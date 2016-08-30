@@ -1,0 +1,7 @@
+1630 million lines read
+DONE
+INDEGREE RESULT:
+[('<http://www.wikidata.org/entity/Q5>', 6709854), ('<http://www.wikidata.org/entity/Q4167836>', 5365743), ('<http://www.wikidata.org/entity/Q16521>', 4299440), ('<http://www.wikidata.org/entity/Q4167410>', 2018447), ('<http://www.wikidata.org/entity/Q11266439>', 1412697), ('<http://www.wikidata.org/entity/Q13100073>', 1177039), ('<http://www.wikidata.org/entity/Q486972>', 751158), ('<http://www.wikidata.org/entity/Q532>', 547002), ('<http://www.wikidata.org/entity/Q79007>', 521561), ('<http://www.wikidata.org/entity/Q13406463>', 471103)]
+OUTDEGREE RESULT
+[('<http://www.wikidata.org/entity/Q5>', 937), ('<http://www.wikidata.org/entity/Q4167410>', 557), ('<http://www.wikidata.org/entity/Q532>', 544), ('<http://www.wikidata.org/entity/Q4167836>', 513), ('<http://www.wikidata.org/entity/Q486972>', 417), ('<http://www.wikidata.org/entity/Q79007>', 367), ('<http://www.wikidata.org/entity/Q11266439>', 345), ('<http://www.wikidata.org/entity/Q16521>', 315), ('<http://www.wikidata.org/entity/Q13406463>', 308), ('<http://www.wikidata.org/entity/Q13100073>', 122)]
+EXECUTION TIME: 7020.97356081 s
