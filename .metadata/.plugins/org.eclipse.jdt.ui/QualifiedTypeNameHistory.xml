@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.mysql.jdbc.Connection"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="BulkInsert.BulkInsertable"/>
+<fullyQualifiedTypeName name="BulkInsert.IBulkInsertable"/>
+<fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="java.sql.Timestamp"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="org.apache.commons.logging.Log"/>
+<fullyQualifiedTypeName name="org.apache.jena.atlas.logging.Log"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.Query"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.QueryExecutionFactory"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.QueryExecution"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.ResultSet"/>
+<fullyQualifiedTypeName name="org.apache.jena.sparql.engine.http.QueryExceptionHTTP"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.QuerySolution"/>
+<fullyQualifiedTypeName name="org.apache.jena.rdf.model.Resource"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.ResultSetFactory"/>
+<fullyQualifiedTypeName name="org.apache.jena.rdf.model.Literal"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.ResultSetFormatter"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.QuerySolutionMap"/>
+<fullyQualifiedTypeName name="org.apache.jena.query.QueryFactory"/>
+<fullyQualifiedTypeName name="org.apache.jena.sparql.engine.http.QueryEngineHTTP"/>
+<fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="org.apache.jena.rdf.model.Model"/>
+<fullyQualifiedTypeName name="org.apache.jena.rdf.model.ModelFactory"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="org.apache.jena.riot.lang.PipedRDFIterator"/>
+<fullyQualifiedTypeName name="org.apache.jena.riot.lang.PipedRDFStream"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ExecutorService"/>
+<fullyQualifiedTypeName name="org.apache.jena.graph.Triple"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+</qualifiedTypeNameHistroy>
