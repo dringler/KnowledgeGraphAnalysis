@@ -1,0 +1,33 @@
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFactory;
+import org.apache.jena.query.ResultSetFormatter;
+import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
+
+public class QuerySPARQL {
+
+	public static void main(String[] args) {
+		DBpediaObject dbpedia = new DBpediaObject();
+		dbpedia.queryEndpoint();
+		
+		queryYAGO();
+	
+	}
+
+
+	private static void queryDBpedia() {
+		
+		
+	}
+
+
+	
+
+}

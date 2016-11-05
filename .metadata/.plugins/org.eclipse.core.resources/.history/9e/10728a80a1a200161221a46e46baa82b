@@ -1,0 +1,13 @@
+
+public class QuerySPARQL {
+
+	public static void main(String[] args) {
+		DBpediaObject dbpedia = new DBpediaObject();
+		dbpedia.queryEndpoint();
+		
+		//queryYAGO();
+	
+	}
+
+
+}

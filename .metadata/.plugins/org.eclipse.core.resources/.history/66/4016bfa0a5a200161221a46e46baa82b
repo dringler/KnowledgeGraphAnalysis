@@ -1,0 +1,54 @@
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
+
+
+public class YAGOobject {
+
+	public void queryEndpoint() {
+		String service = "https://linkeddata1.calcul.u-psud.fr/sparql";
+		String queryTest = "ASK {}";
+		QueryExecution qeTest = QueryExecutionFactory.sparqlService(service, queryTest);
+			
+		try {
+			if(qeTest.execAsk()) {
+				System.out.println(service + " is up");
+				
+				String yagoClasses[] =  getYagoClasses();
+				Map<String, Integer> yagoClassCounts = new HashMap<String, Integer>();
+				yagoClassCounts = getClassCount(service, yagoClasses, false);
+				getClassDegrees(service, yagoClasses);
+				getClassInstaceDegrees(service, yagoClasses, yagoClassCounts);	
+			
+			}
+			
+					
+		} catch (QueryExceptionHTTP e) {
+			System.out.println(service + " is down: " + e);
+		} finally {
+			qeTest.close();
+			System.out.println("DONE");
+		}
+		
+	}
+
+	private Map<String, Integer> getClassCount(String service,
+			String[] yagoClasses, boolean print) {
+		Map<String, Integer> dboClassCountsMap = new HashMap<String, Integer>();
+		for (String dboClass : dboClasses) {
+			//System.out.println("Get class count for "+ dboClass);
+			String queryString = getQueryPrefix();
+		return null;
+	}
+
+	private String[] getYagoClasses() {
+		String yagoClassArray[] = {"100002684",
+								"100003553"
+								};
+		return yagoClassArray;
+	}
+
+}

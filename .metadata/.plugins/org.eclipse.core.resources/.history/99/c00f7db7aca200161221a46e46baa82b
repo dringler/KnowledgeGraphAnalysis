@@ -1,0 +1,18 @@
+
+public class QuerySPARQL {
+
+	public static void main(String[] args) {
+		int endpoint = 0;
+		// query DBpedia
+		QueryObject dbpedia = new QueryObject();
+		//dbpedia.queryEndpoint(endpoint);
+		
+		// query YAGO
+		endpoint = 1;
+		QueryObject yago = new QueryObject();
+		yago.queryEndpoint(endpoint);
+	
+	}
+
+
+}

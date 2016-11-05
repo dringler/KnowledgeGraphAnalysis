@@ -1,0 +1,33 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class QuerySPARQL {
+
+	public static void main(String[] args) {
+		Map<String, CountObject> results = new HashMap<String, CountObject>();
+		int endpoint = 0;
+		// query DBpedia
+		QueryObject dbpedia = new QueryObject();
+		results = dbpedia.queryEndpoint(endpoint);
+		//process results
+		//...
+		for (Map.Entry<String, CountObject> entry : results.entrySet())
+		{
+		    System.out.println(entry.getKey() + "/" + entry.getValue());
+		}
+		
+		/*
+		// query YAGO
+		endpoint = 1;
+		QueryObject yago = new QueryObject();
+		results = yago.queryEndpoint(endpoint);
+		
+		//...
+		 * 
+		*/
+	
+	}
+
+
+}
