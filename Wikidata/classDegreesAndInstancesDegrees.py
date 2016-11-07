@@ -2,12 +2,13 @@
 
 import time
 import numpy
+import operator
 
-start = time.time()
+
 
 #readFile = '/Volumes/Samsung/wikidata_sample_from_nt.nt'
-#readFile = '/Volumes/Samsung/wikidata.nt'
-readFile = 'wikidata_sample_1m.nt'
+readFile = '/Volumes/Samsung/Wikidata/wikidata.nt'
+#readFile = 'wikidata_sample_1m.nt'
 
 isA = '<http://www.wikidata.org/prop/direct/P31>'
 
@@ -29,6 +30,14 @@ class ClassInstances:
         return self.uri
     def getClassInstances(self):
         return len(self.allClassInstances)
+    def getMin(self):
+        return self.min
+    def getAvg(self):
+        return self.avg
+    def getMed(self):
+        return self.median
+    def getMax(self):
+        return self.max
     def addInstance(self, instance):
         if instance in self.allClassInstances:
             self.countDict[instance] += 1
@@ -64,6 +73,8 @@ class InstanceSet:
         self.iSet = set()
     def getSet(self):
         return self.iSet
+
+
 
 # top 10 classes     
 topClassSet = set()
@@ -139,6 +150,9 @@ topClassSet.update([#'<http://www.wikidata.org/entity/Q5>', '<http://www.wikidat
                         '<http://www.wikidata.org/entity/Q40218>'
                     ])
 
+indegreeDic = {}  # key:class, value: indegree
+outdegreeDic = {}  # key: class, value: outdegree
+
 instanceSetAllDict = {}
 ciAll = {}
 coAll = {}
@@ -188,13 +202,13 @@ def countInstanceDegrees(s, o):
                 ciSet.addInstance(o)
 
 
-def calculateClassDegrees():
+def calculateClassInstanceDegrees():
     for k,v in ciAll.items():
         v.calculateDegrees()
     for k,v in coAll.items():
         v.calculateDegrees()
         
-def printClassDegreeResults():
+def printClassInstanceDegreeResults():
     for k,v in ciAll.items():
         v.printResults()
     for k,v in coAll.items():
@@ -205,11 +219,57 @@ def saveAllResults(fw):
         v.saveResults(fw)
     for k,v in coAll.items():
         v.saveResults(fw)
+
+def classDegrees(file):
+    start = time.time()
+    global indegreeDic
+    global outdegreeDic
+    print ('START CALCULATING CLASS DEGREES')
+    f = open(file, 'r')
+    lineCounter = 0
+    for line in f:
+        splittedLine = line.rstrip('\n').split()
+        s, p, o = getSPO(splittedLine)
+        if s in topClassSet:
+            if outdegreeDic.has_key(s):
+                outdegreeDic[s] += 1
+            else:
+                outdegreeDic[s] = 1
+        if o in topClassSet:
+            if indegreeDic.has_key(o):
+                indegreeDic[o] += 1
+            else:
+                indegreeDic[o] = 1
+        lineCounter += 1
+        if (lineCounter % lineProgress == 0):
+            print ('{} million lines read'.format(lineCounter / 1000000))
+    f.close()
+    print ('DONE CALCULATING CLASS DEGREES')
+    print ('INDEGREE RESULT:')
+    print sorted(indegreeDic.items(), key=operator.itemgetter(1), reverse=True)
+    print ('OUTDEGREE RESULT')
+    print sorted(outdegreeDic.items(), key=operator.itemgetter(1), reverse=True)
+
+    print ("Write results to classDegreeResult.txt")
+    fw = open('classDegreesResult.txt', 'w')
+    fw.write("class indegree results\n")
+    for k,v in indegreeDic.items():
+        fw.write('{}: {}\n'.format(k, v))
+    #fw.write(sorted(indegreeDic.items(), key=operator.itemgetter(1), reverse=True))
+    fw.write("\nclass outdegree results\n")
+    #fw.write(sorted(outdegreeDic.items(), key=operator.itemgetter(1), reverse=True))
+    for k,v in outdegreeDic.items():
+        fw.write('{}: {}\n'.format(k, v))
+
+    print ('EXECUTION TIME: {} s'.format(time.time() - start))
         
-print('START')
-try:
+
+
+def classInstanceDegrees(file):
+    start = time.time()
+    print ('START CALCULCATING CLASS INSTANCE DEGREES')
     # get all instances for the top10 classes
-    f = open(readFile, 'r')
+    f = open(file, 'r')
     lineCounter = 0
     print ('START COUNTING INSTANCES')
     for line in f:
@@ -219,14 +279,14 @@ try:
             countInstances(s, o)
         lineCounter += 1
         if (lineCounter % lineProgress == 0):
-            print ('{} million lines read'.format(lineCounter/1000000))
-        #if (lineCounter > 5000):
-        #    break
+            print ('{} million lines read'.format(lineCounter / 1000000))
+            # if (lineCounter > 5000):
+            #    break
     f.close()
     print ('DONE COUNTING INSTANCES')
     for k, v in instanceSetAllDict.items():
         print ('set for {}, #instances: {}'.format(k, len(v.getSet())))
-        
+
     # count instance degrees
     print ('START COUNTING INSTANCE DEGREES')
     f = open(readFile, 'r')
@@ -237,20 +297,62 @@ try:
         countInstanceDegrees(s, o)
         lineCounter += 1
         if (lineCounter % lineProgress == 0):
-            print ('{} million lines read'.format(lineCounter/1000000))
-        #if (lineCounter > 5000):
-        #    break
+            print ('{} million lines read'.format(lineCounter / 1000000))
+            # if (lineCounter > 5000):
+            #    break
     f.close()
     print ('DONE COUNTING INSTANCE DEGREES')
     print ('START CALCULATING CLASS DEGREES')
-    calculateClassDegrees()
+    calculateClassInstanceDegrees()
     print ('DONE CALCULATING CLASS DEGREES')
     print ('RESULTS')
-    printClassDegreeResults()
+    printClassInstanceDegreeResults()
     fw = open('classInstancesDegreesResult.txt', 'w')
     saveAllResults(fw)
     fw.close()
     print ('RESULTS SAVED IN classInstancesDegreesResult.txt')
-    print ('EXECUTION TIME: {} s'.format(time.time()-start))
+    print ('EXECUTION TIME: {} s'.format(time.time() - start))
+
+
+def createFinalCSV():
+    print ('WRITE FINAL CSV')
+    fw = open('allDegrees.csv', 'w')
+    fw.write('class, instance count, class indegree, class outdegree, classInstanceIndegreeMin,	classInstanceIndegreeAvg, classInstanceIndegreeMedian, classInstanceIndegreeMax, classInstanceOutdegreeMin,	classInstanceOutdegreeAvg, classInstanceOutdegreeMedian, classInstanceOutdegreeMax\n')
+    for uri in topClassSet:
+        instanceCount = 0
+        indegreeResult = 0
+        outdegreeResult = 0
+        if uri in instanceSetAllDict:
+            instanceCount = len(instanceSetAllDict[uri].getSet())
+        if uri in indegreeDic:
+            indegreeResult = indegreeDic[uri]
+        if uri in outdegreeDic:
+            outdegreeResult = outdegreeDic[uri]
+
+        fw.write('{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}\n'.format(
+                        uri,
+                        instanceCount,
+                        indegreeResult,
+                        outdegreeResult,
+                        ciAll[uri].getMin(),
+                        ciAll[uri].getAvg(),
+                        ciAll[uri].getMed(),
+                        ciAll[uri].getMax(),
+                        coAll[uri].getMin(),
+                        coAll[uri].getAvg(),
+                        coAll[uri].getMed(),
+                        coAll[uri].getMax()
+        ))
+    fw.close()
+    print ('DONE WRITING FINAL CSV TO allDegrees.csv')
+
+try:
+    print('START')
+    classDegrees(readFile)
+
+    classInstanceDegrees(readFile)
+
+    createFinalCSV()
+    print ('DONE WITH PROGRAM')
 except:
     print ('ERROR')

@@ -1,0 +1,173 @@
+RESULTS
+class instances indegree for VisualizableObject
+min: 1, avg: 385.015151515, median: 2.0, max: 6149
+class instances indegree for VisualizableThing
+min: 1, avg: 21.3855670103, median: 3.0, max: 2840
+class instances indegree for species
+min: 42, avg: 7868.0, median: 4603.0, max: 20436
+class instances indegree for humanagent
+min: 2, avg: 1991.33333333, median: 379.0, max: 5593
+class instances indegree for agent
+min: 1, avg: 15.5, median: 15.5, max: 30
+class instances indegree for person
+min: 1, avg: 1220.91147541, median: 1.0, max: 29319
+class instances indegree for athlete
+min: 1, avg: 1.87202380952, median: 1.0, max: 20
+class instances indegree for actor
+min: 1, avg: 1.26132404181, median: 1.0, max: 6
+class instances indegree for director
+min: 1, avg: 1.81481481481, median: 1.0, max: 8
+class instances indegree for celebrity
+min: 1, avg: 2.25563909774, median: 1.0, max: 31
+class instances indegree for male
+min: 1, avg: 2.67755102041, median: 1.0, max: 50
+class instances indegree for ethnicGroup
+min: 1, avg: 1.42105263158, median: 1.0, max: 5
+class instances indegree for governmentOrganization
+min: 1, avg: 1.8835978836, median: 1.0, max: 49
+class instances indegree for company
+min: 1, avg: 171.671910112, median: 1.0, max: 20881
+class instances indegree for location
+min: 1, avg: 7800.28, median: 2532.0, max: 34548
+class instances indegree for geopoloticalEntity
+min: 2938, avg: 2938.0, median: 2938.0, max: 2938
+class instances indegree for geopoliticalLocation
+min: 1, avg: 336.448275862, median: 1.0, max: 18789
+class instances indegree for city
+min: 1, avg: 5.69489624229, median: 2.0, max: 601
+class instances indegree for street
+min: 1, avg: 1.66666666667, median: 1.0, max: 3
+class instances indegree for beach
+min: 1, avg: 1.4, median: 1.0, max: 2
+class instances indegree for skiarea
+min: 1, avg: 1.86029411765, median: 1.0, max: 15
+class instances indegree for river
+min: 1, avg: 4.25896414343, median: 2.0, max: 93
+class instances indegree for airport
+min: 1, avg: 1.69230769231, median: 1.0, max: 7
+class instances indegree for abstractThing
+min: 145, avg: 6534.46153846, median: 4500.5, max: 22440
+class instances indegree for creativeWork
+min: 7, avg: 5199.625, median: 5610.0, max: 12830
+class instances indegree for time
+min: 9999999, avg: 0.0, median: 0.0, max: 0
+class instances indegree for politician
+min: 1, avg: 370.565217391, median: 1.0, max: 16790
+class instances indegree for politicalParty
+min: 1, avg: 1.47368421053, median: 1.0, max: 5
+class instances indegree for musicAlbum
+min: 1, avg: 1.42105263158, median: 1.0, max: 3
+class instances indegree for musicSong
+min: 1, avg: 1.83333333333, median: 1.0, max: 6
+class instances indegree for movie
+min: 1, avg: 1.51291512915, median: 1.0, max: 10
+class instances indegree for book
+min: 1, avg: 1.3047752809, median: 1.0, max: 7
+class instances indegree for software
+min: 1, avg: 224.671428571, median: 1.0, max: 13696
+class instances indegree for sport
+min: 1, avg: 41.953125, median: 2.0, max: 1649
+class instances indegree for event
+min: 41, avg: 2682.58823529, median: 2220.0, max: 11764
+class instances indegree for militaryEventType
+min: 1, avg: 2260.75, median: 2.0, max: 9038
+class instances indegree for militaryConflict
+min: 15, avg: 15.0, median: 15.0, max: 15
+class instances indegree for sportsEvent
+min: 1139, avg: 4772.25, median: 4060.5, max: 9829
+class instances indegree for country
+min: 1, avg: 22.019047619, median: 7.0, max: 997
+class instances indegree for building
+min: 1, avg: 4614.26470588, median: 2.0, max: 23742
+class instances indegree for chemical
+min: 1, avg: 5.96415770609, median: 2.0, max: 175
+class instances indegree for planet
+min: 9999999, avg: 0.0, median: 0.0, max: 0
+class instances indegree for vehicle
+min: 1, avg: 643.846364883, median: 1.0, max: 16718
+class instances outdegree for VisualizableObject
+min: 1, avg: 1.58578637511, median: 1.0, max: 192
+class instances outdegree for VisualizableThing
+min: 1, avg: 2.18514412417, median: 1.0, max: 693
+class instances outdegree for species
+min: 64, avg: 71.6666666667, median: 66.5, max: 87
+class instances outdegree for humanagent
+min: 1, avg: 51.0, median: 63.0, max: 89
+class instances outdegree for agent
+min: 1, avg: 4.38095238095, median: 2.0, max: 85
+class instances outdegree for person
+min: 1, avg: 1.98340481074, median: 1.0, max: 83
+class instances outdegree for athlete
+min: 1, avg: 2.65592711355, median: 2.0, max: 36
+class instances outdegree for actor
+min: 1, avg: 2.85697024097, median: 3.0, max: 17
+class instances outdegree for director
+min: 1, avg: 1.33289453889, median: 1.0, max: 12
+class instances outdegree for celebrity
+min: 1, avg: 2.21919638269, median: 2.0, max: 64
+class instances outdegree for male
+min: 1, avg: 2.1837943334, median: 2.0, max: 56
+class instances outdegree for ethnicGroup
+min: 1, avg: 1.11319218241, median: 1.0, max: 6
+class instances outdegree for governmentOrganization
+min: 1, avg: 1.09812898807, median: 1.0, max: 64
+class instances outdegree for company
+min: 1, avg: 1.62785388128, median: 1.0, max: 226
+class instances outdegree for location
+min: 1, avg: 23.5223880597, median: 2.0, max: 97
+class instances outdegree for geopoloticalEntity
+min: 68, avg: 68.0, median: 68.0, max: 68
+class instances outdegree for geopoliticalLocation
+min: 1, avg: 1.52064718667, median: 1.0, max: 102
+class instances outdegree for city
+min: 1, avg: 1.73284773178, median: 1.0, max: 227
+class instances outdegree for street
+min: 1, avg: 1.50674312834, median: 1.0, max: 4
+class instances outdegree for beach
+min: 1, avg: 1.0228348973, median: 1.0, max: 6
+class instances outdegree for skiarea
+min: 1, avg: 1.832, median: 2.0, max: 11
+class instances outdegree for river
+min: 1, avg: 1.1348133078, median: 1.0, max: 36
+class instances outdegree for airport
+min: 1, avg: 1.4212546935, median: 1.0, max: 9
+class instances outdegree for abstractThing
+min: 60, avg: 65.0384615385, median: 64.0, max: 97
+class instances outdegree for creativeWork
+min: 1, avg: 62.1111111111, median: 70.0, max: 71
+class instances outdegree for time
+min: 1, avg: 1.01178861789, median: 1.0, max: 2
+class instances outdegree for politician
+min: 1, avg: 1.57293111419, median: 1.0, max: 147
+class instances outdegree for politicalParty
+min: 1, avg: 1.21386762719, median: 1.0, max: 15
+class instances outdegree for musicAlbum
+min: 1, avg: 1.23783783784, median: 1.0, max: 4
+class instances outdegree for musicSong
+min: 1, avg: 1.13679282091, median: 1.0, max: 10
+class instances outdegree for movie
+min: 1, avg: 1.00800120773, median: 1.0, max: 4
+class instances outdegree for book
+min: 1, avg: 1.4866737114, median: 1.0, max: 15
+class instances outdegree for software
+min: 1, avg: 1.29362445415, median: 1.0, max: 100
+class instances outdegree for sport
+min: 1, avg: 1.45213221442, median: 1.0, max: 180
+class instances outdegree for event
+min: 1, avg: 44.3225806452, median: 79.0, max: 80
+class instances outdegree for militaryEventType
+min: 1, avg: 1.76923076923, median: 1.0, max: 79
+class instances outdegree for militaryConflict
+min: 1, avg: 1.39105897975, median: 1.0, max: 3
+class instances outdegree for sportsEvent
+min: 1, avg: 1.45377258236, median: 1.0, max: 105
+class instances outdegree for country
+min: 1, avg: 1.45356298548, median: 1.0, max: 187
+class instances outdegree for building
+min: 1, avg: 2.26066350711, median: 1.0, max: 96
+class instances outdegree for chemical
+min: 1, avg: 1.3027901078, median: 1.0, max: 135
+class instances outdegree for planet
+min: 1, avg: 1.05365853659, median: 1.0, max: 2
+class instances indegree for vehicle
+min: 1, avg: 643.846364883, median: 1.0, max: 16718

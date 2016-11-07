@@ -1,0 +1,35 @@
+class indegree results
+<http://www.wikidata.org/entity/Q215627>: 2
+<http://www.wikidata.org/entity/Q2526255>: 4
+<http://www.wikidata.org/entity/Q7432>: 11
+<http://www.wikidata.org/entity/Q7278>: 2
+<http://www.wikidata.org/entity/Q5>: 229
+<http://www.wikidata.org/entity/Q4022>: 20
+<http://www.wikidata.org/entity/Q634>: 199
+<http://www.wikidata.org/entity/Q198>: 7
+<http://www.wikidata.org/entity/Q82955>: 90
+<http://www.wikidata.org/entity/Q4167836>: 4
+<http://www.wikidata.org/entity/Q386724>: 4
+<http://www.wikidata.org/entity/Q6256>: 79
+<http://www.wikidata.org/entity/Q41176>: 1
+<http://www.wikidata.org/entity/Q11424>: 4
+<http://www.wikidata.org/entity/Q571>: 201
+<http://www.wikidata.org/entity/Q349>: 236
+<http://www.wikidata.org/entity/Q532>: 6
+<http://www.wikidata.org/entity/Q79007>: 2
+<http://www.wikidata.org/entity/Q16521>: 24
+<http://www.wikidata.org/entity/Q11471>: 4
+<http://www.wikidata.org/entity/Q515>: 99
+<http://www.wikidata.org/entity/Q134556>: 4
+<http://www.wikidata.org/entity/Q6581097>: 229
+<http://www.wikidata.org/entity/Q11344>: 52
+<http://www.wikidata.org/entity/Q4167410>: 6
+<http://www.wikidata.org/entity/Q33999>: 10
+<http://www.wikidata.org/entity/Q3957>: 8
+<http://www.wikidata.org/entity/Q13406463>: 10
+<http://www.wikidata.org/entity/Q334166>: 2
+
+class outdegree results
+<http://www.wikidata.org/entity/Q571>: 629
+<http://www.wikidata.org/entity/Q634>: 639
+<http://www.wikidata.org/entity/Q349>: 616
