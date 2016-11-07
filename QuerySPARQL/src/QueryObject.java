@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +9,6 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFactory;
-import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 
 
@@ -25,6 +22,7 @@ public class QueryObject {
 	public Map<String, CountObject> queryEndpoint(int endpoint) {
 		long startTime = System.nanoTime();
 		String service = "";
+		resultObject.clear();
 		if (endpoint == 0) {
 			service = "http://dbpedia.org/sparql";
 		} else if (endpoint == 1) {
