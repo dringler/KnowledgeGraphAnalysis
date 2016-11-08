@@ -1,170 +1,170 @@
 indegree
 <http://www.wikidata.org/entity/Q215627>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 2.0
+median: 2.0
+max: 2
 
 indegree
 <http://www.wikidata.org/entity/Q2526255>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 4
+avg: 4.0
+median: 4.0
+max: 4
 
 indegree
 <http://www.wikidata.org/entity/Q8205328>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 12.3333333333
+median: 4.0
+max: 37
 
 indegree
 <http://www.wikidata.org/entity/Q1970725>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 5.14968814969
+median: 3.0
+max: 65
 
 indegree
 <http://www.wikidata.org/entity/Q6999>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 6.60964734495
+median: 7.0
+max: 48
 
 indegree
 <http://www.wikidata.org/entity/Q7432>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 3.10344827586
+median: 2.0
+max: 12
 
 indegree
 <http://www.wikidata.org/entity/Q7278>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 34.0202420401
+median: 4.0
+max: 40184
 
 indegree
 <http://www.wikidata.org/entity/Q223557>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 13.5
+median: 8.5
+max: 42
 
 indegree
 <http://www.wikidata.org/entity/Q1248784>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 5.8399169535
+median: 4.0
+max: 250
 
 indegree
 <http://www.wikidata.org/entity/Q5>
-min: 7
-avg: 76.1160714286
-median: 62.5
-max: 260
+min: 1
+avg: 4.8410314918
+median: 2.0
+max: 28444
 
 indegree
 <http://www.wikidata.org/entity/Q11424>
-min: 47
-avg: 49.0
-median: 49.0
-max: 51
+min: 1
+avg: 4.12131126576
+median: 2.0
+max: 196
 
 indegree
 <http://www.wikidata.org/entity/Q4022>
-min: 28
-avg: 83.3
-median: 84.5
-max: 164
+min: 1
+avg: 4.16972441089
+median: 3.0
+max: 1012
 
 indegree
 <http://www.wikidata.org/entity/Q17519152>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 5.62857142857
+median: 2.0
+max: 60
 
 indegree
 <http://www.wikidata.org/entity/Q3010205>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 11.8
+median: 9.0
+max: 35
 
 indegree
 <http://www.wikidata.org/entity/Q327333>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 15.0958492079
+median: 2.0
+max: 47341
 
 indegree
 <http://www.wikidata.org/entity/Q4167410>
-min: 12
-avg: 29.3333333333
-median: 24.0
-max: 52
+min: 1
+avg: 3.14254301431
+median: 2.0
+max: 1223
 
 indegree
 <http://www.wikidata.org/entity/Q673661>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 3
+avg: 29.0
+median: 11.0
+max: 73
 
 indegree
 <http://www.wikidata.org/entity/Q337060>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 41.6363636364
+median: 6.0
+max: 240
 
 indegree
 <http://www.wikidata.org/entity/Q2066131>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 3
+avg: 48.5
+median: 8.0
+max: 175
 
 indegree
 <http://www.wikidata.org/entity/Q16510064>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.20506634499
+median: 2.0
+max: 222
 
 indegree
 <http://www.wikidata.org/entity/Q130003>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 4.1346749226
+median: 2.0
+max: 159
 
 indegree
 <http://www.wikidata.org/entity/Q386724>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 4.94909090909
+median: 2.0
+max: 516
 
 indegree
 <http://www.wikidata.org/entity/Q7397>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 5.49521574291
+median: 2.0
+max: 9222
 
 indegree
 <http://www.wikidata.org/entity/Q1656682>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.81051447849
+median: 2.0
+max: 207
 
 indegree
 <http://www.wikidata.org/entity/Q795052>
@@ -182,458 +182,458 @@ max: 0
 
 indegree
 <http://www.wikidata.org/entity/Q4167836>
-min: 409
-avg: 409.0
-median: 409.0
-max: 409
+min: 1
+avg: 4.33798111366
+median: 2.0
+max: 1106
 
 indegree
 <http://www.wikidata.org/entity/Q11446>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.43530087606
+median: 3.0
+max: 87
 
 indegree
 <http://www.wikidata.org/entity/Q16334295>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 6.7852614897
+median: 2.0
+max: 374
 
 indegree
 <http://www.wikidata.org/entity/Q350604>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 14.5714285714
+median: 4.0
+max: 91
 
 indegree
 <http://www.wikidata.org/entity/Q891723>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 18.7934782609
+median: 3.0
+max: 1294
 
 indegree
 <http://www.wikidata.org/entity/Q11266439>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.19293453248
+median: 2.0
+max: 608
 
 indegree
 <http://www.wikidata.org/entity/Q6256>
-min: 175
-avg: 253.051282051
-median: 234.0
-max: 555
+min: 4
+avg: 69952.6767677
+median: 8731.5
+max: 1596761
 
 indegree
 <http://www.wikidata.org/entity/Q211236>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 2.0
+median: 2.0
+max: 2
 
 indegree
 <http://www.wikidata.org/entity/Q41176>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 2.82222453927
+median: 2.0
+max: 4726
 
 indegree
 <http://www.wikidata.org/entity/Q1420>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.21269579555
+median: 2.0
+max: 59
 
 indegree
 <http://www.wikidata.org/entity/Q7239>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 12.0
+median: 2.0
+max: 70
 
 indegree
 <http://www.wikidata.org/entity/Q571>
-min: 53
-avg: 54.5
-median: 54.5
-max: 56
+min: 1
+avg: 5.59194698366
+median: 2.0
+max: 49806
 
 indegree
 <http://www.wikidata.org/entity/Q349>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 143.166666667
+median: 9.0
+max: 6210
 
 indegree
 <http://www.wikidata.org/entity/Q42889>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 3.90909090909
+median: 2.5
+max: 11
 
 indegree
 <http://www.wikidata.org/entity/Q532>
-min: 6
-avg: 28.6666666667
-median: 8.0
-max: 72
+min: 1
+avg: 4.78680822078
+median: 3.0
+max: 2655
 
 indegree
 <http://www.wikidata.org/entity/Q24229398>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 8
+avg: 8.0
+median: 8.0
+max: 8
 
 indegree
 <http://www.wikidata.org/entity/Q16521>
-min: 11
-avg: 120.727272727
-median: 132.0
-max: 247
+min: 1
+avg: 10.1215830501
+median: 4.0
+max: 6709854
 
 indegree
 <http://www.wikidata.org/entity/Q11471>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 51.5
+median: 16.0
+max: 172
 
 indegree
 <http://www.wikidata.org/entity/Q515>
-min: 15
-avg: 110.553191489
-median: 107.0
-max: 227
+min: 1
+avg: 118.184937238
+median: 27.0
+max: 51940
 
 indegree
 <http://www.wikidata.org/entity/Q82955>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 2.14285714286
+median: 2.0
+max: 3
 
 indegree
 <http://www.wikidata.org/entity/Q134556>
-min: 6
-avg: 24.5
-median: 24.5
-max: 43
+min: 1
+avg: 5.76679022515
+median: 5.0
+max: 82
 
 indegree
 <http://www.wikidata.org/entity/Q198>
-min: 113
-avg: 113.0
-median: 113.0
-max: 113
+min: 2
+avg: 77.1959459459
+median: 17.0
+max: 3551
 
 indegree
 <http://www.wikidata.org/entity/Q1084>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 9
+avg: 12.5
+median: 12.5
+max: 16
 
 indegree
 <http://www.wikidata.org/entity/Q2188189>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 8.26363636364
+median: 3.0
+max: 287
 
 indegree
 <http://www.wikidata.org/entity/Q40218>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
-
-indegree
-<http://www.wikidata.org/entity/Q482994>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
-
-indegree
-<http://www.wikidata.org/entity/Q11344>
-min: 35
-avg: 124.68
-median: 126.0
-max: 188
-
-indegree
-<http://www.wikidata.org/entity/Q6581097>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
-
-indegree
-<http://www.wikidata.org/entity/Q79007>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
-
-indegree
-<http://www.wikidata.org/entity/Q2221906>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
-
-indegree
-<http://www.wikidata.org/entity/Q33999>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
-
-indegree
-<http://www.wikidata.org/entity/Q13406463>
-min: 5
-avg: 45.0
-median: 50.5
+min: 1
+avg: 14.0526315789
+median: 6.5
 max: 74
 
 indegree
+<http://www.wikidata.org/entity/Q482994>
+min: 1
+avg: 4.30469599285
+median: 2.0
+max: 2921
+
+indegree
+<http://www.wikidata.org/entity/Q11344>
+min: 2
+avg: 426.948387097
+median: 278.0
+max: 6609
+
+indegree
+<http://www.wikidata.org/entity/Q6581097>
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+<http://www.wikidata.org/entity/Q79007>
+min: 1
+avg: 1.68152410551
+median: 1.0
+max: 1130
+
+indegree
+<http://www.wikidata.org/entity/Q2221906>
+min: 1
+avg: 3.09341637011
+median: 2.0
+max: 137
+
+indegree
+<http://www.wikidata.org/entity/Q33999>
+min: 2
+avg: 4.75
+median: 3.5
+max: 10
+
+indegree
+<http://www.wikidata.org/entity/Q13406463>
+min: 1
+avg: 3.59862839186
+median: 2.0
+max: 10928
+
+indegree
 <http://www.wikidata.org/entity/Q334166>
-min: 148
-avg: 148.0
-median: 148.0
-max: 148
+min: 3
+avg: 338.384615385
+median: 41.0
+max: 1940
 
 indegree
 <http://www.wikidata.org/entity/Q16334298>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 4
+avg: 10.0
+median: 4.0
+max: 37
 
 indegree
 <http://www.wikidata.org/entity/Q7302866>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 1.00571428571
+median: 1.0
+max: 2
 
 indegree
 <http://www.wikidata.org/entity/Q486972>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.90475580669
+median: 2.0
+max: 34907
 
 indegree
 <http://www.wikidata.org/entity/Q79529>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 22.8582089552
+median: 5.0
+max: 411
 
 indegree
 <http://www.wikidata.org/entity/Q3957>
-min: 36
-avg: 78.25
-median: 69.0
-max: 139
+min: 1
+avg: 25.7325161678
+median: 7.0
+max: 1972
 
 indegree
 <http://www.wikidata.org/entity/Q634>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 2
+avg: 46.0
+median: 8.0
+max: 266
 
 indegree
 <http://www.wikidata.org/entity/Q40080>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 3.15971923793
+median: 3.0
+max: 65
 
 indegree
 <http://www.wikidata.org/entity/Q178659>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 1
+avg: 1.56818181818
+median: 1.0
+max: 34
 
 outdegree
 <http://www.wikidata.org/entity/Q215627>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 15
+avg: 15.5
+median: 15.5
+max: 16
 
 outdegree
 <http://www.wikidata.org/entity/Q2526255>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 7
+avg: 7.0
+median: 7.0
+max: 7
 
 outdegree
 <http://www.wikidata.org/entity/Q8205328>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 10
+avg: 41.8888888889
+median: 21.0
+max: 135
 
 outdegree
 <http://www.wikidata.org/entity/Q1970725>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 8
+avg: 18.4511434511
+median: 12.0
+max: 251
 
 outdegree
 <http://www.wikidata.org/entity/Q6999>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 37.0713417106
+median: 42.0
+max: 210
 
 outdegree
 <http://www.wikidata.org/entity/Q7432>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 14.1034482759
+median: 6.0
+max: 82
 
 outdegree
 <http://www.wikidata.org/entity/Q7278>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 26.5777265524
+median: 16.0
+max: 598
 
 outdegree
 <http://www.wikidata.org/entity/Q223557>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 13
+avg: 52.625
+median: 27.0
+max: 196
 
 outdegree
 <http://www.wikidata.org/entity/Q1248784>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 31.4415669562
+median: 25.0
+max: 587
 
 outdegree
 <http://www.wikidata.org/entity/Q5>
-min: 82
-avg: 387.75
-median: 350.0
-max: 1102
+min: 3
+avg: 44.0776583766
+median: 34.0
+max: 1522
 
 outdegree
 <http://www.wikidata.org/entity/Q11424>
-min: 336
-avg: 336.0
-median: 336.0
-max: 336
+min: 4
+avg: 37.836661942
+median: 25.0
+max: 677
 
 outdegree
 <http://www.wikidata.org/entity/Q4022>
-min: 178
-avg: 368.7
-median: 370.0
-max: 554
+min: 6
+avg: 19.1317557499
+median: 15.0
+max: 626
 
 outdegree
 <http://www.wikidata.org/entity/Q17519152>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 16.8571428571
+median: 12.0
+max: 125
 
 outdegree
 <http://www.wikidata.org/entity/Q3010205>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 9
+avg: 56.4
+median: 45.0
+max: 151
 
 outdegree
 <http://www.wikidata.org/entity/Q327333>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 16.5277722077
+median: 11.0
+max: 361
 
 outdegree
 <http://www.wikidata.org/entity/Q4167410>
-min: 446
-avg: 460.333333333
-median: 465.0
-max: 470
+min: 3
+avg: 116.44333448
+median: 63.0
+max: 1197
 
 outdegree
 <http://www.wikidata.org/entity/Q673661>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 23
+avg: 97.6666666667
+median: 39.0
+max: 231
 
 outdegree
 <http://www.wikidata.org/entity/Q337060>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 13
+avg: 50.4545454545
+median: 22.0
+max: 214
 
 outdegree
 <http://www.wikidata.org/entity/Q2066131>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 9
+avg: 33.0
+median: 24.5
+max: 74
 
 outdegree
 <http://www.wikidata.org/entity/Q16510064>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 10.6911942099
+median: 6.0
+max: 251
 
 outdegree
 <http://www.wikidata.org/entity/Q130003>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 21.4473684211
+median: 14.0
+max: 267
 
 outdegree
 <http://www.wikidata.org/entity/Q386724>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 17.68
+median: 13.0
+max: 290
 
 outdegree
 <http://www.wikidata.org/entity/Q7397>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 17.0927965337
+median: 12.0
+max: 298
 
 outdegree
 <http://www.wikidata.org/entity/Q1656682>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 13.5752038234
+median: 8.0
+max: 345
 
 outdegree
 <http://www.wikidata.org/entity/Q795052>
@@ -651,192 +651,192 @@ max: 0
 
 outdegree
 <http://www.wikidata.org/entity/Q4167836>
-min: 688
-avg: 688.0
-median: 688.0
-max: 688
+min: 4
+avg: 44.122297865
+median: 42.0
+max: 840
 
 outdegree
 <http://www.wikidata.org/entity/Q11446>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 15.6189381971
+median: 13.0
+max: 438
 
 outdegree
 <http://www.wikidata.org/entity/Q16334295>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 23.324881141
+median: 13.0
+max: 461
 
 outdegree
 <http://www.wikidata.org/entity/Q350604>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 44.619047619
+median: 27.0
+max: 183
 
 outdegree
 <http://www.wikidata.org/entity/Q891723>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 45.2826086957
+median: 22.0
+max: 659
 
 outdegree
 <http://www.wikidata.org/entity/Q11266439>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 3
+avg: 41.6089197031
+median: 9.0
+max: 1144
 
 outdegree
 <http://www.wikidata.org/entity/Q6256>
-min: 759
-avg: 1024.76923077
-median: 953.0
-max: 1775
+min: 34
+avg: 1012.97979798
+median: 968.0
+max: 1813
 
 outdegree
 <http://www.wikidata.org/entity/Q211236>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 19
+avg: 19.0
+median: 19.0
+max: 19
 
 outdegree
 <http://www.wikidata.org/entity/Q41176>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 21.6583166071
+median: 20.0
+max: 1167
 
 outdegree
 <http://www.wikidata.org/entity/Q1420>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 11.7394888706
+median: 8.0
+max: 151
 
 outdegree
 <http://www.wikidata.org/entity/Q7239>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 47.6363636364
+median: 19.0
+max: 296
 
 outdegree
 <http://www.wikidata.org/entity/Q571>
-min: 214
-avg: 219.5
-median: 219.5
-max: 225
+min: 5
+avg: 23.8642616779
+median: 19.0
+max: 624
 
 outdegree
 <http://www.wikidata.org/entity/Q349>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 56.9111111111
+median: 32.5
+max: 386
 
 outdegree
 <http://www.wikidata.org/entity/Q42889>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 18.1818181818
+median: 13.5
+max: 53
 
 outdegree
 <http://www.wikidata.org/entity/Q532>
-min: 90
-avg: 180.666666667
-median: 92.0
-max: 360
+min: 6
+avg: 24.7677357689
+median: 23.0
+max: 779
 
 outdegree
 <http://www.wikidata.org/entity/Q24229398>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 31
+avg: 31.0
+median: 31.0
+max: 31
 
 outdegree
 <http://www.wikidata.org/entity/Q16521>
-min: 105
-avg: 449.181818182
-median: 500.0
-max: 852
+min: 3
+avg: 51.9208400503
+median: 50.0
+max: 1167
 
 outdegree
 <http://www.wikidata.org/entity/Q11471>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 9
+avg: 140.75
+median: 63.5
+max: 427
 
 outdegree
 <http://www.wikidata.org/entity/Q515>
-min: 128
-avg: 474.829787234
-median: 465.0
-max: 827
+min: 6
+avg: 123.219985233
+median: 101.0
+max: 1200
 
 outdegree
 <http://www.wikidata.org/entity/Q82955>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 7
+avg: 12.7142857143
+median: 14.0
+max: 19
 
 outdegree
 <http://www.wikidata.org/entity/Q134556>
-min: 56
-avg: 121.0
-median: 121.0
-max: 186
+min: 6
+avg: 28.7049011532
+median: 22.0
+max: 1200
 
 outdegree
 <http://www.wikidata.org/entity/Q198>
-min: 355
-avg: 355.0
-median: 355.0
-max: 355
+min: 6
+avg: 85.1402027027
+median: 55.5
+max: 591
 
 outdegree
 <http://www.wikidata.org/entity/Q1084>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 12
+avg: 48.0
+median: 48.0
+max: 84
 
 outdegree
 <http://www.wikidata.org/entity/Q2188189>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 90.4363636364
+median: 62.0
+max: 197
 
 outdegree
 <http://www.wikidata.org/entity/Q40218>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 56.7368421053
+median: 35.0
+max: 301
 
 outdegree
 <http://www.wikidata.org/entity/Q482994>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 25.6428763629
+median: 22.0
+max: 390
 
 outdegree
 <http://www.wikidata.org/entity/Q11344>
-min: 182
-avg: 478.04
-median: 483.0
-max: 710
+min: 36
+avg: 399.806451613
+median: 450.0
+max: 726
 
 outdegree
 <http://www.wikidata.org/entity/Q6581097>
@@ -847,92 +847,92 @@ max: 0
 
 outdegree
 <http://www.wikidata.org/entity/Q79007>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 23.8907308968
+median: 23.0
+max: 397
 
 outdegree
 <http://www.wikidata.org/entity/Q2221906>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 7
+avg: 12.4332740214
+median: 10.0
+max: 297
 
 outdegree
 <http://www.wikidata.org/entity/Q33999>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 11
+avg: 22.5
+median: 15.0
+max: 49
 
 outdegree
 <http://www.wikidata.org/entity/Q13406463>
-min: 50
-avg: 176.0
-median: 202.0
-max: 250
+min: 3
+avg: 17.2613401843
+median: 13.0
+max: 1005
 
 outdegree
 <http://www.wikidata.org/entity/Q334166>
-min: 482
-avg: 482.0
-median: 482.0
-max: 482
+min: 14
+avg: 195.538461538
+median: 108.0
+max: 541
 
 outdegree
 <http://www.wikidata.org/entity/Q16334298>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 11
+avg: 22.1428571429
+median: 22.0
+max: 36
 
 outdegree
 <http://www.wikidata.org/entity/Q7302866>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 11
+avg: 11.0914285714
+median: 11.0
+max: 20
 
 outdegree
 <http://www.wikidata.org/entity/Q486972>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 3
+avg: 19.2481177933
+median: 14.0
+max: 402
 
 outdegree
 <http://www.wikidata.org/entity/Q79529>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 72.328358209
+median: 26.0
+max: 465
 
 outdegree
 <http://www.wikidata.org/entity/Q3957>
-min: 203
-avg: 373.5
-median: 398.0
-max: 495
+min: 6
+avg: 58.4509700707
+median: 37.0
+max: 643
 
 outdegree
 <http://www.wikidata.org/entity/Q634>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 123.428571429
+median: 22.0
+max: 647
 
 outdegree
 <http://www.wikidata.org/entity/Q40080>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 14.7891419567
+median: 13.0
+max: 186
 
 outdegree
 <http://www.wikidata.org/entity/Q178659>
-min: 9999999
-avg: 0.0
-median: 0.0
-max: 0
+min: 6
+avg: 32.4431818182
+median: 30.0
+max: 143
 

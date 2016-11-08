@@ -220,16 +220,20 @@ def saveAllResults(fw):
     for k,v in coAll.items():
         v.saveResults(fw)
 
+
 def classDegrees(file):
     start = time.time()
     global indegreeDic
     global outdegreeDic
-    print ('START CALCULATING CLASS DEGREES')
+    # get all instances & the indegree and outdegree for the top classes
     f = open(file, 'r')
     lineCounter = 0
+    print ('START COUNTING INSTANCES AND CALCULATING CLASS DEGREES')
     for line in f:
         splittedLine = line.rstrip('\n').split()
         s, p, o = getSPO(splittedLine)
+        if (p == isA and o in topClassSet):
+            countInstances(s, o)
         if s in topClassSet:
             if outdegreeDic.has_key(s):
                 outdegreeDic[s] += 1
@@ -243,49 +247,28 @@ def classDegrees(file):
         lineCounter += 1
         if (lineCounter % lineProgress == 0):
             print ('{} million lines read'.format(lineCounter / 1000000))
-    f.close()
-    print ('DONE CALCULATING CLASS DEGREES')
-    print ('INDEGREE RESULT:')
-    print sorted(indegreeDic.items(), key=operator.itemgetter(1), reverse=True)
-    print ('OUTDEGREE RESULT')
-    print sorted(outdegreeDic.items(), key=operator.itemgetter(1), reverse=True)
-
-    print ("Write results to classDegreeResult.txt")
-    fw = open('classDegreesResult.txt', 'w')
-    fw.write("class indegree results\n")
-    for k,v in indegreeDic.items():
-        fw.write('{}: {}\n'.format(k, v))
-    #fw.write(sorted(indegreeDic.items(), key=operator.itemgetter(1), reverse=True))
-    fw.write("\nclass outdegree results\n")
-    #fw.write(sorted(outdegreeDic.items(), key=operator.itemgetter(1), reverse=True))
-    for k,v in outdegreeDic.items():
-        fw.write('{}: {}\n'.format(k, v))
-
-    print ('EXECUTION TIME: {} s'.format(time.time() - start))
-        
-
-
-def classInstanceDegrees(file):
-    start = time.time()
-    print ('START CALCULCATING CLASS INSTANCE DEGREES')
-    # get all instances for the top10 classes
-    f = open(file, 'r')
-    lineCounter = 0
-    print ('START COUNTING INSTANCES')
-    for line in f:
-        splittedLine = line.rstrip('\n').split()
-        s, p, o = getSPO(splittedLine)
-        if (p == isA and o in topClassSet):
-            countInstances(s, o)
-        lineCounter += 1
-        if (lineCounter % lineProgress == 0):
-            print ('{} million lines read'.format(lineCounter / 1000000))
             # if (lineCounter > 5000):
             #    break
     f.close()
     print ('DONE COUNTING INSTANCES')
-    for k, v in instanceSetAllDict.items():
-        print ('set for {}, #instances: {}'.format(k, len(v.getSet())))
+    #for k, v in instanceSetAllDict.items():
+    #    print ('set for {}, #instances: {}'.format(k, len(v.getSet())))
+
+    print ('DONE CALCULATING CLASS DEGREES')
+    #print ('INDEGREE RESULT:')
+    #print sorted(indegreeDic.items(), key=operator.itemgetter(1), reverse=True)
+    #print ('OUTDEGREE RESULT')
+    #print sorted(outdegreeDic.items(), key=operator.itemgetter(1), reverse=True)
+
+    print ("Write results to classDegreeResult.txt")
+    fw = open('classDegreesResult.txt', 'w')
+    fw.write("class indegree results\n")
+    for k, v in indegreeDic.items():
+        fw.write('{}: {}\n'.format(k, v))
+    fw.write("\nclass outdegree results\n")
+    for k, v in outdegreeDic.items():
+        fw.write('{}: {}\n'.format(k, v))
+    print ("Results written to classDegreeResult.txt")
 
     # count instance degrees
     print ('START COUNTING INSTANCE DEGREES')
@@ -305,8 +288,8 @@ def classInstanceDegrees(file):
     print ('START CALCULATING CLASS DEGREES')
     calculateClassInstanceDegrees()
     print ('DONE CALCULATING CLASS DEGREES')
-    print ('RESULTS')
-    printClassInstanceDegreeResults()
+    #print ('RESULTS')
+    #printClassInstanceDegreeResults()
     fw = open('classInstancesDegreesResult.txt', 'w')
     saveAllResults(fw)
     fw.close()
@@ -349,8 +332,6 @@ def createFinalCSV():
 try:
     print('START')
     classDegrees(readFile)
-
-    classInstanceDegrees(readFile)
 
     createFinalCSV()
     print ('DONE WITH PROGRAM')
