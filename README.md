@@ -15,3 +15,4 @@ Approach:
 * Calculation of minimum, average, median, and maximum indegree and outdegree for the instances of each class
 * Create a combined list with all top 10 classes and equal classes in other KGs (e.g. with owl:sameAs properties)
 * Calculate all degree values for the new classes as well
+* Calculate the instance overlap of the classes using different string similarity measures
