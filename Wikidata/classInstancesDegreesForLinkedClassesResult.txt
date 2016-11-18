@@ -1,0 +1,28 @@
+indegree person
+<http://www.wikidata.org/entity/Q215627>
+min: 2
+avg: 2.0
+median: 2.0
+max: 2
+
+indegree work
+<http://www.wikidata.org/entity/Q386724>
+min: 1
+avg: 4.94909090909
+median: 2.0
+max: 516
+
+outdegree person
+<http://www.wikidata.org/entity/Q215627>
+min: 15
+avg: 15.5
+median: 15.5
+max: 16
+
+outdegree work
+<http://www.wikidata.org/entity/Q386724>
+min: 6
+avg: 17.68
+median: 13.0
+max: 290
+

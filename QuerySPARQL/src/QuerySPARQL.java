@@ -9,19 +9,24 @@ public class QuerySPARQL {
 		int endpoint = 0;
 		
 		// query DBpedia
-		QueryObject dbpedia = new QueryObject();
+		/*QueryObject dbpedia = new QueryObject();
 		results = dbpedia.queryEndpoint(endpoint);
 		printHeader();
 		printResults(results);
-		
+		*/
 		
 		
 		// query YAGO
-		endpoint = 1;
+		/*endpoint = 1;
 		QueryObject yago = new QueryObject();
 		results = yago.queryEndpoint(endpoint);
 		printHeader();
 		printResults(results);
+		*/
+		
+		// query Wikidata
+		QueryWikidataObject wiki = new QueryWikidataObject();
+		wiki.queryEndpoint();
 		 
 	
 	}

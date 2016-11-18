@@ -1,0 +1,43 @@
+RESULTS
+indegree human Q5
+min: 1, avg: 4.8410314918, median: 2.0, max: 28444
+indegree wikimedia category
+min: 1, avg: 4.33798111366, median: 2.0, max: 1106
+indegree taxon Q16521
+min: 1, avg: 10.1215830501, median: 4.0, max: 6709854
+indegree wikimedia disambiguation page Q4167410
+min: 1, avg: 3.14250222479, median: 2.0, max: 1223
+indegree wikimedia template Q11266439
+min: 1, avg: 3.19278258394, median: 2.0, max: 608
+indegree village-level division in china Q13100073
+min: 1, avg: 3.00184532255, median: 3.0, max: 42
+indegree human settlement Q486972
+min: 1, avg: 3.90475377383, median: 2.0, max: 34907
+indegree village Q532
+min: 1, avg: 4.77778022891, median: 3.0, max: 2655
+indegree street Q79007
+min: 1, avg: 1.67929641935, median: 1.0, max: 1130
+indegree wikimedia list article Q13406463
+min: 1, avg: 3.60038287386, median: 2.0, max: 10928
+outdegree human Q5
+min: 3, avg: 44.0776583766, median: 34.0, max: 1522
+outdegree wikimedia category
+min: 4, avg: 44.122297865, median: 42.0, max: 840
+outdegree taxon Q16521
+min: 3, avg: 51.9208400503, median: 50.0, max: 1167
+outdegree wikimedia disambiguation page Q4167410
+min: 3, avg: 116.446512983, median: 63.0, max: 1197
+outdegree wikimedia template Q11266439
+min: 3, avg: 41.6077563927, median: 9.0, max: 1144
+outdegree village-level division in china Q13100073
+min: 12, avg: 14.0107830726, median: 14.0, max: 244
+outdegree human settlement Q486972
+min: 3, avg: 19.2476855434, median: 14.0, max: 402
+outdegree village Q532
+min: 6, avg: 24.727049117, median: 23.0, max: 779
+outdegree street Q79007
+min: 6, avg: 23.8537248274, median: 23.0, max: 397
+outdegree wikimedia list article Q13406463
+min: 3, avg: 17.2342949237, median: 13.0, max: 1005
+RESULTS SAVED IN classInstancesDegreesResult.txt
+EXECUTION TIME: 14159.681237 s

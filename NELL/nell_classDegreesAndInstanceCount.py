@@ -134,11 +134,12 @@ topClassSet.update([
                    'concept:building',
                    'concept:chemical',
                    'concept:planet',
-                   'concept:vehicle',
+                   'concept:vehicle'
             ])
 
 indegreeDic = {}  # key:class, value: indegree
 outdegreeDic = {}  # key: class, value: outdegree
+allClassesSet = set() #set of all classes
 
 instanceSetAllDict = {}
 ciAll = {}
@@ -210,6 +211,32 @@ def saveAllResults(fw):
         v.saveResults(fw)
 
 
+def getAllClasses(ontology):
+    print ('get all classes in nell (memberofsets concept:rtwcategory)')
+    global allClassesSet
+    # get all classes having: ?class memberofsets concept:rtwcategory
+    f = open(ontology, 'r')
+    for line in f:
+        splittedLine = line.rstrip('\n').split()
+        s, p, o = getSPO(splittedLine)
+        if (p=='memberofsets' and o == 'concept:rtwcategory'):
+            if s not in allClassesSet:
+                allClassesSet.add(s)
+    f.close()
+
+    # second run for getting also the subclasses that were not correctly defined with memberofsets concept:rtwcategory
+    f = open(ontology, 'r')
+    for line in f:
+        splittedLine = line.rstrip('\n').split()
+        s, p, o = getSPO(splittedLine)
+        if (p=='generalizations' and o in allClassesSet): #s.startswith('concept') and
+            if s not in allClassesSet:
+                allClassesSet.add(s)
+    f.close()
+
+    print ('{} classes found in ontology'.format(len(allClassesSet)))
+
+
 def classDegrees(readFiles):
     start = time.time()
     global indegreeDic
@@ -222,8 +249,9 @@ def classDegrees(readFiles):
         for line in f:
             splittedLine = line.rstrip('\n').split()
             s, p, o = getSPO(splittedLine)
-            if (p == 'generalizations' and o in topClassSet):
-                countInstances(s, o)
+            if s not in allClassesSet:
+                if (p == 'generalizations' and o in topClassSet):
+                    countInstances(s, o)
             if s in topClassSet:
                 if outdegreeDic.has_key(s):
                     outdegreeDic[s] += 1
@@ -329,12 +357,26 @@ def createFinalCSV():
     print ('DONE WRITING FINAL CSV TO allDegrees.csv')
 
 
+
+
 try:
     print('START')
     readFiles = [nell, ontology]
+
+    getAllClasses(ontology)
+
     classDegrees(readFiles)
 
     createFinalCSV()
+
+    #inspectClasses = ['concept:location', 'concept:event', 'concept:company']
+    #for uri in inspectClasses:
+    #    print ('{} instances of {}'.format(len(instanceSetAllDict[uri].getSet()), uri))
+    #    i = instanceSetAllDict[uri]
+    #    for item in i.getSet():
+    #        print item
+
+
     print ('DONE WITH PROGRAM')
 except:
     print ('ERROR')

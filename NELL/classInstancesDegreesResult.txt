@@ -1,0 +1,602 @@
+indegree
+concept:book
+min: 1
+avg: 1.3047752809
+median: 1.0
+max: 7
+
+indegree
+concept:building
+min: 1
+avg: 1.90476190476
+median: 1.0
+max: 6
+
+indegree
+concept:city
+min: 1
+avg: 5.69489624229
+median: 2.0
+max: 601
+
+indegree
+concept:skiarea
+min: 1
+avg: 1.89928057554
+median: 1.0
+max: 15
+
+indegree
+concept:country
+min: 1
+avg: 21.9409937888
+median: 7.0
+max: 997
+
+indegree
+concept:river
+min: 1
+avg: 3.58221024259
+median: 2.0
+max: 93
+
+indegree
+concept:musicalbum
+min: 1
+avg: 1.42105263158
+median: 1.0
+max: 3
+
+indegree
+concept:politicalparty
+min: 1
+avg: 1.46153846154
+median: 1.0
+max: 5
+
+indegree
+concept:geopoliticallocation
+min: 1
+avg: 2.9020979021
+median: 1.0
+max: 23
+
+indegree
+concept:militaryconflict
+min: 15
+avg: 15.0
+median: 15.0
+max: 15
+
+indegree
+concept:planet
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:celebrity
+min: 1
+avg: 1.62972292191
+median: 1.0
+max: 31
+
+indegree
+concept:vehicle
+min: 1
+avg: 1.73076923077
+median: 1.0
+max: 7
+
+indegree
+concept:event
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:person
+min: 1
+avg: 1.80427046263
+median: 1.0
+max: 32
+
+indegree
+concept:actor
+min: 1
+avg: 1.3
+median: 1.0
+max: 7
+
+indegree
+concept:time
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:sportsevent
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:humanagent
+min: 2
+avg: 2.0
+median: 2.0
+max: 2
+
+indegree
+concept:creativework
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:musicsong
+min: 1
+avg: 1.83333333333
+median: 1.0
+max: 6
+
+indegree
+concept:beach
+min: 1
+avg: 1.58333333333
+median: 1.0
+max: 4
+
+indegree
+concept:movie
+min: 1
+avg: 1.51282051282
+median: 1.0
+max: 10
+
+indegree
+concept:governmentorganization
+min: 1
+avg: 1.8835978836
+median: 1.0
+max: 49
+
+indegree
+concept:street
+min: 1
+avg: 1.66666666667
+median: 1.0
+max: 3
+
+indegree
+concept:visualizableobject
+min: 1
+avg: 9.96666666667
+median: 1.0
+max: 205
+
+indegree
+concept:agent
+min: 1
+avg: 1.0
+median: 1.0
+max: 1
+
+indegree
+concept:sport
+min: 1
+avg: 40.2985074627
+median: 2.0
+max: 1649
+
+indegree
+concept:location
+min: 1
+avg: 1.25
+median: 1.0
+max: 2
+
+indegree
+concept:politician
+min: 1
+avg: 4.85714285714
+median: 1.0
+max: 142
+
+indegree
+concept:geopoliticalentity
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:chemical
+min: 1
+avg: 6.08626198083
+median: 2.0
+max: 175
+
+indegree
+concept:ethnicgroup
+min: 1
+avg: 1.42105263158
+median: 1.0
+max: 5
+
+indegree
+concept:visualizablething
+min: 1
+avg: 7.13485477178
+median: 3.0
+max: 334
+
+indegree
+concept:director
+min: 1
+avg: 1.67647058824
+median: 1.0
+max: 8
+
+indegree
+concept:athlete
+min: 1
+avg: 1.87202380952
+median: 1.0
+max: 20
+
+indegree
+concept:abstractthing
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:species
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+indegree
+concept:male
+min: 1
+avg: 2.16806722689
+median: 1.0
+max: 50
+
+indegree
+concept:airport
+min: 1
+avg: 1.69230769231
+median: 1.0
+max: 7
+
+indegree
+concept:militaryeventtype
+min: 1
+avg: 1.66666666667
+median: 2.0
+max: 2
+
+indegree
+concept:company
+min: 1
+avg: 3.64611872146
+median: 1.0
+max: 613
+
+indegree
+concept:software
+min: 1
+avg: 1.66176470588
+median: 1.0
+max: 14
+
+outdegree
+concept:book
+min: 1
+avg: 1.48673397511
+median: 1.0
+max: 15
+
+outdegree
+concept:building
+min: 1
+avg: 1.29444444444
+median: 1.0
+max: 12
+
+outdegree
+concept:city
+min: 1
+avg: 1.73284773178
+median: 1.0
+max: 227
+
+outdegree
+concept:skiarea
+min: 1
+avg: 1.83543517199
+median: 2.0
+max: 11
+
+outdegree
+concept:country
+min: 1
+avg: 1.46348456738
+median: 1.0
+max: 187
+
+outdegree
+concept:river
+min: 1
+avg: 1.44685238175
+median: 1.0
+max: 36
+
+outdegree
+concept:musicalbum
+min: 1
+avg: 1.23826378539
+median: 1.0
+max: 4
+
+outdegree
+concept:politicalparty
+min: 1
+avg: 1.2145589559
+median: 1.0
+max: 15
+
+outdegree
+concept:geopoliticallocation
+min: 1
+avg: 1.56012714109
+median: 1.0
+max: 24
+
+outdegree
+concept:militaryconflict
+min: 1
+avg: 1.39112635539
+median: 1.0
+max: 3
+
+outdegree
+concept:planet
+min: 1
+avg: 1.05365853659
+median: 1.0
+max: 2
+
+outdegree
+concept:celebrity
+min: 1
+avg: 3.27299893276
+median: 3.0
+max: 64
+
+outdegree
+concept:vehicle
+min: 1
+avg: 1.06591429506
+median: 1.0
+max: 8
+
+outdegree
+concept:event
+min: 1
+avg: 1.78571428571
+median: 2.0
+max: 3
+
+outdegree
+concept:person
+min: 1
+avg: 1.63510479042
+median: 1.0
+max: 68
+
+outdegree
+concept:actor
+min: 1
+avg: 2.87106574725
+median: 3.0
+max: 20
+
+outdegree
+concept:time
+min: 1
+avg: 1.01178861789
+median: 1.0
+max: 2
+
+outdegree
+concept:sportsevent
+min: 1
+avg: 1.33132316424
+median: 1.0
+max: 3
+
+outdegree
+concept:humanagent
+min: 1
+avg: 1.0
+median: 1.0
+max: 1
+
+outdegree
+concept:creativework
+min: 1
+avg: 1.0
+median: 1.0
+max: 1
+
+outdegree
+concept:musicsong
+min: 1
+avg: 1.13727478356
+median: 1.0
+max: 10
+
+outdegree
+concept:beach
+min: 1
+avg: 1.02625934728
+median: 1.0
+max: 6
+
+outdegree
+concept:movie
+min: 1
+avg: 1.00845027916
+median: 1.0
+max: 4
+
+outdegree
+concept:governmentorganization
+min: 1
+avg: 1.09812898807
+median: 1.0
+max: 64
+
+outdegree
+concept:street
+min: 1
+avg: 1.5068411895
+median: 1.0
+max: 4
+
+outdegree
+concept:visualizableobject
+min: 1
+avg: 1.38490725126
+median: 1.0
+max: 192
+
+outdegree
+concept:agent
+min: 1
+avg: 2.41463414634
+median: 2.0
+max: 10
+
+outdegree
+concept:sport
+min: 1
+avg: 1.46871794872
+median: 1.0
+max: 180
+
+outdegree
+concept:location
+min: 1
+avg: 1.9
+median: 2.0
+max: 6
+
+outdegree
+concept:politician
+min: 1
+avg: 1.6933347926
+median: 1.0
+max: 147
+
+outdegree
+concept:geopoliticalentity
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+outdegree
+concept:chemical
+min: 1
+avg: 1.31914221219
+median: 1.0
+max: 149
+
+outdegree
+concept:ethnicgroup
+min: 1
+avg: 1.11376953125
+median: 1.0
+max: 6
+
+outdegree
+concept:visualizablething
+min: 1
+avg: 2.16010353115
+median: 1.0
+max: 693
+
+outdegree
+concept:director
+min: 1
+avg: 1.41305767138
+median: 1.0
+max: 12
+
+outdegree
+concept:athlete
+min: 1
+avg: 2.65679389313
+median: 2.0
+max: 36
+
+outdegree
+concept:abstractthing
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+outdegree
+concept:species
+min: 9999999
+avg: 0.0
+median: 0.0
+max: 0
+
+outdegree
+concept:male
+min: 1
+avg: 3.02603316436
+median: 3.0
+max: 64
+
+outdegree
+concept:airport
+min: 1
+avg: 1.42301854975
+median: 1.0
+max: 9
+
+outdegree
+concept:militaryeventtype
+min: 1
+avg: 1.22535211268
+median: 1.0
+max: 5
+
+outdegree
+concept:company
+min: 1
+avg: 1.53991836735
+median: 1.0
+max: 226
+
+outdegree
+concept:software
+min: 1
+avg: 1.26270742358
+median: 1.0
+max: 3
+
