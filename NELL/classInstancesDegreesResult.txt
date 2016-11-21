@@ -1,125 +1,125 @@
 indegree
 concept:book
-min: 1
-avg: 1.3047752809
-median: 1.0
+min: 0
+avg: 0.327189481099
+median: 0.0
 max: 7
 
 indegree
 concept:building
-min: 1
-avg: 1.90476190476
-median: 1.0
+min: 0
+avg: 0.031746031746
+median: 0.0
 max: 6
 
 indegree
 concept:city
-min: 1
-avg: 5.69489624229
-median: 2.0
+min: 0
+avg: 0.543838037598
+median: 0.0
 max: 601
 
 indegree
 concept:skiarea
-min: 1
-avg: 1.89928057554
-median: 1.0
+min: 0
+avg: 0.00965018094089
+median: 0.0
 max: 15
 
 indegree
 concept:country
-min: 1
-avg: 21.9409937888
-median: 7.0
+min: 0
+avg: 1.19160060719
+median: 0.0
 max: 997
 
 indegree
 concept:river
-min: 1
-avg: 3.58221024259
-median: 2.0
+min: 0
+avg: 0.0559249284632
+median: 0.0
 max: 93
 
 indegree
 concept:musicalbum
-min: 1
-avg: 1.42105263158
-median: 1.0
+min: 0
+avg: 0.00502980625931
+median: 0.0
 max: 3
 
 indegree
 concept:politicalparty
-min: 1
-avg: 1.46153846154
-median: 1.0
+min: 0
+avg: 0.00641314131413
+median: 0.0
 max: 5
 
 indegree
 concept:geopoliticallocation
-min: 1
-avg: 2.9020979021
-median: 1.0
+min: 0
+avg: 0.0732827123433
+median: 0.0
 max: 23
 
 indegree
 concept:militaryconflict
-min: 15
-avg: 15.0
-median: 15.0
+min: 0
+avg: 0.00165965921664
+median: 0.0
 max: 15
 
 indegree
 concept:planet
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 concept:celebrity
-min: 1
-avg: 1.62972292191
-median: 1.0
+min: 0
+avg: 0.0276200640342
+median: 0.0
 max: 31
 
 indegree
 concept:vehicle
-min: 1
-avg: 1.73076923077
-median: 1.0
+min: 0
+avg: 0.00736015701668
+median: 0.0
 max: 7
 
 indegree
 concept:event
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 concept:person
-min: 1
-avg: 1.80427046263
-median: 1.0
+min: 0
+avg: 0.094872754491
+median: 0.0
 max: 32
 
 indegree
 concept:actor
-min: 1
-avg: 1.3
-median: 1.0
+min: 0
+avg: 0.0133133064791
+median: 0.0
 max: 7
 
 indegree
 concept:time
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 concept:sportsevent
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
@@ -133,79 +133,79 @@ max: 2
 
 indegree
 concept:creativework
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 concept:musicsong
-min: 1
-avg: 1.83333333333
-median: 1.0
+min: 0
+avg: 0.000857967397239
+median: 0.0
 max: 6
 
 indegree
 concept:beach
-min: 1
-avg: 1.58333333333
-median: 1.0
+min: 0
+avg: 0.000550692713466
+median: 0.0
 max: 4
 
 indegree
 concept:movie
-min: 1
-avg: 1.51282051282
-median: 1.0
+min: 0
+avg: 0.0623208088124
+median: 0.0
 max: 10
 
 indegree
 concept:governmentorganization
-min: 1
-avg: 1.8835978836
-median: 1.0
+min: 0
+avg: 0.0128339161469
+median: 0.0
 max: 49
 
 indegree
 concept:street
-min: 1
-avg: 1.66666666667
-median: 1.0
+min: 0
+avg: 0.000197722239798
+median: 0.0
 max: 3
 
 indegree
 concept:visualizableobject
-min: 1
-avg: 9.96666666667
-median: 1.0
+min: 0
+avg: 0.252107925801
+median: 0.0
 max: 205
 
 indegree
 concept:agent
-min: 1
-avg: 1.0
-median: 1.0
+min: 0
+avg: 0.0243902439024
+median: 0.0
 max: 1
 
 indegree
 concept:sport
-min: 1
-avg: 40.2985074627
-median: 2.0
+min: 0
+avg: 0.461538461538
+median: 0.0
 max: 1649
 
 indegree
 concept:location
-min: 1
-avg: 1.25
-median: 1.0
+min: 0
+avg: 0.2
+median: 0.0
 max: 2
 
 indegree
 concept:politician
-min: 1
-avg: 4.85714285714
-median: 1.0
+min: 0
+avg: 0.029769070811
+median: 0.0
 max: 142
 
 indegree
@@ -217,37 +217,37 @@ max: 0
 
 indegree
 concept:chemical
-min: 1
-avg: 6.08626198083
-median: 2.0
+min: 0
+avg: 0.0860045146727
+median: 0.0
 max: 175
 
 indegree
 concept:ethnicgroup
-min: 1
-avg: 1.42105263158
-median: 1.0
+min: 0
+avg: 0.00439453125
+median: 0.0
 max: 5
 
 indegree
 concept:visualizablething
-min: 1
-avg: 7.13485477178
-median: 3.0
+min: 0
+avg: 0.635792198188
+median: 0.0
 max: 334
 
 indegree
 concept:director
-min: 1
-avg: 1.67647058824
-median: 1.0
+min: 0
+avg: 0.00206746463547
+median: 0.0
 max: 8
 
 indegree
 concept:athlete
-min: 1
-avg: 1.87202380952
-median: 1.0
+min: 0
+avg: 0.032010178117
+median: 0.0
 max: 20
 
 indegree
@@ -266,37 +266,37 @@ max: 0
 
 indegree
 concept:male
-min: 1
-avg: 2.16806722689
-median: 1.0
+min: 0
+avg: 0.0443337056448
+median: 0.0
 max: 50
 
 indegree
 concept:airport
-min: 1
-avg: 1.69230769231
-median: 1.0
+min: 0
+avg: 0.000927487352445
+median: 0.0
 max: 7
 
 indegree
 concept:militaryeventtype
-min: 1
-avg: 1.66666666667
-median: 2.0
+min: 0
+avg: 0.0352112676056
+median: 0.0
 max: 2
 
 indegree
 concept:company
-min: 1
-avg: 3.64611872146
-median: 1.0
+min: 0
+avg: 0.260734693878
+median: 0.0
 max: 613
 
 indegree
 concept:software
-min: 1
-avg: 1.66176470588
-median: 1.0
+min: 0
+avg: 0.0197379912664
+median: 0.0
 max: 14
 
 outdegree
