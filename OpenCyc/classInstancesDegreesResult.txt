@@ -1,6 +1,6 @@
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVi--5wpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
@@ -14,30 +14,30 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rv33BppwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVim7ZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjntpwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVj82pwpEbGdrcN5Y29ycA>
-min: 1
-avg: 11.0769230769
-median: 2.0
+min: 0
+avg: 4.11428571429
+median: 0.0
 max: 70
 
 indegree
@@ -49,7 +49,7 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rv4C-JZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
@@ -63,51 +63,51 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjZ_ZwpEbGdrcN5Y29ycA>
-min: 1
-avg: 2.32
-median: 1.0
+min: 0
+avg: 0.0141153565344
+median: 0.0
 max: 10
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVinsZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvWXYgJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 9.21316249272
-median: 2.0
+min: 0
+avg: 4.04130120072
+median: 0.0
 max: 4147
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVkH_ZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVj7KJwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjQs5wpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.0
+min: 0
+avg: 0.875
 median: 1.0
 max: 1
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rwLmi3JwpEbGdrcN5Y29ycA>
-min: 12
-avg: 12.0
-median: 12.0
+min: 0
+avg: 0.0422535211268
+median: 0.0
 max: 12
 
 indegree
@@ -119,7 +119,7 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvViADZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
@@ -133,16 +133,16 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvViq35wpEbGdrcN5Y29ycA>
-min: 1
-avg: 5.19004524887
-median: 2.0
+min: 0
+avg: 2.22610383309
+median: 0.0
 max: 241
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rwP3teJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.0
-median: 1.0
+min: 0
+avg: 0.0588235294118
+median: 0.0
 max: 1
 
 indegree
@@ -154,23 +154,23 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjnZ5wpEbGdrcN5Y29ycA>
-min: 1
-avg: 7.55
-median: 1.0
+min: 0
+avg: 0.316803356857
+median: 0.0
 max: 491
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjE1pwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvViAkpwpEbGdrcN5Y29ycA>
-min: 1
-avg: 20.25
-median: 10.0
+min: 0
+avg: 0.0942408376963
+median: 0.0
 max: 60
 
 indegree
@@ -182,23 +182,23 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVj-r5wpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjvKZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVinb5wpEbGdrcN5Y29ycA>
-min: 129
-avg: 173.5
-median: 173.5
+min: 0
+avg: 12.3928571429
+median: 0.0
 max: 218
 
 indegree
@@ -210,23 +210,23 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjmoJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 18.5
-median: 3.5
+min: 0
+avg: 11.3846153846
+median: 2.0
 max: 103
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rv6i4pJwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rv973YpwpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.0
-median: 1.0
+min: 0
+avg: 0.00105374077977
+median: 0.0
 max: 1
 
 indegree
@@ -238,79 +238,79 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjK65wpEbGdrcN5Y29ycA>
-min: 1
-avg: 10.1893491124
-median: 1.0
+min: 0
+avg: 1.03052064632
+median: 0.0
 max: 777
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rv3HKmpwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rwQtlDpwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVji6JwpEbGdrcN5Y29ycA>
-min: 1
-avg: 21.1927710843
-median: 5.0
+min: 0
+avg: 10.226744186
+median: 0.0
 max: 330
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rwClAZJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.25
-median: 1.0
+min: 0
+avg: 0.151515151515
+median: 0.0
 max: 2
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjRL5wpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.0
-median: 1.0
+min: 0
+avg: 0.5
+median: 0.5
 max: 1
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvViVwZwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVi-55wpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvViAw5wpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjaHZwpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.2
-median: 1.0
+min: 0
+avg: 0.00278551532033
+median: 0.0
 max: 2
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvViIeZwpEbGdrcN5Y29ycA>
-min: 1
-avg: 11.625
-median: 2.5
+min: 0
+avg: 4.32558139535
+median: 0.0
 max: 72
 
 indegree
@@ -329,16 +329,16 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVkHM5wpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.43298969072
+min: 0
+avg: 0.743315508021
 median: 1.0
 max: 13
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rpPHhAOB1EdqAAAACs6hRXg>
-min: 1
-avg: 6.66605691057
-median: 2.0
+min: 0
+avg: 3.10960462691
+median: 0.0
 max: 1226
 
 indegree
@@ -357,16 +357,16 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rrPJDpCTfQdeS8IqP1a0lBw>
-min: 1
-avg: 283.090909091
-median: 49.0
+min: 0
+avg: 107.379310345
+median: 0.0
 max: 4518
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjNlZwpEbGdrcN5Y29ycA>
-min: 1
-avg: 5.1981981982
-median: 2.0
+min: 0
+avg: 1.64857142857
+median: 0.0
 max: 112
 
 indegree
@@ -378,16 +378,16 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rwPySLpwpEbGdrcN5Y29ycA>
-min: 2
-avg: 2.0
-median: 2.0
+min: 0
+avg: 0.222222222222
+median: 0.0
 max: 2
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjaApwpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.48837209302
-median: 1.0
+min: 0
+avg: 0.0171054389951
+median: 0.0
 max: 16
 
 indegree
@@ -399,65 +399,65 @@ max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rHIBS0h_TEdaAAABQ2rksLw>
-min: 1
-avg: 6.019826864
+min: 0
+avg: 3.04005076858
 median: 1.0
 max: 1195
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rFGe-SEsrEd2AAADggVfs8g>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjTtJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 2.05263157895
-median: 2.0
+min: 0
+avg: 0.928571428571
+median: 0.0
 max: 7
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvnSeAJwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rAu7tPpCSQdeeTei3nO_QvQ>
-min: 9
-avg: 9.5
-median: 9.5
+min: 0
+avg: 1.05555555556
+median: 0.0
 max: 10
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjzBJwpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjqs5wpEbGdrcN5Y29ycA>
-min: 9999999
+min: 0
 avg: 0.0
 median: 0.0
 max: 0
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvi9EhJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 2.12116484659
-median: 1.0
+min: 0
+avg: 0.54980455587
+median: 0.0
 max: 150
 
 indegree
 <http://sw.opencyc.org/concept/Mx4rvVjReJwpEbGdrcN5Y29ycA>
-min: 1
-avg: 1.66666666667
-median: 2.0
+min: 0
+avg: 1.25
+median: 1.5
 max: 2
 
 outdegree

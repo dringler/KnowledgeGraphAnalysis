@@ -3,6 +3,7 @@
 import time
 import numpy
 import operator
+from collections import *
 
 #readFile = 'opencyc-latest_sample.nt'
 readFile = '../../../SeminarPaper_KG_Files/opencyc-latest.nt'
@@ -46,6 +47,9 @@ class ClassInstances:
     def getMax(self):
         return self.max
 
+    def getCountDict(self):
+        return self.countDict
+
     def addInstance(self, instance):
         if instance in self.allClassInstances:
             self.countDict[instance] += 1
@@ -54,10 +58,14 @@ class ClassInstances:
             self.allClassInstances.add(instance)
 
     def calculateDegrees(self):
+        print ('len(self.countDict): {}',format(len(self.countDict)))
+        # init instance degrees
+        print('INITIALIZE INSTANCE DEGREES')
         # set instance degrees to zero (for the case that the degree values are 0)
-        for i in instanceSetAllDict[self.uri].getSet():  # self.allClassInstances:
+        for i in instanceSetAllDict[self.uri].getSet():#self.allClassInstances:
             if not self.countDict.has_key(i):
                 self.countDict[i] = 0
+        print ('len(self.countDict): {}', format(len(self.countDict)))
         allValueList = []
         for k, v in self.countDict.iteritems():
             allValueList.append(v)
@@ -87,7 +95,6 @@ class ClassInstances:
 class InstanceSet:
     def __init__(self, ):
         self.iSet = set()
-
     def getSet(self):
         return self.iSet
 
@@ -97,72 +104,10 @@ topClassSet = set()
 # instances sets
 allInstances = set()  # allInstances = set()
 topClassSet.update([
-                '<http://sw.opencyc.org/concept/Mx4rpPHhAOB1EdqAAAACs6hRXg>',
-                '<http://sw.opencyc.org/concept/Mx4rvWXYgJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjE1pwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVim7ZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVji6JwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjK65wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjaApwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVinb5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVinsZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvViAkpwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVi--5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjaHZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjqs5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rv4C-JZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rAu7tPpCSQdeeTei3nO_QvQ>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjmoJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx8Ngh4rwP1535wpEbGdrcN5Y29ycB4rIcwFloGUQdeMlsOWYLFB2w>',
-                '<http://sw.opencyc.org/concept/Mx8Ngh4rwP1535wpEbGdrcN5Y29ycB4rvViAkpwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rv3HKmpwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjZ_ZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjTtJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwQrzS5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rrPJDpCTfQdeS8IqP1a0lBw>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjnZ5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rv33BppwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVj1FJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjvKZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwQwcZ5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVkHM5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVj-r5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4r0EwZ9r8aEdmAAAACs6hRjg>',
-                '<http://sw.opencyc.org/concept/Mx4rvVkH_ZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwClAZJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4r1-G8dDi8Ed2AAAACs6hRXg>',
-                '<http://sw.opencyc.org/concept/Mx4rvViAw5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvViq35wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rFGe-SEsrEd2AAADggVfs8g>',
-                '<http://sw.opencyc.org/concept/Mx4rvi9EhJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rHIBS0h_TEdaAAABQ2rksLw>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjntpwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVj82pwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwAXXLZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwLmi3JwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwP3teJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rv6i4pJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rv973YpwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwJaXepwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvcUMxZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwPySLpwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvViADZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvnSeAJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvViPO5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjzBJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvViIeZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVj7KJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjNlZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjReJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4r-n4BEPzcQdaYSaNf0XKNIw>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjQs5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjRL5wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjT95wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjUgJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVjVQJwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvViVwZwpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rvVi-55wpEbGdrcN5Y29ycA>',
-                '<http://sw.opencyc.org/concept/Mx4rwQtlDpwpEbGdrcN5Y29ycA>'
+                '<http://sw.opencyc.org/concept/Mx4rrPJDpCTfQdeS8IqP1a0lBw>', # populated place (indegree)
+                '<http://sw.opencyc.org/concept/Mx4rvVinb5wpEbGdrcN5Y29ycA>', # intelligent agent (indegree)
+                '<http://sw.opencyc.org/concept/Mx4rvViAkpwpEbGdrcN5Y29ycA>', # person (indegree)
+                '<http://sw.opencyc.org/concept/Mx4rwLmi3JwpEbGdrcN5Y29ycA>' # album-cw (indegree)
             ])
 
 indegreeDic = {}  # key:class, value: indegree
@@ -192,7 +137,7 @@ def getSPO(splittedLine):
     return subj, pred, obj
 
 
-# count all instances of the top10 classes
+# count all instances of the top classes
 def countInstances(s, o):
     # s a o: s=instance, o=class
     allInstances.add(s)
@@ -215,6 +160,23 @@ def countInstanceDegrees(s, o):
             if o in i.getSet():
                 ciSet = ciAll[uri]
                 ciSet.addInstance(o)
+
+def getTopXIndegreeInstances(x):
+    for uri, i in ciAll.items():
+        ciCountDict = ciAll[uri].getCountDict()
+        sortedCiCountDict = OrderedDict(sorted(ciCountDict.items(), key=lambda t: t[1], reverse=True))
+
+        print('INSTANCES In instanceSetAllDict: {}'.format(len(instanceSetAllDict[uri].getSet())))
+
+        print ('TOP INSTANCES FOR CLASS: {} with {} instances having a degree of at least 1'.format(uri, ciAll[uri].getClassInstances()))
+        print ('MEDIAN: {}'.format(ciAll[uri].getMed()))
+        counter = 0
+        for k, v in sortedCiCountDict.items():
+            if counter>x:
+                break
+            print k,v
+            counter += 1
+
 
 
 def calculateClassInstanceDegrees():
@@ -305,8 +267,13 @@ def classDegrees(file):
     print ('START CALCULATING CLASS DEGREES')
     calculateClassInstanceDegrees()
     print ('DONE CALCULATING CLASS DEGREES')
-    # print ('RESULTS')
-    # printClassInstanceDegreeResults()
+
+    # get top 10 instances for each class
+    print ('GET TOP 10 INSTANCES REGARING INDEGREE FOR EACH CLASS')
+    getTopXIndegreeInstances(10)
+
+    print ('RESULTS')
+    printClassInstanceDegreeResults()
     fw = open('classInstancesDegreesResult.txt', 'w')
     saveAllResults(fw)
     fw.close()
@@ -358,7 +325,7 @@ try:
     print('START')
     classDegrees(readFile)
 
-    createFinalCSV()
+    #createFinalCSV()
     print ('DONE WITH PROGRAM')
 except:
     print ('ERROR')
