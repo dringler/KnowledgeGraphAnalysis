@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cda7064-2058-4193-9fba-456357a4426f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/OpenCyc/opencyc_InstanceDegreesForClasses.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NELL/allDegrees.csv" afterPath="$PROJECT_DIR$/NELL/allDegrees.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NELL/classInstancesDegreesResult.txt" afterPath="$PROJECT_DIR$/NELL/classInstancesDegreesResult.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NELL/nell_classDegreesAndInstanceCount.py" afterPath="$PROJECT_DIR$/NELL/nell_classDegreesAndInstanceCount.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py" afterPath="$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py" />
     </list>
     <ignored path="SeminarPaper.iws" />
@@ -63,8 +61,8 @@
       <file leaf-file-name="classInstancesDegrees.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Wikidata/classInstancesDegrees.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="135">
+              <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
               <folding>
                 <element signature="e#40#51#0" expanded="true" />
               </folding>
@@ -75,41 +73,11 @@
       <file leaf-file-name="classDegreesAndInstancesDegrees.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
+            <state relative-caret-position="180">
+              <caret line="12" column="49" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
               <folding>
                 <element signature="e#40#51#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="opencyc_classDegreesAndInstanceCount.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/OpenCyc/opencyc_classDegreesAndInstanceCount.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="59" column="37" selection-start-line="56" selection-start-column="8" selection-end-line="59" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nell_classDegreesAndInstanceCount.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NELL/nell_classDegreesAndInstanceCount.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="opencyc_InstanceDegreesForClasses.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/OpenCyc/opencyc_InstanceDegreesForClasses.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="115" column="23" selection-start-line="115" selection-start-column="23" selection-end-line="115" selection-end-column="23" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -131,11 +99,11 @@
       <list>
         <option value="$PROJECT_DIR$/NELL_instance_degrees.py" />
         <option value="$PROJECT_DIR$/Wikidata/classDegrees.py" />
-        <option value="$PROJECT_DIR$/Wikidata/classInstancesDegrees.py" />
         <option value="$PROJECT_DIR$/OpenCyc/opencyc_InstanceDegreesForClasses.py" />
         <option value="$PROJECT_DIR$/OpenCyc/opencyc_classDegreesAndInstanceCount.py" />
         <option value="$PROJECT_DIR$/NELL/nell_classDegreesAndInstanceCount.py" />
         <option value="$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py" />
+        <option value="$PROJECT_DIR$/Wikidata/classInstancesDegrees.py" />
       </list>
     </option>
   </component>
@@ -672,44 +640,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/OpenCyc/opencyc_InstanceDegreesForClasses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="87" column="49" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Wikidata/classInstancesDegrees.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding>
             <element signature="e#40#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OpenCyc/opencyc_InstanceDegreesForClasses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="115" column="23" selection-start-line="115" selection-start-column="23" selection-end-line="115" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NELL/nell_classDegreesAndInstanceCount.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state relative-caret-position="840">
+          <caret line="58" column="34" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/OpenCyc/opencyc_classDegreesAndInstanceCount.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="59" column="37" selection-start-line="56" selection-start-column="8" selection-end-line="59" selection-end-column="37" />
+        <state relative-caret-position="900">
+          <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
+        <state relative-caret-position="180">
+          <caret line="12" column="49" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
           <folding>
             <element signature="e#40#51#0" expanded="true" />
           </folding>
