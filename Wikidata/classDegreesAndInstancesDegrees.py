@@ -45,6 +45,10 @@ class ClassInstances:
             self.countDict[instance] = 1
             self.allClassInstances.add(instance)
     def calculateDegrees(self):
+        # set instance degrees to zero (for the case that the degree values are 0)
+        for i in instanceSetAllDict[self.uri].getSet():  # self.allClassInstances:
+            if not self.countDict.has_key(i):
+                self.countDict[i] = 0
         allValueList = []
         for k,v in self.countDict.iteritems():
             allValueList.append(v)
