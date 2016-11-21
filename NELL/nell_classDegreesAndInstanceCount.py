@@ -4,12 +4,9 @@ import time
 import numpy
 import operator
 
-#readFile = 'opencyc-latest_sample.nt'
-readFile = 'opencyc-latest.nt'
-
-nellSample = 'NELL_sample.csv'
-nell = 'NELL.08m.995.esv.csv'
-ontology = 'NELL.08m.995.ontology.csv'
+nellSample = '../../../SeminarPaper_KG_Files/NELL_sample.csv'
+nell = '../../../SeminarPaper_KG_Files/NELL.08m.995.esv.csv'
+ontology = '../../../SeminarPaper_KG_Files/NELL.08m.995.ontology.csv'
 lineProgress = 1000000
 
 
@@ -53,6 +50,10 @@ class ClassInstances:
             self.allClassInstances.add(instance)
 
     def calculateDegrees(self):
+        # set instance degrees to zero (for the case that the degree values are 0)
+        for i in instanceSetAllDict[self.uri].getSet():  # self.allClassInstances:
+            if not self.countDict.has_key(i):
+                self.countDict[i] = 0
         allValueList = []
         for k, v in self.countDict.iteritems():
             allValueList.append(v)
