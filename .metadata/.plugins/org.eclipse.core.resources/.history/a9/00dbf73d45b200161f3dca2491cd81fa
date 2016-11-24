@@ -1,0 +1,24 @@
+
+public class LineClass {
+	private String line;
+	private String s;
+	private String p;
+	private String o;
+	
+	 public LineClass(String line) {
+		 this.line = line;
+		 String words[] = line.split("\\s+");
+		 this.s = words[0];
+		 this.p = words[1];
+		 this.o = words[2];
+	 }
+	 public String getS() {
+		 return this.s;
+	 }
+	 public String getP() {
+		 return this.p;
+	 }
+	 public String getO() {
+		 return this.o;
+	 }
+}

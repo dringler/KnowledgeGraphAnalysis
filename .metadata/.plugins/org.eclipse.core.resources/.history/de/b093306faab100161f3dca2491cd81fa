@@ -1,0 +1,135 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+
+public class GetInstances {
+
+	public static void main(String[] args) {
+		//for each KG
+		String dbpediaInstanceTypesTransitive = "/Users/curtis/SeminarPaper_KG_files/DBpedia/instance_types_transitive_en.ttl";
+		String dbpediaInstanceTypes = "/Users/curtis/SeminarPaper_KG_files/DBpedia/instance_types_en.ttl";
+		String dbpediaInstanceTypesSample = "/Users/curtis/SeminarPaper_KG_files/DBpedia/instance_types_en_sample.ttl";
+		
+		String fileName = dbpediaInstanceTypesSample;
+		
+		HashSet<String> dboClasses = getDBpediaClasses();
+		
+		try {//Stream<String> stream =
+			//	Map<String, HashSet> output =
+			List<String> output =
+					Files.lines(Paths.get(fileName))
+				
+				.skip(1) //skip first row 
+				.filter(line -> containsClassName(line))
+				.collect(Collectors.toList());
+				//.collect(//groupingBy(getClassName(line), getInstanceName(line))); //Collectors.toList()
+				
+		
+	        //stream.forEach(System.out::println);
+		} catch (IOException e) {
+			System.out.println("ERROR WHILE reading file: " + fileName);
+			e.printStackTrace();
+		}
+		
+		
+
+	}
+	
+	
+	private static boolean containsClassName(String line) {
+		boolean containsClass = false;
+		//get spo triple
+		String spo[] = getSPO(line);
+		// check if property is rdfs:type
+		if (spo[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>")) {
+			//check if className is a dbo class
+			if (spo[2].startsWith("<http://dbpedia.org/ontology/")) {
+				
+				//check if className is in classNameArray
+				String lineClassName = getClassNameOfURI(spo[2]);
+				//System.out.println(lineClassName);
+				
+				
+			}
+		}
+		
+		
+			
+		
+
+		return containsClass;
+	}
+
+
+	private static String getClassNameOfURI(String o) {
+		//<http://dbpedia.org/ontology/CLASSNAME_TO_KEEP>
+		return o.substring(29, o.length()-1);
+	}
+
+
+	private static String[] getSPO(String line) {
+		String words[] = line.split("\\s+");
+		return words;
+	}
+
+
+	/**
+	   * Get query prefix 
+	   * @return Array of all DBpedia classes
+	   */
+	private static HashSet<String> getDBpediaClasses() {
+		HashSet<String> classNameArray = new HashSet<String>();
+		classNameArray.addAll(Arrays.asList(
+							//PERSON
+								"Agent",
+								"Person",
+								"Politician",
+								"Athlete",
+								"Actor",
+							//ORGANIZATION
+								"GovernmentAgency",
+								"Company",
+								"PoliticalParty",
+							//PLACE
+								"Place",
+								"PopulatedPlace",
+								"City",
+								"Village",
+								"Town",
+								"Country",
+							//ART
+								"Work",
+								"MusicalWork",
+								"Album",
+								"Song",
+								"Single",
+								"Film",
+								"Book",
+							//EVENT	
+								"Event",
+								"MilitaryConflict",
+								"SocietalEvent",
+								"SportsEvent",
+							//TRANSPORT
+								"MeanOfTransportation",
+								"Automobile",
+								"Ship",
+								"Spacecraft",
+							//OTHER
+								"ChemicalSubstance",
+								"ChemicalElement",
+								"CelestialBody",
+								"Planet")
+								);
+		return classNameArray;
+	}
+
+}

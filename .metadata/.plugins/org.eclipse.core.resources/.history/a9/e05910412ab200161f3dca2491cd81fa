@@ -1,0 +1,159 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+
+public class GetInstances {
+
+	public static void main(String[] args) {
+		
+		long startTime = System.nanoTime();
+		
+		//for each KG
+		String dbpediaInstanceTypesTransitive = "/Users/curtis/SeminarPaper_KG_files/DBpedia/instance_types_transitive_en.ttl";
+		String dbpediaInstanceTypes = "/Users/curtis/SeminarPaper_KG_files/DBpedia/instance_types_en.ttl";
+		String dbpediaInstanceTypesSample = "/Users/curtis/SeminarPaper_KG_files/DBpedia/instance_types_en_sample.ttl";
+		
+		String fileName = dbpediaInstanceTypesSample;
+		
+		HashSet<String> dboClasses = getDBpediaClasses();
+		System.out.println(dboClasses);
+		
+		try {//Stream<LineClass> lineThatHaveDboClassStream =
+			//	Map<String, HashSet> output =
+			Map<String, List<String>> linesThatHaveDboClass =
+					Files.lines(Paths.get(fileName))
+				//.stream()
+				.skip(1) //skip first row 
+				.filter(line -> containsClassName(line, dboClasses))
+				//.map(MyString::getLineClass);
+				
+				.collect(Collectors.groupingBy(line -> getClassName(line), Collectors.mapping(line -> getInstanceName(line), Collectors.toList())));
+				//.collect(groupingBy(getClassName(line), getInstanceName(line)));			
+		
+	        //stream.forEach(System.out::println);
+		
+		
+			//System.out.println(linesThatHaveDboClass);
+			for (Entry<String, List<String>> entry : linesThatHaveDboClass.entrySet())
+			System.out.println(entry.getKey() + ": " + entry.getValue().size() + " instances");
+			
+		/*Map<String, HashSet> result =
+				linesThatHaveDboClass
+					.collect(groupingBy(getClassName(x)),  getInstanceName(x));
+		*/
+		} catch (IOException e) {
+			System.out.println("ERROR WHILE reading file: " + fileName);
+			e.printStackTrace();
+		} finally {
+			System.out.println("EXECUTION TIME: " +  (System.nanoTime() - startTime) + " seconds." );
+		}
+		
+		
+		
+
+	}
+	
+	
+	private static String getClassName(String line) {
+		String spo[] = getSPO(line);
+		return spo[2];
+	}
+	private static String getInstanceName(String line) {
+		String spo[] = getSPO(line);
+		return spo[0];
+	}
+
+
+	private static boolean containsClassName(String line, HashSet<String> dboClasses ) {
+		boolean containsClass = false;
+		//get spo triple
+		String spo[] = getSPO(line);
+		// check if property is rdfs:type
+		if (spo[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>")) {
+			//check if className is a dbo class
+			if (spo[2].startsWith("<http://dbpedia.org/ontology/")) {
+				//get pure class name in line
+				String lineClassName = getClassNameOfURI(spo[2]);
+				//check if className is in classNameArray
+				if (dboClasses.contains(lineClassName)) {
+					containsClass = true;
+				}		
+			}
+		}
+		return containsClass;
+	}
+
+
+	private static String getClassNameOfURI(String o) {
+		//"<http://dbpedia.org/ontology/CLASSNAME_TO_KEEP>"
+		return o.substring(29, o.length()-1);
+	}
+
+
+	private static String[] getSPO(String line) {
+		String words[] = line.split("\\s+");
+		return words;
+	}
+
+
+	/**
+	   * Get query prefix 
+	   * @return Array of all DBpedia classes
+	   */
+	private static HashSet<String> getDBpediaClasses() {
+		HashSet<String> classNameArray = new HashSet<String>();
+		classNameArray.addAll(Arrays.asList(
+							//PERSON
+								"Agent",
+								"Person",
+								"Politician",
+								"Athlete",
+								"Actor",
+							//ORGANIZATION
+								"GovernmentAgency",
+								"Company",
+								"PoliticalParty",
+							//PLACE
+								"Place",
+								"PopulatedPlace",
+								"City",
+								"Village",
+								"Town",
+								"Country",
+							//ART
+								"Work",
+								"MusicalWork",
+								"Album",
+								"Song",
+								"Single",
+								"Film",
+								"Book",
+							//EVENT	
+								"Event",
+								"MilitaryConflict",
+								"SocietalEvent",
+								"SportsEvent",
+							//TRANSPORT
+								"MeanOfTransportation",
+								"Automobile",
+								"Ship",
+								"Spacecraft",
+							//OTHER
+								"ChemicalSubstance",
+								"ChemicalElement",
+								"CelestialBody",
+								"Planet")
+								);
+		return classNameArray;
+	}
+
+}

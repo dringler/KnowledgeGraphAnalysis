@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cda7064-2058-4193-9fba-456357a4426f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Wikidata/classInstancesDegreesForLinkedClassesResult.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Wikidata/classInstancesDegreesResult_backup.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Wikidata/wikidata_degree_results_top10classes.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Wikidata/wikidata_top100classes.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QuerySPARQL/.indexes/e4/history.index" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QuerySPARQL/.indexes/e4/history.index" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QuerySPARQL/.markers.snap" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QuerySPARQL/.markers.snap" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QuerySPARQL/.syncinfo.snap" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/QuerySPARQL/.syncinfo.snap" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.markers.snap" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.markers.snap" />
@@ -13,8 +10,15 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/16.snap" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/16.snap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/453122202.index" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/453122202.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.log" afterPath="$PROJECT_DIR$/.metadata/.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.debug.ui/launchConfigurationHistory.xml" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.debug.ui/launchConfigurationHistory.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QuerySPARQL/src/QueryObject.java" afterPath="$PROJECT_DIR$/QuerySPARQL/src/QueryObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QuerySPARQL/src/QuerySPARQL.java" afterPath="$PROJECT_DIR$/QuerySPARQL/src/QuerySPARQL.java" />
     </list>
     <ignored path="SeminarPaper.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,7 +87,7 @@
       <file leaf-file-name="classDegreesAndInstancesDegrees.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
+            <state relative-caret-position="640">
               <caret line="316" column="47" selection-start-line="316" selection-start-column="47" selection-end-line="316" selection-end-column="47" />
               <folding>
                 <element signature="e#40#51#0" expanded="true" />
@@ -686,7 +690,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Wikidata/classDegreesAndInstancesDegrees.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
+        <state relative-caret-position="640">
           <caret line="316" column="47" selection-start-line="316" selection-start-column="47" selection-end-line="316" selection-end-column="47" />
           <folding>
             <element signature="e#40#51#0" expanded="true" />

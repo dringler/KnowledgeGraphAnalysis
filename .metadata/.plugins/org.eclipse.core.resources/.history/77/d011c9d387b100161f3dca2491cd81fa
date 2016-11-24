@@ -1,0 +1,8 @@
+
+public class InstanceObject {
+ private String className;
+ 
+ public InstanceObject(String className) {
+	 this.className = className;
+ }
+}

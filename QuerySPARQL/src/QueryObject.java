@@ -47,6 +47,8 @@ public class QueryObject {
 				getClassDegrees(endpoint, service, kgClasses);
 				getClassInstaceDegrees(endpoint, service, kgClasses);	
 				
+				//getClassInstances(endpoint, service, kgClasses); // DBpedia endpoint LIMIT of 10,000 rows
+				
 			}
 					
 		} catch (QueryExceptionHTTP e) {
@@ -59,6 +61,59 @@ public class QueryObject {
 		return resultObject;
 	}
 	
+	
+	/**
+	   * Get class instances for all classes
+	   * @param endpoint 0:dbpedia, 1:yago
+	   * @param service  url of endpoint
+	   * @param kgClasses array of all class names
+	   */
+	private void getClassInstances(int endpoint, String service,
+			String[] kgClasses) {
+		//create dict-like object for storing an InstanceObj for each class
+		Map<String, InstanceObject> classInstanceDict = new HashMap<String, InstanceObject>();
+		for (String className : kgClasses) {
+			//create instanceObj
+			InstanceObject instanceObj = new InstanceObject(className);
+			// create query & send query to endpoint
+			String queryString = getClassInstanceQueryString(endpoint, className);
+			ResultSet results = queryEndpoint(service, queryString);
+				//process results: add labels to instanceObj
+				while (results.hasNext()) {
+					QuerySolution sol = results.next();
+					if (sol.get("label").isLiteral()) {
+						instanceObj.addInstance(sol.getLiteral("label").toString());
+					}
+				}
+			
+			//add instanceObj to classInstanceDict
+			classInstanceDict.put(className, instanceObj);
+			System.out.println(className + " has "+ instanceObj.getNumberOfInstances() + " instances with " + instanceObj.getDuplicateCounter() + " duplicates.");
+		}
+		/*for (Map.Entry<String, InstanceObject> entry : classInstanceDict.entrySet()) {
+			System.out.println(entry.getKey() + " has " + entry.getValue().getNumberOfInstances() + " instances");
+		}*/
+		
+	}
+
+
+	private String getClassInstanceQueryString(int endpoint, String className) {
+		String queryString = "";
+		queryString = getQueryPrefix();
+		queryString = queryString +
+				"SELECT ?label WHERE {\n";
+		if (endpoint == 0) { //dbpedia
+			queryString = queryString +
+					"?i a <http://dbpedia.org/ontology/" + className + "> .\n"+
+					" ?i rdfs:label ?label .\n FILTER langMatches( lang(?label), 'EN' )}";
+		} else if (endpoint == 1) { //yago
+			queryString = queryString +
+					"?i a <http://yago-knowledge.org/resource/" + className + "> .\n"+
+					" ?i rdfs:label ?label .\n FILTER langMatches( lang(?label), 'ENG' )}";
+		}
+		return queryString;
+	}
+
 
 	/**
 	   * Get class counts for passed kgClasses
@@ -541,58 +596,65 @@ public class QueryObject {
 	   * @return Array of all DBpedia classes
 	   */
 	private static String[] getDBpediaClasses() {
-		String classNameArray[] = {"Taxon",
-								"Species",
+		String classNameArray[] = {//"Taxon",
+								//"Species",
+							//PERSON
 								"Agent",
 								"Person",
+								"Politician",
 								"Athlete",
 								"Actor",
-								"MovieDirector",
-								"Celebrity",
+								//"MovieDirector",
+								//"Celebrity",
+							//ORGANIZATION
 								"GovernmentAgency",
 								"Company",
+								"PoliticalParty",
+							//PLACE
 								"Place",
-								"Location",
-								"Region",
-								"NaturalRegion",
+								//"Location",
+								//"Region",
+								//"NaturalRegion",
 								"PopulatedPlace",
 								"City",
 								"Village",
 								"Town",
-								"Street",
-								"Beach",
-								"SkiArea",
-								"SkiResort",
-								"River",
-								"Airport",
+								"Country",
+								//"Street",
+								//"Beach",
+								//"SkiArea",
+								//"SkiResort",
+								//"River",
+								//"Airport",
+								//"Building",
+							//ART
 								"Work",
-								"Image",
-								"TimePeriod",
-								"CareerStation",
-								"Politician",
-								"PoliticalParty",
 								"MusicalWork",
 								"Album",
 								"Song",
 								"Single",
 								"Film",
 								"Book",
-								"Software",
-								"Sport",
+								//"Image",
+								//"Software",
+							//EVENT	
 								"Event",
 								"MilitaryConflict",
 								"SocietalEvent",
 								"SportsEvent",
-								"Country",
-								"Building",
-								"ChemicalSubstance",
-								"ChemicalElement",
-								"CelestialBody",
-								"Planet",
+							//TRANSPORT
 								"MeanOfTransportation",
 								"Automobile",
 								"Ship",
-								"Spacecraft"
+								"Spacecraft",
+							//OTHER
+								//"TimePeriod",
+								//"CareerStation",
+								//"Sport",
+								"ChemicalSubstance",
+								"ChemicalElement",
+								"CelestialBody",
+								"Planet"
 								};
 		return classNameArray;
 	}
@@ -601,68 +663,75 @@ public class QueryObject {
 	   * @return Array of all YAGO classes
 	   */
 	private String[] getYAGOclasses() {
-		String classNameArray[] = {"wordnet_object_100002684",
-									"wordnet_whole_100003553",
-									"wordnet_living_thing_100004258",
-									"wordnet_organism_100004475",
-									"wordnet_taxonomic_group_107992450",
-									"wordnet_species_108110373",
-									"wordnet_individual_110203839",	
+		String classNameArray[] = {//"wordnet_object_100002684",
+									//"wordnet_whole_100003553",
+									//"wordnet_living_thing_100004258",
+									//"wordnet_organism_100004475",
+									//"wordnet_taxonomic_group_107992450",
+									//"wordnet_species_108110373",
+									//"wordnet_individual_110203839",
+								//PERSON
 									"yagoLegalActor",
 									"wordnet_causal_agent_100007347",
 									"wordnet_person_100007846",
+									"wordnet_politician_110450303",
+									"wordnet_politician_110451263",
 									"wordnet_athlete_109820263",	
 									"wordnet_actor_109767197",	
-									"wordnet_director_110015215",	
-									"wordnet_celebrity_109903153",	
-									"wordnet_male_109624168",
-									"wordnet_group_100031264",
+									//"wordnet_director_110015215",	
+									//"wordnet_celebrity_109903153",	
+									//"wordnet_male_109624168",
+									//"wordnet_group_100031264",
+								//ORGANIZATION
 									"wordnet_government_108050678",
 									"wordnet_stock_company_108383310",
+									"wordnet_party_108256968",
+								//PLACE
 									"wordnet_location_100027167",
-									"wordnet_region_108630985",
-									"yagoGeoEntity",
+									//"wordnet_region_108630985",
+									//"yagoGeoEntity",
 									"wordnet_settlement_108672562",		
 									"wordnet_city_108524735",
 									"wordnet_village_108672738",	
 									"wordnet_town_108665504",
-									"wordnet_street_104334599",		
-									"wordnet_beach_109217230",	
-									"wordnet_ski_resort_108652376",		
-									"wordnet_river_109411430",
-									"wordnet_airport_102692232",
-									"wordnet_abstraction_100002137",
-									"wordnet_artifact_100021939",
+									"wordnet_country_108544813",
+									//"wordnet_street_104334599",		
+									//"wordnet_beach_109217230",	
+									//"wordnet_ski_resort_108652376",		
+									//"wordnet_river_109411430",
+									//"wordnet_airport_102692232",
+									//"wordnet_building_102913152",
+								//ART
+									//"wordnet_abstraction_100002137",
+									//"wordnet_artifact_100021939",
 									"wordnet_work_104599396",
-									"wordnet_picture_106999436",
-									"wordnet_picture_103931044",
-									"wordnet_time_interval_115269513",
-									"wordnet_noun_106319293",
-									"wordnet_politician_110450303",
-									"wordnet_politician_110451263",
-									"wordnet_party_108256968",
+									//"wordnet_picture_106999436",
+									//"wordnet_picture_103931044",									
 									"wordnet_musical_composition_107037465",	
 									"wordnet_album_106591815",
 									"wordnet_song_107048000",
 									"wordnet_movie_106613686",	
 									"wordnet_book_106410904",
 									"wordnet_book_102870092",
-									"wordnet_software_106566077",	
-									"wordnet_sport_100523513",
+									//"wordnet_software_106566077",										
+								//EVENT	
 									"wordnet_event_100029378",
 									"wordnet_war_101236296",
 									"wordnet_social_event_107288639",
-									"wordnet_country_108544813",
-									"wordnet_building_102913152",
-									"wordnet_chemical_element_114622893",	
-									"wordnet_substance_100019613",
-									"wordnet_celestial_body_109239740",	
-									"wordnet_planet_109394007",
+								//TRANSPORT	
 									"wordnet_vehicle_104524313",
 									"wordnet_conveyance_103100490",
 									"wordnet_car_102958343",
 									"wordnet_ship_104194289",
-									"wordnet_spacecraft_104264914"
+									"wordnet_spacecraft_104264914",
+								//OTHER	
+									"wordnet_chemical_element_114622893",	
+									"wordnet_substance_100019613",
+									"wordnet_celestial_body_109239740",	
+									"wordnet_planet_109394007"
+									//"wordnet_time_interval_115269513",
+									//"wordnet_noun_106319293",
+									//"wordnet_sport_100523513",
 									};
 		return classNameArray;
 	}

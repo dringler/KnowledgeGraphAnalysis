@@ -9,25 +9,25 @@ public class QuerySPARQL {
 		int endpoint = 0;
 		
 		// query DBpedia
-		/*QueryObject dbpedia = new QueryObject();
-		results = dbpedia.queryEndpoint(endpoint);
-		printHeader();
-		printResults(results);
-		*/
-		
+		//QueryObject dbpedia = new QueryObject();
+		//results = dbpedia.queryEndpoint(endpoint);
+		//printCountHeader();
+		//printResults(results);
+				
 		
 		// query YAGO
-		/*endpoint = 1;
-		QueryObject yago = new QueryObject();
-		results = yago.queryEndpoint(endpoint);
-		printHeader();
-		printResults(results);
-		*/
+		//endpoint = 1;
+		//QueryObject yago = new QueryObject();
+		//results = yago.queryEndpoint(endpoint);
+		//printCountHeader();
+		//printResults(results);
+		
 		
 		// query Wikidata
-		QueryWikidataObject wiki = new QueryWikidataObject();
-		wiki.queryEndpoint();
-		 
+		//QueryWikidataObject wiki = new QueryWikidataObject();
+		//wiki.queryEndpoint();
+		 	
+		
 	
 	}
 	private static void printResults(Map<String, CountObject> results) {
@@ -35,7 +35,7 @@ public class QuerySPARQL {
 		    results.get(entry.getKey()).printAll();
 		}
 	}
-	public static void printHeader() {
+	public static void printCountHeader() {
 		System.out.println("className, count, classIndegree, classOutdegree, "
 				+ "classInstanceIndegreeMin, classInstanceIndegreeAvg, classInstanceIndegreeMed, classInstanceIndegreeMax, "
 				+ "classInstanceOutdegreeMin, classInstanceOutdegreeAvg, classInstanceOutdegreeMed, classInstanceOutdegreeMax");

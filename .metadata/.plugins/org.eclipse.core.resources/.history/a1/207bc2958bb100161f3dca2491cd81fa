@@ -1,0 +1,28 @@
+import java.util.Set;
+
+
+public class InstanceObject {
+ private String className;
+ private Set<String> instances;
+ 
+ public InstanceObject(String className) {
+	 this.className = className;
+ }
+ /**
+  * Add instance to instanceSet
+  * @param label (string)
+ */
+ public void addInstance(String label) {
+	 if (!instances.contains(label)) {
+		 instances.add(label);
+	 }
+ }
+ public Set<String> getInstances() {
+	 return instances;
+ }
+ 
+ public int getNumberOfInstances() {
+	 return instances.size();
+ }
+ 
+}
