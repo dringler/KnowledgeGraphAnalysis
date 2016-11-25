@@ -14,12 +14,14 @@ import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 
 public class QueryObject {
 	static Map<String, CountObject> resultObject = new HashMap<String, CountObject>();
+	static Map<String, InstanceObject> resultObjectInstance = new HashMap<String, InstanceObject>();
 	/**
 	   * Get class counts for passed kgClasses
 	   * @param endpoint 0:dbpedia, 1:yago
 	   * @return Map of resultObject<String, CountObject>
 	   */
-	public Map<String, CountObject> queryEndpoint(int endpoint) {
+	//public Map<String, CountObject> queryEndpoint(int endpoint) {
+	public Map<String, InstanceObject> queryEndpoint(int endpoint) {
 		long startTime = System.nanoTime();
 		String service = "";
 		resultObject.clear();
@@ -43,11 +45,11 @@ public class QueryObject {
 				} else if (endpoint == 1) {
 					kgClasses = getYAGOclasses();
 				}
-				getClassCount(endpoint, service, kgClasses, false);
-				getClassDegrees(endpoint, service, kgClasses);
-				getClassInstaceDegrees(endpoint, service, kgClasses);	
+				//getClassCount(endpoint, service, kgClasses, false);
+				//getClassDegrees(endpoint, service, kgClasses);
+				//getClassInstaceDegrees(endpoint, service, kgClasses);	
 				
-				//getClassInstances(endpoint, service, kgClasses); // DBpedia endpoint LIMIT of 10,000 rows
+				getClassInstances(endpoint, service, kgClasses); // DBpedia endpoint LIMIT of 10,000 rows
 				
 			}
 					
@@ -58,7 +60,7 @@ public class QueryObject {
 			
 			System.out.println("DONE for " + service + " in " + TimeUnit.SECONDS.convert((System.nanoTime() - startTime), TimeUnit.NANOSECONDS) +  " seconds" );
 		}
-		return resultObject;
+		return resultObjectInstance;
 	}
 	
 	
@@ -78,21 +80,23 @@ public class QueryObject {
 			// create query & send query to endpoint
 			String queryString = getClassInstanceQueryString(endpoint, className);
 			ResultSet results = queryEndpoint(service, queryString);
-				//process results: add labels to instanceObj
-				while (results.hasNext()) {
-					QuerySolution sol = results.next();
-					if (sol.get("label").isLiteral()) {
-						instanceObj.addInstance(sol.getLiteral("label").toString());
-					}
+			//process results: add labels to instanceObj
+			while (results.hasNext()) {
+				QuerySolution sol = results.next();
+				if (sol.get("label").isLiteral()) {
+					//instanceObj.addInstance(sol.getLiteral("label").toString());
+					instanceObj.addInstance(sol.getResource("i").toString(), sol.getLiteral("label").toString());
 				}
+			}
 			
 			//add instanceObj to classInstanceDict
 			classInstanceDict.put(className, instanceObj);
-			System.out.println(className + " has "+ instanceObj.getNumberOfInstances() + " instances with " + instanceObj.getDuplicateCounter() + " duplicates.");
+			System.out.println(className + " has "+ instanceObj.getNumberOfInstancesMap() + " instances. " + instanceObj.getDuplicateCounterMap() + " have more than one english label.");
 		}
 		/*for (Map.Entry<String, InstanceObject> entry : classInstanceDict.entrySet()) {
 			System.out.println(entry.getKey() + " has " + entry.getValue().getNumberOfInstances() + " instances");
 		}*/
+		resultObjectInstance = classInstanceDict;
 		
 	}
 
@@ -101,7 +105,7 @@ public class QueryObject {
 		String queryString = "";
 		queryString = getQueryPrefix();
 		queryString = queryString +
-				"SELECT ?label WHERE {\n";
+				"SELECT ?i ?label WHERE {\n";
 		if (endpoint == 0) { //dbpedia
 			queryString = queryString +
 					"?i a <http://dbpedia.org/ontology/" + className + "> .\n"+
@@ -727,7 +731,7 @@ public class QueryObject {
 								//OTHER	
 									"wordnet_chemical_element_114622893",	
 									"wordnet_substance_100019613",
-									"wordnet_celestial_body_109239740",	
+									"wordnet_celestial_body_109239740",
 									"wordnet_planet_109394007"
 									//"wordnet_time_interval_115269513",
 									//"wordnet_noun_106319293",
