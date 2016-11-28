@@ -596,7 +596,7 @@ public class QueryObject {
 		return p;
 	}
 	/**
-	   * Get query prefix 
+	   * Get all relevant classes from DBpedia
 	   * @return Array of all DBpedia classes
 	   */
 	private static String[] getDBpediaClasses() {
@@ -663,7 +663,7 @@ public class QueryObject {
 		return classNameArray;
 	}
 	/**
-	   * Get query prefix 
+	   * Get all relevant classes from YAGO
 	   * @return Array of all YAGO classes
 	   */
 	private String[] getYAGOclasses() {
