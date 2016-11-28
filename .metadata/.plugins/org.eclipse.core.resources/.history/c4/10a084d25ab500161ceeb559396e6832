@@ -24,8 +24,7 @@ public class GetInstances {
 		
 		boolean dbpedia = false;
 		boolean yago = false;
-		boolean opencyc = false;
-		boolean nell = true;
+		boolean opencyc = true;
 		
 		String fType1  = "";
 		String fType2 = "";
@@ -82,23 +81,6 @@ public class GetInstances {
 						
 			runProcess(2, fType1, fType2, fLabels, classes);
 		}
-		if (nell) {
-			//NELL files
-			if (useSamples) {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/NELL/NELL.08m.995.esv_s.csv";
-				fType2 = "/Users/curtis/SeminarPaper_KG_files/NELL/NELL.08m.995.ontology_s.csv";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/NELL/NELL.08m.995.esv_s.csv";
-			} else {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/NELL/NELL.08m.995.esv.csv";
-				fType2 = "/Users/curtis/SeminarPaper_KG_files/NELL/NELL.08m.995.ontology.csv";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/NELL/NELL.08m.995.esv.csv";
-			}
-			// get all classes for OpenCyc
-			HashSet<String> classes = getNellClasses();
-			System.out.println(classes);
-						
-			runProcess(3, fType1, fType2, fLabels, classes);
-		}
 		
 		System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
 	}
@@ -109,8 +91,8 @@ public class GetInstances {
 				String fType2, String fLabels, HashSet<String> classes) {
 			
 			int skipRows = 0; 
-			if (kg == 0 || kg == 3)
-				skipRows = 1; //skip first row for dbpedia and nell
+			if (kg == 0)
+				skipRows = 1; //skip first row for dbpedia
 			else if (kg == 1)
 				skipRows = 10; //skip first ten rows for yago 
 			
@@ -121,6 +103,7 @@ public class GetInstances {
 			// GET ALL INSTANCES FOR ALL CLASSES
 				Map<String, Set<String>> classInstances = getClassInstances(kg, fType1, fType2, classes, allInstancesSet, skipRows);
 					
+				
 				System.out.println("allInstancesSet.size():" + allInstancesSet.size());
 				int instanceCount = 0;
 				for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
@@ -137,7 +120,7 @@ public class GetInstances {
 								.skip(skipRows) //skip first row
 								.filter(line -> containsInstanceNameEn(kg, line, classInstances, allInstancesSet, labeledInstancesSet))
 								//.collect(Collectors.toMap(line -> getS(line), Collectors.toSet(line -> getLabel(getO(line)))));
-								.collect(Collectors.groupingBy(line -> getS(kg, line), Collectors.mapping(line -> getLabel(kg, line), Collectors.toSet())));
+								.collect(Collectors.groupingBy(line -> getS(kg, line), Collectors.mapping(line -> getLabel(kg, getO(kg, line)), Collectors.toSet())));
 				
 				//System.out.println(classInstances);
 				//System.out.println(instancesWithLabel);
@@ -183,8 +166,6 @@ public class GetInstances {
 					resultFolder = "yagoResults/";
 				} else if (kg == 2) {
 					resultFolder = "opencycResults/";
-				} else if (kg == 3) {
-					resultFolder ="nellResults/";
 				}
 				//http://stackoverflow.com/questions/2885173/how-to-create-a-file-and-write-to-a-file-in-java
 				//for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
@@ -260,14 +241,10 @@ public class GetInstances {
 			//DBpedia and OpenCyc
 			labelString = "<http://www.w3.org/2000/01/rdf-schema#label>";
 			englishLabel = "@en";
-		} else if (kg == 1) {
+		} else {
 			//YAGO
 			labelString = "rdfs:label";
 			englishLabel = "@eng";
-		} else if (kg == 3) {
-			labelString = "generalizations";
-			englishLabel = "concept";
-			
 		}
 		//check if line was complete (yago contains single element references as line)
 		if (spo.length >= 3) {
@@ -313,38 +290,22 @@ public class GetInstances {
 	}
 	/**
 	  * Get label of string
-	  * @param line (string)
+	  * @param o (string)
 	  * @returns substring without label
 	 */
-	private static String getLabel(int kg, String line) {
+	private static String getLabel(int kg, String o) {
 		String returnString = "";
-		
-		
 		if (kg==0 || kg == 2) {
 			//DBpedia and OpenCyc: LABEL_TO_KEEP@en\s
-			String o = getO(kg, line);
 			returnString = o.substring(0, o.length()-4); //-4 due to whitespace created by getSPO in the end
 		} else if (kg == 1) {
 			//YAGO: "LABEL_TO_KEEP"@eng .\n
-			String o = getO(kg, line);
 			returnString = o.substring(1, o.length()-7);			
-		} else if (kg == 3) { //NELL
-			returnString = getEntityLiteralStringsInNell(kg, line);
 		}
 		//System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
-	/**
-	  * Get seventh argument of line
-	  * @param line
-	  * @returns spo[6] (String)
-	 */
-	private static String getEntityLiteralStringsInNell(int kg, String line) {
-		String spo[] = getSPO(kg, line);
-		return spo[6];
-	}
 	
-
 	/**
 	  * Check if line contains className
 	  * @param kg 0:dbpedia, 1:yago
@@ -372,11 +333,8 @@ public class GetInstances {
 		} else if (kg == 2) {//opencyc
 			typeString = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
 			classString = "<http://sw.opencyc.org/concept/";
-			classString2 = "<http://sw.opencyc.org/concept/";	
-		} else if (kg == 3) { //nell
-			typeString = "generalizations";
-			classString = "concept:";
-			classString2 = "concept:";
+			classString2 = "<http://sw.opencyc.org/concept/";
+			
 		}
 			
 		//check if line was complete (yago contains single element references as line)
@@ -415,9 +373,6 @@ public class GetInstances {
 		} else if (kg == 2) {
 			//<http://sw.opencyc.org/concept/CLASSNAME_TO_KEEP>
 			returnString = o.substring(31, o.length()-1);
-		} else if (kg == 3) {
-			//"concept:CLASSNAME_TO_KEEP"
-			returnString = o.substring(8, o.length());
 		}
 		//System.out.println("getClassNameOfURI: " + returnString);
 		return returnString;
@@ -462,7 +417,7 @@ public class GetInstances {
 				String[] preWords = line.split("\\s+"); //split on whitespace
 				words = preWords;
 			}
-		} else { //YAGO and NELL
+		} else { //YAGO
 			String[] preWords = line.split("\\t"); //split on tab
 			words = preWords;
 		}
@@ -574,10 +529,6 @@ public class GetInstances {
 									));
 		return classNameArray;
 	}
-	/**
-	   * Get HashSet containing all class names in OpenCyc 
-	   * @return Array of all OpenCyc classes
-	   */
 	private static HashSet<String> getOpenCycClasses() {
 		HashSet<String> classNameArray = new HashSet<String>();
 		classNameArray.addAll(Arrays.asList(
@@ -622,48 +573,6 @@ public class GetInstances {
 								"Mx4r-n4BEPzcQdaYSaNf0XKNIw", //celestial object
 								"Mx4rvVjQs5wpEbGdrcN5Y29ycA", //celestial body
 								"Mx4rvVjRL5wpEbGdrcN5Y29ycA" //planet
-							));
-		return classNameArray;
-	}
-	/**
-	   * Get HashSet containing all class names in NELL 
-	   * @return Array of all NELL classes
-	   */
-	private static HashSet<String> getNellClasses() {
-		HashSet<String> classNameArray = new HashSet<String>();
-		classNameArray.addAll(Arrays.asList(
-							//PERSON
-                 				"humanagent",
-                 				"agent",
-                 				"person",
-                 				"politician",
-                 				"athlete",
-                 				"actor",
-                 			//ORGANIZATION
-                 				"governmentorganization",
-                 				"company",
-                 				"politicalparty",
-    						//PLACE
-                 				"location",
-                                "geopoliticallocation",
-                                "city",
-                                "country",
-    						//ART
-                                "creativework",
-                                "musicalbum",
-                                "musicsong",
-                                "movie",
-                                "book",
-    						//EVENT
-                                "event",
-                                "militaryeventtype",
-                                "militaryconflict",
-                                "sportsevent",
-    						//TRANSPORT
-                                "vehicle",
-    						//OTHER
-                                "chemical",
-                                "planet"
 							));
 		return classNameArray;
 	}

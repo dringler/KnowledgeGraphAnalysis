@@ -331,7 +331,7 @@ public class GetInstances {
 		} else if (kg == 3) { //NELL
 			returnString = getEntityLiteralStringsInNell(kg, line);
 		}
-		//System.out.println("getLabel: " + returnString);
+		System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
 	/**
@@ -344,6 +344,8 @@ public class GetInstances {
 		return spo[6];
 	}
 	
+
+
 
 	/**
 	  * Check if line contains className

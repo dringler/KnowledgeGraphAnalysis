@@ -331,19 +331,21 @@ public class GetInstances {
 		} else if (kg == 3) { //NELL
 			returnString = getEntityLiteralStringsInNell(kg, line);
 		}
-		//System.out.println("getLabel: " + returnString);
+		System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
 	/**
-	  * Get seventh argument of line
+	  * Get sixth argument of line
 	  * @param line
-	  * @returns spo[6] (String)
+	  * @returns spo[5] (String)
 	 */
 	private static String getEntityLiteralStringsInNell(int kg, String line) {
 		String spo[] = getSPO(kg, line);
-		return spo[6];
+		return spo[5];
 	}
 	
+
+
 
 	/**
 	  * Check if line contains className

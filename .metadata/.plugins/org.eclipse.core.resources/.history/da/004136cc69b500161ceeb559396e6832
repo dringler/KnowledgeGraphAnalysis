@@ -137,7 +137,7 @@ public class GetInstances {
 								.skip(skipRows) //skip first row
 								.filter(line -> containsInstanceNameEn(kg, line, classInstances, allInstancesSet, labeledInstancesSet))
 								//.collect(Collectors.toMap(line -> getS(line), Collectors.toSet(line -> getLabel(getO(line)))));
-								.collect(Collectors.groupingBy(line -> getS(kg, line), Collectors.mapping(line -> getLabel(kg, line), Collectors.toSet())));
+								.collect(Collectors.groupingBy(line -> getS(kg, line), Collectors.mapping(line -> getLabel(kg, getO(kg, line)), Collectors.toSet())));
 				
 				//System.out.println(classInstances);
 				//System.out.println(instancesWithLabel);
@@ -265,8 +265,6 @@ public class GetInstances {
 			labelString = "rdfs:label";
 			englishLabel = "@eng";
 		} else if (kg == 3) {
-			labelString = "generalizations";
-			englishLabel = "concept";
 			
 		}
 		//check if line was complete (yago contains single element references as line)
@@ -313,38 +311,24 @@ public class GetInstances {
 	}
 	/**
 	  * Get label of string
-	  * @param line (string)
+	  * @param o (string)
 	  * @returns substring without label
 	 */
-	private static String getLabel(int kg, String line) {
+	private static String getLabel(int kg, String o) {
 		String returnString = "";
-		
-		
 		if (kg==0 || kg == 2) {
 			//DBpedia and OpenCyc: LABEL_TO_KEEP@en\s
-			String o = getO(kg, line);
 			returnString = o.substring(0, o.length()-4); //-4 due to whitespace created by getSPO in the end
 		} else if (kg == 1) {
 			//YAGO: "LABEL_TO_KEEP"@eng .\n
-			String o = getO(kg, line);
 			returnString = o.substring(1, o.length()-7);			
-		} else if (kg == 3) { //NELL
-			returnString = getEntityLiteralStringsInNell(kg, line);
+		} else if (kg == 3) {
+			returnString = o;
 		}
 		//System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
-	/**
-	  * Get seventh argument of line
-	  * @param line
-	  * @returns spo[6] (String)
-	 */
-	private static String getEntityLiteralStringsInNell(int kg, String line) {
-		String spo[] = getSPO(kg, line);
-		return spo[6];
-	}
 	
-
 	/**
 	  * Check if line contains className
 	  * @param kg 0:dbpedia, 1:yago
@@ -633,37 +617,37 @@ public class GetInstances {
 		HashSet<String> classNameArray = new HashSet<String>();
 		classNameArray.addAll(Arrays.asList(
 							//PERSON
-                 				"humanagent",
-                 				"agent",
-                 				"person",
-                 				"politician",
-                 				"athlete",
-                 				"actor",
+                 				"concept:humanagent",
+                 				"concept:agent",
+                 				"concept:person",
+                 				"concept:politician",
+                 				"concept:athlete",
+                 				"concept:actor",
                  			//ORGANIZATION
-                 				"governmentorganization",
-                 				"company",
-                 				"politicalparty",
+                 				"concept:governmentorganization",
+                 				"concept:company",
+                 				"concept:politicalparty",
     						//PLACE
-                 				"location",
-                                "geopoliticallocation",
-                                "city",
-                                "country",
+                 				"concept:location",
+                                "concept:geopoliticallocation",
+                                "concept:city",
+                                "concept:country",
     						//ART
-                                "creativework",
-                                "musicalbum",
-                                "musicsong",
-                                "movie",
-                                "book",
+                                "concept:creativework",
+                                "concept:musicalbum",
+                                "concept:musicsong",
+                                "concept:movie",
+                                "concept:book",
     						//EVENT
-                                "event",
-                                "militaryeventtype",
-                                "militaryconflict",
-                                "sportsevent",
+                                "concept:event",
+                                "concept:militaryeventtype",
+                                "concept:militaryconflict",
+                                "concept:sportsevent",
     						//TRANSPORT
-                                "vehicle",
+                                "concept:vehicle",
     						//OTHER
-                                "chemical",
-                                "planet"
+                                "concept:chemical",
+                                "concept:planet"
 							));
 		return classNameArray;
 	}
