@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="org.eclipse.debug.ui.STRING_VARIABLE_SELECTION_DIALOG_SECTION">
+		<item value="382" key="DIALOG_WIDTH"/>
+		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText-Regular" key="DIALOG_FONT_NAME"/>
+		<item value="538" key="DIALOG_HEIGHT"/>
+		<item value="243" key="DIALOG_X_ORIGIN"/>
+		<item value="-28" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.debug.ui.SCOPED_SAVE_SELECTION_DIALOG">
 		<item value="289" key="DIALOG_WIDTH"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 		<item value="352" key="DIALOG_HEIGHT"/>
 	</section>
 	<section name="org.eclipse.debug.ui.LAUNCH_CONFIGURATIONS_DIALOG_SECTION">
-		<item value="800" key="DIALOG_WIDTH"/>
-		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
-		<item value=", " key="org.eclipse.debug.ui.EXPANDED_NODES"/>
+		<item value="868" key="DIALOG_WIDTH"/>
+		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText-Regular" key="DIALOG_FONT_NAME"/>
+		<item value="org.eclipse.jdt.launching.localJavaApplication, " key="org.eclipse.debug.ui.EXPANDED_NODES"/>
 		<item value="762" key="org.eclipse.debug.ui.DIALOG_SASH_WEIGHTS_2"/>
-		<item value="640" key="DIALOG_HEIGHT"/>
+		<item value="1057" key="DIALOG_HEIGHT"/>
 		<item value="237" key="org.eclipse.debug.ui.DIALOG_SASH_WEIGHTS_1"/>
 	</section>
 </section>

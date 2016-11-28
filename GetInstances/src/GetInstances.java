@@ -19,10 +19,12 @@ public class GetInstances {
 		
 		long startTime = System.nanoTime();
 		
-		// SPECIFY PARAMETERS
+		// PARAMETERS
 		boolean useSamples = false;
+		
 		boolean dbpedia = false;
-		boolean yago = true;
+		boolean yago = false;
+		boolean opencyc = true;
 		
 		String fInstanceTypesTransitive  = "";
 		String fInstanceTypes = "";
@@ -56,21 +58,42 @@ public class GetInstances {
 				fInstanceTypes = "/Users/curtis/SeminarPaper_KG_files/YAGO/yagoTypes.ttl";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/YAGO/yagoLabels.ttl";
 			}
-			// get all classes for DBpedia
+			// get all classes for YAGO
 			HashSet<String> classes = getYagoClasses();
 			System.out.println(classes);
 			
 			runProcess(1, fInstanceTypesTransitive, fInstanceTypes, fLabels, classes);
 			
 		}
+		
+		if (opencyc) {
+			//OpenCyc files
+			if (useSamples) {
+				fInstanceTypes = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_sample.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_sample.nt";
+			} else {
+				fInstanceTypes = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
+			}
+			// get all classes for OpenCyc
+			HashSet<String> classes = getOpenCycClasses();
+			System.out.println(classes);
+						
+			runProcess(2, fInstanceTypesTransitive, fInstanceTypes, fLabels, classes);
+		}
+		
 		System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
 	}
 		
+		
+
 		private static void runProcess(int kg, String fInstanceTypesTransitive,
 				String fInstanceTypes, String fLabels, HashSet<String> classes) {
 			
-			int skipRows = 1; //skip first row for dbpedia
-			if (kg == 1)
+			int skipRows = 0; 
+			if (kg == 0)
+				skipRows = 1; //skip first row for dbpedia
+			else if (kg == 1)
 				skipRows = 10; //skip first ten rows for yago 
 			
 			HashSet<String> allInstancesSet = new HashSet<String>();
@@ -78,30 +101,8 @@ public class GetInstances {
 			
 			try {
 			// GET ALL INSTANCES FOR ALL CLASSES
-				//create stream objects of the files
-				//http://www.oracle.com/technetwork/articles/java/ma14-java-se-8-streams-2177646.html
-				Stream<String> itTransitive = Files.lines(Paths.get(fInstanceTypesTransitive));
-				Stream<String> it = Files.lines(Paths.get(fInstanceTypes));
-				
-				
-				// read files
-				Map<String, Set<String>> classInstances =
-						//Files.lines(Paths.get(fileName))	
-						Stream.concat(itTransitive, it)
-							.skip(skipRows) //skip rows 
-							.filter(line -> containsClassName(kg, line, classes, allInstancesSet)) //check if line contains a className
-							//collect: group by className (third argument), set of all instance names (first argument): instance a className
-							.collect(Collectors.groupingBy(line -> getO(kg, line), Collectors.mapping(line -> getS(kg, line), Collectors.toSet())));
-			
-				//System.out.println(linesThatHaveDboClass);
-				/*for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
-					System.out.println(entry.getKey() + ": " + entry.getValue().size() + " instances");
-					//write instances to disk
-					Path fileName = Paths.get("results/" + getClassNameOfURI(entry.getKey()) + "Instances.txt");
-					Files.write(fileName, entry.getValue(), Charset.forName("UTF-8"));
-				}
-				*/
-				
+				Map<String, Set<String>> classInstances = getClassInstances(kg, fInstanceTypesTransitive, fInstanceTypes, classes, allInstancesSet, skipRows);
+					
 				
 				System.out.println("allInstancesSet.size():" + allInstancesSet.size());
 				int instanceCount = 0;
@@ -161,8 +162,10 @@ public class GetInstances {
 				String resultFolder = "";
 				if (kg == 0) {
 					resultFolder = "DBpediaResults/";
-				} else {
+				} else if (kg == 1){
 					resultFolder = "yagoResults/";
+				} else if (kg == 2) {
+					resultFolder = "opencycResults/";
 				}
 				//http://stackoverflow.com/questions/2885173/how-to-create-a-file-and-write-to-a-file-in-java
 				//for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
@@ -184,6 +187,43 @@ public class GetInstances {
 
 
 
+	private static Map<String, Set<String>> getClassInstances(
+				int kg, String fInstanceTypesTransitive, String fInstanceTypes, HashSet<String> classes, HashSet<String> allInstancesSet, int skipRows) {
+		//create stream objects of the files
+		//http://www.oracle.com/technetwork/articles/java/ma14-java-se-8-streams-2177646.html
+		Map<String, Set<String>> classInstances = null;
+		try {
+			if (fInstanceTypesTransitive != "") { //check transitive type file
+				Stream<String> itTransitive = Files.lines(Paths.get(fInstanceTypesTransitive));
+				Stream<String> it = Files.lines(Paths.get(fInstanceTypes));
+				// read files
+				classInstances =
+						Stream.concat(itTransitive, it)
+							.skip(skipRows) //skip rows 
+							.filter(line -> containsClassName(kg, line, classes, allInstancesSet)) //check if line contains a className
+							//collect: group by className (third argument), set of all instance names (first argument): instance a className
+							.collect(Collectors.groupingBy(line -> getO(kg, line), Collectors.mapping(line -> getS(kg, line), Collectors.toSet())));
+			} else { //only one file
+				Stream<String> it = Files.lines(Paths.get(fInstanceTypes));
+				// read files
+				classInstances =	
+						it
+							.skip(skipRows) //skip rows 
+							.filter(line -> containsClassName(kg, line, classes, allInstancesSet)) //check if line contains a className
+							//collect: group by className (third argument), set of all instance names (first argument): instance a className
+							.collect(Collectors.groupingBy(line -> getO(kg, line), Collectors.mapping(line -> getS(kg, line), Collectors.toSet())));
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("ERROR READING FILES FOR GETTING THE CLASS INSTANCES");
+		}
+		return classInstances;
+		}
+
+
+
 	/**
 	  * Check if line contains an instance name with english label
 	  * @param line
@@ -197,8 +237,8 @@ public class GetInstances {
 		//get label and English label string
 		String labelString = "";
 		String englishLabel = "";
-		if (kg == 0) {
-			//DBpedia
+		if (kg == 0 || kg == 2) {
+			//DBpedia and OpenCyc
 			labelString = "<http://www.w3.org/2000/01/rdf-schema#label>";
 			englishLabel = "@en";
 		} else {
@@ -255,13 +295,13 @@ public class GetInstances {
 	 */
 	private static String getLabel(int kg, String o) {
 		String returnString = "";
-		if (kg==0) {
-			//DBpedia: LABEL_TO_KEEP@en\s
+		if (kg==0 || kg == 2) {
+			//DBpedia and OpenCyc: LABEL_TO_KEEP@en\s
 			returnString = o.substring(0, o.length()-4); //-4 due to whitespace created by getSPO in the end
-		} else {
+		} else if (kg == 1) {
 			//YAGO: "LABEL_TO_KEEP"@eng .\n
 			returnString = o.substring(1, o.length()-7);			
-		}	
+		}
 		//System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
@@ -285,12 +325,18 @@ public class GetInstances {
 			typeString = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
 			classString = "<http://dbpedia.org/ontology/";
 			classString2 = "<http://dbpedia.org/ontology/";
-		} else {
+		} else if (kg == 1) {
 			//YAGO
 			typeString = "rdf:type";
 			classString = "<wordnet_";
 			classString2 = "<yagoLegalActor";
+		} else if (kg == 2) {//opencyc
+			typeString = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+			classString = "<http://sw.opencyc.org/concept/";
+			classString2 = "<http://sw.opencyc.org/concept/";
+			
 		}
+			
 		//check if line was complete (yago contains single element references as line)
 		if (spo.length >= 3) {
 			// check if property is rdfs:type
@@ -321,9 +367,12 @@ public class GetInstances {
 		if (kg ==0) {
 			//"<http://dbpedia.org/ontology/CLASSNAME_TO_KEEP>"
 			returnString = o.substring(29, o.length()-1);
-		} else {
+		} else if (kg == 1) {
 			//"<CLASSNAME_TO_KEEP> ."
 			returnString = o.substring(1, o.length()-3);
+		} else if (kg == 2) {
+			//<http://sw.opencyc.org/concept/CLASSNAME_TO_KEEP>
+			returnString = o.substring(31, o.length()-1);
 		}
 		//System.out.println("getClassNameOfURI: " + returnString);
 		return returnString;
@@ -337,7 +386,7 @@ public class GetInstances {
 	 */
 	private static String[] getSPO(int kg, String line) {
 		String[] words;
-		if (kg == 0) { //DBEPDIA
+		if (kg == 0 || kg == 2) { //DBEPDIA or OpenCyc
 			// replace quotes in object and split line to s,p,o triple
 			if (line.contains("\"")) {
 				String[] allWords = line.replace("\"", "").split("\\s+");
@@ -476,8 +525,55 @@ public class GetInstances {
 									"wordnet_chemical_element_114622893",	
 									"wordnet_substance_100019613",
 									"wordnet_celestial_body_109239740",
-									"wordnet_planet_109394007")
-									);
+									"wordnet_planet_109394007"
+									));
+		return classNameArray;
+	}
+	private static HashSet<String> getOpenCycClasses() {
+		HashSet<String> classNameArray = new HashSet<String>();
+		classNameArray.addAll(Arrays.asList(
+							//PERSON
+								"Mx4rvVinb5wpEbGdrcN5Y29ycA", //intelligent agent
+								"Mx4rvVinsZwpEbGdrcN5Y29ycA", //legal agent
+								"Mx4rvViAkpwpEbGdrcN5Y29ycA", //person
+								"Mx4rvVjntpwpEbGdrcN5Y29ycA", //politician
+								"Mx4rvVi--5wpEbGdrcN5Y29ycA", //athlete
+								"Mx4rvVjaHZwpEbGdrcN5Y29ycA", //actor
+							//ORGANIZATION
+								"Mx4rv3HKmpwpEbGdrcN5Y29ycA", //governmental organization
+								"Mx4rvVjZ_ZwpEbGdrcN5Y29ycA", //publicly held corporation
+								"Mx4rvVj82pwpEbGdrcN5Y29ycA", //political party
+							//PLACE
+								"Mx4rvVjTtJwpEbGdrcN5Y29ycA", //place
+								"Mx4rrPJDpCTfQdeS8IqP1a0lBw", //populated place
+								"Mx4rvVjnZ5wpEbGdrcN5Y29ycA", //city
+								"Mx4rv33BppwpEbGdrcN5Y29ycA", //village
+								"Mx4rvViIeZwpEbGdrcN5Y29ycA", //country
+							//ART
+								"Mx4rwAXXLZwpEbGdrcN5Y29ycA", //audio conceptual work
+								"Mx4rwLmi3JwpEbGdrcN5Y29ycA", //album cw
+								"Mx4rwP3teJwpEbGdrcN5Y29ycA", //song cw
+								"Mx4rv6i4pJwpEbGdrcN5Y29ycA", //single recording cw
+								"Mx4rv973YpwpEbGdrcN5Y29ycA", //movie cw
+								"Mx4rwJaXepwpEbGdrcN5Y29ycA", //book copy
+							//EVENT
+								"Mx4rvViADZwpEbGdrcN5Y29ycA", //event
+								"Mx4rvnSeAJwpEbGdrcN5Y29ycA", //military conflict
+								"Mx4rvViPO5wpEbGdrcN5Y29ycA", //social occurrence
+								"Mx4rvVjzBJwpEbGdrcN5Y29ycA", //sports event
+							//TRANSPORT
+								"Mx4rvVjT95wpEbGdrcN5Y29ycA", //road vehicle
+								"Mx4rvVjUgJwpEbGdrcN5Y29ycA", //conveyance
+								"Mx4rvVjVQJwpEbGdrcN5Y29ycA", //transportation device
+								"Mx4rvViVwZwpEbGdrcN5Y29ycA", //automobile
+								"Mx4rvVi-55wpEbGdrcN5Y29ycA", //watercraft
+								"Mx4rwQtlDpwpEbGdrcN5Y29ycA", //spacecraft
+							//OTHER
+								"Mx4rvVjNlZwpEbGdrcN5Y29ycA", //chemical substance
+								"Mx4r-n4BEPzcQdaYSaNf0XKNIw", //celestial object
+								"Mx4rvVjQs5wpEbGdrcN5Y29ycA", //celestial body
+								"Mx4rvVjRL5wpEbGdrcN5Y29ycA" //planet
+							));
 		return classNameArray;
 	}
 }
