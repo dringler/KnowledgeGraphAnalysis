@@ -105,8 +105,8 @@ public class GetInstances {
 				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
 			} else {
-				fType1 = "";
-				fLabels = "";
+				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata.nt";
 			}
 			// get all classes for Wikidata
 			HashSet<String> classes = getWikidataClasses();
@@ -271,7 +271,7 @@ public class GetInstances {
 		if (kg == 0 || kg == 2 || kg == 4) {
 			//DBpedia, OpenCyc, and Wikidata
 			labelString = "<http://www.w3.org/2000/01/rdf-schema#label>";
-			englishLabel = "@en "; //include whitespace to do not match @en-gb or @en-ca in wikidata
+			englishLabel = "@en";
 		} else if (kg == 1) {
 			//YAGO
 			labelString = "rdfs:label";
@@ -340,7 +340,7 @@ public class GetInstances {
 		} else if (kg == 3) { //NELL
 			returnString = getEntityLiteralStringsInNell(kg, line);
 		}
-		//System.out.println("getLabel: " + returnString);
+		System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
 	/**
@@ -435,7 +435,7 @@ public class GetInstances {
 			//<http://www.wikidata.org/entity/CLASSNAME_TO_KEEP>
 			returnString = o.substring(32, o.length()-1);
 		}
-		//System.out.println("getClassNameOfURI: " + returnString);
+		System.out.println("getClassNameOfURI: " + returnString);
 		return returnString;
 	}
 

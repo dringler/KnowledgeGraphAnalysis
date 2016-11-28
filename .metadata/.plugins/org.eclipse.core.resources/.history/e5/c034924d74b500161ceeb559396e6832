@@ -20,13 +20,13 @@ public class GetInstances {
 		long startTime = System.nanoTime();
 		
 		// PARAMETERS
-		boolean useSamples = true;
+		boolean useSamples = false;
 		
 		boolean dbpedia = false; //0
 		boolean yago = false; //1
-		boolean opencyc = false; //2
+		boolean opencyc = true; //2
 		boolean nell = false; //3
-		boolean wikidata = true; //4
+		boolean wikidata = false; //4
 		
 		String fType1  = "";
 		String fType2 = "";

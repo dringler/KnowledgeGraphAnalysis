@@ -71,8 +71,8 @@ public class GetInstances {
 		if (opencyc) {
 			//OpenCyc files
 			if (useSamples) {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_s.nt";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_s.nt";
+				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_sample.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_sample.nt";
 			} else {
 				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
@@ -102,13 +102,13 @@ public class GetInstances {
 		}
 		if (wikidata) {
 			if (useSamples) {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
+				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_sample.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_sample.nt";
 			} else {
 				fType1 = "";
 				fLabels = "";
 			}
-			// get all classes for Wikidata
+			// get all classes for OpenCyc
 			HashSet<String> classes = getWikidataClasses();
 			System.out.println(classes);
 						
@@ -225,17 +225,17 @@ public class GetInstances {
 		Map<String, Set<String>> classInstances = null;
 		try {
 			if (fType2 != "") { //concat if two files are passed to method
-				Stream<String> it1 = Files.lines(Paths.get(fType1));
-				Stream<String> it2 = Files.lines(Paths.get(fType2));
+				Stream<String> itTransitive = Files.lines(Paths.get(fType1));
+				Stream<String> it = Files.lines(Paths.get(fType2));
 				// read files
 				classInstances =
-						Stream.concat(it1, it2)
+						Stream.concat(itTransitive, it)
 							.skip(skipRows) //skip rows 
 							.filter(line -> containsClassName(kg, line, classes, allInstancesSet)) //check if line contains a className
 							//collect: group by className (third argument), set of all instance names (first argument): instance a className
 							.collect(Collectors.groupingBy(line -> getO(kg, line), Collectors.mapping(line -> getS(kg, line), Collectors.toSet())));
 			} else { //only one file
-				Stream<String> it = Files.lines(Paths.get(fType1));
+				Stream<String> it = Files.lines(Paths.get(fType2));
 				// read files
 				classInstances =	
 						it
@@ -271,7 +271,7 @@ public class GetInstances {
 		if (kg == 0 || kg == 2 || kg == 4) {
 			//DBpedia, OpenCyc, and Wikidata
 			labelString = "<http://www.w3.org/2000/01/rdf-schema#label>";
-			englishLabel = "@en "; //include whitespace to do not match @en-gb or @en-ca in wikidata
+			englishLabel = "@en";
 		} else if (kg == 1) {
 			//YAGO
 			labelString = "rdfs:label";
@@ -340,7 +340,7 @@ public class GetInstances {
 		} else if (kg == 3) { //NELL
 			returnString = getEntityLiteralStringsInNell(kg, line);
 		}
-		//System.out.println("getLabel: " + returnString);
+		System.out.println("getLabel: " + returnString);
 		return  returnString;
 	}
 	/**
@@ -435,7 +435,7 @@ public class GetInstances {
 			//<http://www.wikidata.org/entity/CLASSNAME_TO_KEEP>
 			returnString = o.substring(32, o.length()-1);
 		}
-		//System.out.println("getClassNameOfURI: " + returnString);
+		System.out.println("getClassNameOfURI: " + returnString);
 		return returnString;
 	}
 

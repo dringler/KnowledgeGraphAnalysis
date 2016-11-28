@@ -71,8 +71,8 @@ public class GetInstances {
 		if (opencyc) {
 			//OpenCyc files
 			if (useSamples) {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_s.nt";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_s.nt";
+				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_sample.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_sample.nt";
 			} else {
 				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
@@ -102,13 +102,13 @@ public class GetInstances {
 		}
 		if (wikidata) {
 			if (useSamples) {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
+				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_sample.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_sample.nt";
 			} else {
 				fType1 = "";
 				fLabels = "";
 			}
-			// get all classes for Wikidata
+			// get all classes for OpenCyc
 			HashSet<String> classes = getWikidataClasses();
 			System.out.println(classes);
 						
@@ -169,7 +169,8 @@ public class GetInstances {
 						String allLabels = null;
 						if (instancesWithLabel.get(instance) == null) {
 							noLabelCounter += 1;
-						} else {	
+						} else {
+							
 							for (String label : instancesWithLabel.get(instance)) {
 								if (allLabels == null) {
 									allLabels = label;
@@ -177,13 +178,17 @@ public class GetInstances {
 									allLabels = allLabels + "\t" + label;
 								}
 							}
-						}			
-						instanceWithLabel.add(instance + "\t" + allLabels);			
+						}
+			
+						instanceWithLabel.add(instance + "\t" + allLabels);
+						
 					}
 					//add map (instance, label) to class map
 					classInstancesWithLabel.put(entry.getKey(), instanceWithLabel);
-				}						
-				System.out.println("No english label found for "+ noLabelCounter + " instances");		
+				}
+						
+				System.out.println("No english label found for "+ noLabelCounter + " instances");
+						
 				
 				//write to file
 				String resultFolder = "";
@@ -195,8 +200,6 @@ public class GetInstances {
 					resultFolder = "opencycResults/";
 				} else if (kg == 3) {
 					resultFolder ="nellResults/";
-				} else if (kg == 4) {
-					resultFolder = "wikidataResults/";
 				}
 				//http://stackoverflow.com/questions/2885173/how-to-create-a-file-and-write-to-a-file-in-java
 				//for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
@@ -225,17 +228,17 @@ public class GetInstances {
 		Map<String, Set<String>> classInstances = null;
 		try {
 			if (fType2 != "") { //concat if two files are passed to method
-				Stream<String> it1 = Files.lines(Paths.get(fType1));
-				Stream<String> it2 = Files.lines(Paths.get(fType2));
+				Stream<String> itTransitive = Files.lines(Paths.get(fType1));
+				Stream<String> it = Files.lines(Paths.get(fType2));
 				// read files
 				classInstances =
-						Stream.concat(it1, it2)
+						Stream.concat(itTransitive, it)
 							.skip(skipRows) //skip rows 
 							.filter(line -> containsClassName(kg, line, classes, allInstancesSet)) //check if line contains a className
 							//collect: group by className (third argument), set of all instance names (first argument): instance a className
 							.collect(Collectors.groupingBy(line -> getO(kg, line), Collectors.mapping(line -> getS(kg, line), Collectors.toSet())));
 			} else { //only one file
-				Stream<String> it = Files.lines(Paths.get(fType1));
+				Stream<String> it = Files.lines(Paths.get(fType2));
 				// read files
 				classInstances =	
 						it
@@ -268,10 +271,10 @@ public class GetInstances {
 		//get label and English label string
 		String labelString = "";
 		String englishLabel = "";
-		if (kg == 0 || kg == 2 || kg == 4) {
-			//DBpedia, OpenCyc, and Wikidata
+		if (kg == 0 || kg == 2) {
+			//DBpedia and OpenCyc
 			labelString = "<http://www.w3.org/2000/01/rdf-schema#label>";
-			englishLabel = "@en "; //include whitespace to do not match @en-gb or @en-ca in wikidata
+			englishLabel = "@en";
 		} else if (kg == 1) {
 			//YAGO
 			labelString = "rdfs:label";
@@ -279,6 +282,7 @@ public class GetInstances {
 		} else if (kg == 3) {
 			labelString = "generalizations";
 			englishLabel = "concept";
+			
 		}
 		//check if line was complete (yago contains single element references as line)
 		if (spo.length >= 3) {
@@ -328,9 +332,11 @@ public class GetInstances {
 	  * @returns substring without label
 	 */
 	private static String getLabel(int kg, String line) {
-		String returnString = "";	
-		if (kg==0 || kg == 2 || kg == 4) {
-			//DBpedia, OpenCyc, and Wikidata: LABEL_TO_KEEP@en\s
+		String returnString = "";
+		
+		
+		if (kg==0 || kg == 2) {
+			//DBpedia and OpenCyc: LABEL_TO_KEEP@en\s
 			String o = getO(kg, line);
 			returnString = o.substring(0, o.length()-4); //-4 due to whitespace created by getSPO in the end
 		} else if (kg == 1) {
@@ -386,10 +392,6 @@ public class GetInstances {
 			typeString = "generalizations";
 			classString = "concept:";
 			classString2 = "concept:";
-		} else if (kg == 4) { //wikidata
-			typeString = "<http://www.wikidata.org/prop/direct/P31>";
-			classString = "<http://www.wikidata.org/entity/";
-			classString2 = "<http://www.wikidata.org/entity/";
 		}
 			
 		//check if line was complete (yago contains single element references as line)
@@ -435,7 +437,7 @@ public class GetInstances {
 			//<http://www.wikidata.org/entity/CLASSNAME_TO_KEEP>
 			returnString = o.substring(32, o.length()-1);
 		}
-		//System.out.println("getClassNameOfURI: " + returnString);
+		System.out.println("getClassNameOfURI: " + returnString);
 		return returnString;
 	}
 

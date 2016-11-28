@@ -105,8 +105,8 @@ public class GetInstances {
 				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
 			} else {
-				fType1 = "";
-				fLabels = "";
+				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata.nt";
+				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata.nt";
 			}
 			// get all classes for Wikidata
 			HashSet<String> classes = getWikidataClasses();
