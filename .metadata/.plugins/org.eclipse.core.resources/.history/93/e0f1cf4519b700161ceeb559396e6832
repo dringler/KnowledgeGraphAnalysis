@@ -1,0 +1,183 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
+
+
+public class CountSameAs {
+
+	public static void main(String[] args) {
+		long startTime = System.nanoTime();
+		
+		// PARAMETERS
+		//boolean useSamples = false;
+		
+		boolean dbpedia = true; //0
+		boolean yago = false; //1
+		boolean opencyc = false; //2
+		boolean nell = false; //3
+		boolean wikidata = false; //4
+		
+		
+		ClassMapping cM = new ClassMapping();
+		ArrayList<String> classNames = getClassNames();
+		
+		HashMap<String, HashSet<String>> dInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> yInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> oInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> nInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> wInstances = new HashMap<String, HashSet<String>>();
+		
+		HashMap<String, Integer> dCountMap = new HashMap<String, Integer>();
+		
+		//get all instances of all classes
+		//for every class (can contain more than one className for each KG)
+		for (String className : classNames) {
+			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);
+			System.out.println(classMap);
+			
+			
+			//for each className in DBpedia
+			for (String kgClassName : classMap.get("d")) {
+				dInstances.put(kgClassName, new HashSet<String>());
+				Path fileName = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/" + kgClassName + "InstancesWithLabels.txt");
+				try (Stream<String> stream = Files.lines(fileName)) {
+					stream.forEach(line -> getInstance(line, kgClassName, dInstances));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			//System.out.println(dInstances.get(kgClassName));
+			//initialize countMap for DBpedia
+			dCountMap.put(kgClassName, 0);
+			}
+			//... for other KGS (yago, opencyc)
+		}//done getting all instances of all classes
+		
+		
+		//count owl:sameAs link
+		
+		
+		
+		//DBpedia to OpenCyc
+		Path d2o = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAs/opencyc_links.nt");
+		System.out.println("DBpedia to OpenCyc counts:");
+		getCounts(d2o, cM, classNames, dInstances, dCountMap);
+		
+		
+		
+		
+		//DBpedia to YAGO
+		Path d2y = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAs/yago_links.nt");
+		System.out.println("DBpedia to YAGO counts:");
+		getCounts(d2y, cM, classNames, dInstances, dCountMap);
+		/*
+		//YAGO to DBpedia
+		Path y2d = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/yagoDBpediaInstances.ttl");
+		
+		//OpenCyc to DBpedia
+		Path o2d = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt");
+		*/
+		
+		
+
+		System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
+	}
+	
+	private static void getCounts(Path d2o, ClassMapping cM,
+			ArrayList<String> classNames,
+			HashMap<String, HashSet<String>> dInstances,
+			HashMap<String, Integer> dCountMap) {
+		try (Stream<String> stream = Files.lines(d2o)) {
+			stream.forEach(line -> checkAndCountLinks(line, cM, classNames, dInstances, dCountMap));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(dCountMap);
+		
+	}
+
+	private static void checkAndCountLinks(String line,
+			ClassMapping cM, ArrayList<String> classNames, HashMap<String, HashSet<String>> dInstances,
+			HashMap<String, Integer> countMap) {
+		//split file on whitespace!
+		String[] words = line.split("\\s+");
+		//for all classes
+		for (String className : classNames) {
+			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);
+			//for all kgClassNames in DBpedia
+			for (String kgClassName : classMap.get("d")) {
+				//check if s (word[0] is contained in the instance list
+				if(dInstances.get(kgClassName).contains(words[0])) {
+					//System.out.println(words[0]);
+					countMap.put(kgClassName, countMap.get(kgClassName) + 1);
+				}
+			}
+			
+		}
+	}
+
+	/**
+	  * Split line on tab and add first element (instance uri) to HashMap
+	  * @param line
+	 * @param kgClassName 
+	 * @param dInstances 
+	 */
+	private static void getInstance(String line, String kgClassName, HashMap<String, HashSet<String>> dInstances) {
+		String[] words = line.split("\\t");
+		dInstances.get(kgClassName).add(words[0]);
+	}
+
+
+	private static ArrayList<String> getClassNames() {
+		ArrayList<String> classNames = new ArrayList<String>();
+		classNames.addAll(Arrays.asList(
+							//PERSON
+							/*	"Agent",
+								"Person",
+								"Politician",*/
+								"Athlete",
+								"Actor",/*
+							//ORGANIZATION
+								"GovernmentOrganization",
+								"Company",
+								"PoliticalParty",
+							//PLACE
+								"Place",
+								"PopulatedPlace",*/
+								"City_Village_Town",
+								"Country"/*,
+							//ART
+								"Work",
+								"MusicalWork",
+								"Album",
+								"Song",
+								"Single",
+								"Movie",
+								"Book",
+							//EVENT	
+								"Event",
+								"MilitaryConflict",
+								"SocietalEvent",
+								"SportsEvent",
+							//TRANSPORT
+								"Vehicle",
+								"Automobile",
+								"Ship",
+								"Spacecraft",
+							//OTHER
+								"ChemicalElement_Substance",
+								"CelestialBody_Object",
+								"Planet"*/
+							));
+		return classNames;
+	}
+	
+	
+}

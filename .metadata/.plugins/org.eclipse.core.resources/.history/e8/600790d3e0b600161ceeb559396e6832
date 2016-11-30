@@ -1,0 +1,75 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+
+public class ClassMapping {
+	Map<String, Set<String>> fullClassMap = new HashMap<String, Set<String>>();
+	String className;
+	//Map<String, String> singleClassMap = new HashMap<String, String>();
+	
+	public ClassMapping() {
+		this.fullClassMap = initFullClassMap();
+	}
+
+	private Map<String, Set<String>> initFullClassMap() {
+		Map<String, Set<String>> fullClassMap = new HashMap<String, Set<String>>();
+		Set<String> kgClasses = new HashSet<String>();
+		String classNames[] = getClassNames();
+		
+		fullClassMap.put("Actor", kgClasses);
+		return fullClassMap;
+	}
+
+	private String[] getClassNames() {
+		HashSet<String> classNames = new HashSet<String>();
+		classNames.addAll(Arrays.asList(
+							//PERSON
+								"Agent",
+								"Person",
+								"Politician",
+								"Athlete",
+								"Actor",
+							//ORGANIZATION
+								"GovernmentAgency",
+								"Company",
+								"PoliticalParty",
+							//PLACE
+								"Place",
+								"PopulatedPlace",
+								"City",
+								"Village",
+								"Town",
+								"Country",
+							//ART
+								"Work",
+								"MusicalWork",
+								"Album",
+								"Song",
+								"Single",
+								"Film",
+								"Book",
+							//EVENT	
+								"Event",
+								"MilitaryConflict",
+								"SocietalEvent",
+								"SportsEvent",
+							//TRANSPORT
+								"MeanOfTransportation",
+								"Automobile",
+								"Ship",
+								"Spacecraft",
+							//OTHER
+								"ChemicalSubstance",
+								"ChemicalElement",
+								"CelestialBody",
+								"Planet")
+								);
+		return classNames;
+	}
+
+
+
+}

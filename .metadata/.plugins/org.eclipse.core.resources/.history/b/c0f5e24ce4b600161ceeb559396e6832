@@ -1,0 +1,82 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+
+public class ClassMapping {
+	Map<String, Set<String>> fullClassMap = new HashMap<String, Set<String>>();
+	String className;
+	//Map<String, String> singleClassMap = new HashMap<String, String>();
+	
+	public ClassMapping() {
+		this.fullClassMap = initFullClassMap();
+	}
+
+	private Map<String, Set<String>> initFullClassMap() {
+		Map<String, Set<String>> fullClassMap = new HashMap<String, Set<String>>();
+		Set<String> kgClasses = new HashSet<String>();
+		Set<String> classNames = getClassNames();
+		for (String className : classNames) {
+			System.out.println(className);
+		}
+		
+		fullClassMap.put("Actor", kgClasses);
+		return fullClassMap;
+	}
+	
+	public Map<String, Set<String>> getClassMap() {
+		
+		return this.fullClassMap;
+	}
+
+	private HashSet<String> getClassNames() {
+		HashSet<String> classNames = new HashSet<String>();
+		classNames.addAll(Arrays.asList(
+							//PERSON
+								"Agent",
+								"Person",
+								"Politician",
+								"Athlete",
+								"Actor",
+							//ORGANIZATION
+								"GovernmentOrganization",
+								"Company",
+								"PoliticalParty",
+							//PLACE
+								"Place",
+								"PopulatedPlace",
+								"City_Village_Town",
+								"Country",
+							//ART
+								"Work",
+								"MusicalWork",
+								"Album",
+								"Song",
+								"Single",
+								"Movie",
+								"Book",
+							//EVENT	
+								"Event",
+								"MilitaryConflict",
+								"SocietalEvent",
+								"SportsEvent",
+							//TRANSPORT
+								"Vehicle",
+								"Automobile",
+								"Ship",
+								"Spacecraft",
+							//OTHER
+								"ChemicalElement_Substance",
+								"CelestialBody_Object",
+								"Planet")
+								);
+		return classNames;
+	}
+
+
+
+
+
+}

@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<watchExpressions>\n<expression enabled\="true" text\="sol.getResource(&quot;i&quot;).toString()"/>\n<expression enabled\="true" text\="sol.getLiteral(&quot;label&quot;).toString()"/>\n</watchExpressions>\n
+prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<watchExpressions>\n<expression enabled\="true" text\="dInstances.get(kgClassName)"/>\n</watchExpressions>\n

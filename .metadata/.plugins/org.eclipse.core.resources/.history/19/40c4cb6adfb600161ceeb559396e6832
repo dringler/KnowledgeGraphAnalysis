@@ -1,0 +1,38 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+
+public class ClassMapping {
+	Map<String, Map<String,String>> fullClassMap = new HashMap<String, Map<String,String>>();
+	String className;
+	Map<String, String> singleClassMap = new HashMap<String, String>();
+	
+	public ClassMapping() {
+		this.fullClassMap = initFullClassMap();
+	}
+
+	private Map<String, Map<String, String>> initFullClassMap() {
+		Map<String, Map<String,String>> fullClassMap = new HashMap<String, Map<String,String>>();
+		Set<String> classNames = getClassNames();
+		Map<String, String> kgClassNames = getKGclassNames();
+		fullClassMap.put(key, value)
+		return null;
+	}
+
+	private Set<String> getClassNames() {
+		Set<String> classNames = new HashSet<String>();
+		return null;
+	}
+
+	public Map<String, String> getClassMap(String className) {	
+		return this.fullClassMap.get(className);
+	}
+	
+	
+	
+	
+	
+	
+
+}

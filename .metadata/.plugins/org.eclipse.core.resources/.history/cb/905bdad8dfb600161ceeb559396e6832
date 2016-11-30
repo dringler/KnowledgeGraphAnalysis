@@ -1,0 +1,31 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+
+public class ClassMapping {
+	Map<String, Set<String>> fullClassMap = new HashMap<String, Set<String>>();
+	String className;
+	//Map<String, String> singleClassMap = new HashMap<String, String>();
+	
+	public ClassMapping() {
+		this.fullClassMap = initFullClassMap();
+	}
+
+	private Map<String, Set<String>> initFullClassMap() {
+		Map<String, Set<String>> fullClassMap = new HashMap<String, Set<String>>();
+		
+		fullClassMap.put("Actor", value)
+		return null;
+	}
+
+
+
+	
+	
+	
+	
+	
+
+}

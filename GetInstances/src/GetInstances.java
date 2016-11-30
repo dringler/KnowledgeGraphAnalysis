@@ -20,13 +20,13 @@ public class GetInstances {
 		long startTime = System.nanoTime();
 		
 		// PARAMETERS
-		boolean useSamples = true;
+		boolean useSamples = false;
 		
 		boolean dbpedia = false; //0
 		boolean yago = false; //1
-		boolean opencyc = false; //2
+		boolean opencyc = true; //2
 		boolean nell = false; //3
-		boolean wikidata = true; //4
+		boolean wikidata = false; //4
 		
 		String fType1  = "";
 		String fType2 = "";
@@ -72,9 +72,11 @@ public class GetInstances {
 			//OpenCyc files
 			if (useSamples) {
 				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_s.nt";
+				fType2 = "";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest_s.nt";
 			} else {
 				fType1 = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
+				fType2 = "";
 				fLabels = "/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt";
 			}
 			// get all classes for OpenCyc
@@ -102,11 +104,17 @@ public class GetInstances {
 		}
 		if (wikidata) {
 			if (useSamples) {
-				fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
-				fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
+				//local
+				//fType1 = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
+				//fLabels = "/Users/curtis/SeminarPaper_KG_files/Wikidata/wikidata_s.nt";
+				//volume
+				fType1 = "/Volumes/Samsung/Wikidata/wikidata_s.nt";
+				fType2 = "";
+				fLabels = "/Volumes/Samsung/Wikidata/wikidata_s.nt";
 			} else {
-				fType1 = "";
-				fLabels = "";
+				fType1 = "/Volumes/Samsung/Wikidata/wikidata.nt";
+				fType2 = "";
+				fLabels = "/Volumes/Samsung/Wikidata/wikidata.nt";
 			}
 			// get all classes for Wikidata
 			HashSet<String> classes = getWikidataClasses();
@@ -196,7 +204,10 @@ public class GetInstances {
 				} else if (kg == 3) {
 					resultFolder ="nellResults/";
 				} else if (kg == 4) {
-					resultFolder = "wikidataResults/";
+					//local
+					//resultFolder = "wikidataResults/";
+					//volume
+					resultFolder = "/Volumes/Samsung/Wikidata/wikidataResults/";
 				}
 				//http://stackoverflow.com/questions/2885173/how-to-create-a-file-and-write-to-a-file-in-java
 				//for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
@@ -468,12 +479,8 @@ public class GetInstances {
 					}
 					wordCounter += 1;
 				}
-				
-				//
 				String[] preWords = {s,p,o};
-				words = preWords;
-				
-				
+				words = preWords;			
 			} else {
 				String[] preWords = line.split("\\s+"); //split on whitespace
 				words = preWords;
@@ -615,6 +622,7 @@ public class GetInstances {
 								"Mx4rv33BppwpEbGdrcN5Y29ycA", //village
 								"Mx4rvViIeZwpEbGdrcN5Y29ycA", //country
 							//ART
+								"Mx4rwClAZJwpEbGdrcN5Y29ycA", //conceptual work
 								"Mx4rwAXXLZwpEbGdrcN5Y29ycA", //audio conceptual work
 								"Mx4rwLmi3JwpEbGdrcN5Y29ycA", //album cw
 								"Mx4rwP3teJwpEbGdrcN5Y29ycA", //song cw

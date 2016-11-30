@@ -1,0 +1,347 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
+public class ClassMapping {
+	HashMap<String, HashMap<String, ArrayList<String>>> fullClassMap = new HashMap<String, HashMap<String, ArrayList<String>>>();
+	String className;
+	//Map<String, String> singleClassMap = new HashMap<String, String>();
+	
+	public ClassMapping() {
+		this.fullClassMap = initFullClassMap();
+	}
+	
+	public HashMap<String, ArrayList<String>> getClassMap(String className) {	
+		return this.fullClassMap.get(className);
+	}
+
+	private HashMap<String, HashMap<String, ArrayList<String>>> initFullClassMap() {
+		HashMap<String, HashMap<String, ArrayList<String>>> fullClassMap = new HashMap<String, HashMap<String, ArrayList<String>>>();
+		
+		//PERSON
+			//Legal or causal agent
+			fullClassMap.put("Agent", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Agent")));
+						put("y", new ArrayList<String>(Arrays.asList("yagoLegalActor", "wordnet_causal_agent_100007347")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//Person or Human
+			fullClassMap.put("Person", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Person")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_person_100007846")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//Politician
+			fullClassMap.put("Politician", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Politician")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_politician_110450303", "wordnet_politician_110451263")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);	
+			//ATHLETE
+			fullClassMap.put("Athlete", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Athlete")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_athlete_109820263")));
+						put("w", new ArrayList<String>(Arrays.asList("Q2066131")));
+						put("o", new ArrayList<String>(Arrays.asList("Mx4rvVi--5wpEbGdrcN5Y29ycA")));
+						put("n", new ArrayList<String>(Arrays.asList("athlete")));
+					}}
+			);
+			//ACTOR
+			fullClassMap.put("Actor",
+					new HashMap<String, ArrayList<String>>() {{
+						put("d", new ArrayList<String>(Arrays.asList("Actor")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_actor_109767197")));
+						put("w", new ArrayList<String>(Arrays.asList("Q33999")));
+						put("o", new ArrayList<String>(Arrays.asList("Mx4rvVjaHZwpEbGdrcN5Y29ycA")));
+						put("n", new ArrayList<String>(Arrays.asList("actor")));
+					}}
+			);
+		//ORGANIZATION		
+			//Government organization or agency
+			fullClassMap.put("GovernmentOrganization", 
+				new HashMap<String, ArrayList<String>>() {{
+					put("d",  new ArrayList<String>(Arrays.asList("GovernmentAgency")));
+					put("y", new ArrayList<String>(Arrays.asList("wordnet_government_108050678")));
+					put("w", new ArrayList<String>(Arrays.asList("")));
+					put("o", new ArrayList<String>(Arrays.asList("")));
+					put("n", new ArrayList<String>(Arrays.asList("")));
+				}}
+			);
+			//Publicly held corporation or (stock) company
+			fullClassMap.put("Company", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Company")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_stock_company_108383310")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//PoliticalParty
+			fullClassMap.put("PoliticalParty", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("PoliticalParty")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_party_108256968")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+		//PLACE
+			//(geographic) place or location
+			fullClassMap.put("Place", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Place")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_location_100027167")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//populated place or (human) settlement
+			fullClassMap.put("PopulatedPlace", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("PopulatedPlace")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_settlement_108672562")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//City / Village / Town
+			fullClassMap.put("City_Village_Town", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("City", "Village", "Town")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_city_108524735", "wordnet_village_108672738", "wordnet_town_108665504")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//Country
+			fullClassMap.put("Country", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Country")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_country_108544813")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+		//ART
+			//(creative or conceptual) work
+			fullClassMap.put("Work", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Work")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_work_104599396")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//musical work
+			fullClassMap.put("MusicalWork", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("MusicalWork")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_musical_composition_107037465")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//album
+			fullClassMap.put("Album", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Album")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_album_106591815")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//song or music track
+			fullClassMap.put("Song", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Song")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_song_107048000")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//single
+			fullClassMap.put("Single", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Single")));
+						//put("y", new ArrayList<String>(Arrays.asList("")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//movie or film
+			fullClassMap.put("Movie", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Film")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_movie_106613686")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//book
+			fullClassMap.put("Book", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Book")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_book_106410904", "wordnet_book_102870092")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+		//EVENT
+			//Event
+			fullClassMap.put("Event", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Event")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_event_100029378")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//Military or armed conflict or war
+			fullClassMap.put("MilitaryConflict", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("MilitaryConflict")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_war_101236296")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//SocietalEvent or celebration
+			fullClassMap.put("SocietalEvent", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("SocietalEvent")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_social_event_107288639")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//SportsEvent
+			fullClassMap.put("SportsEvent", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("SportsEvent")));
+						//put("y", new ArrayList<String>(Arrays.asList("")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+		//TRANSPORT
+			//(motor or road) Vehicle / Mean of Transportation
+			fullClassMap.put("Vehicle", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("MeanOfTransportation")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_vehicle_104524313", "wordnet_conveyance_103100490")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//car or automobile
+			fullClassMap.put("Automobile", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Automobile")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_car_102958343")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//ship or watercraft
+			fullClassMap.put("Ship", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Ship")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_ship_104194289")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//spacecraft
+			fullClassMap.put("Spacecraft", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Spacecraft")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_spacecraft_104264914")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+		//OTHER
+			//chemical element or substance
+			fullClassMap.put("ChemicalElement_Substance", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("ChemicalSubstance", "ChemicalElement")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_chemical_element_114622893", "wordnet_substance_100019613")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//astronomical or celestial body/object
+			fullClassMap.put("CelestialBody_Object", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("CelestialBody")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_celestial_body_109239740")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+			//planet
+			fullClassMap.put("Planet", 
+					new HashMap<String, ArrayList<String>>() {{
+						put("d",  new ArrayList<String>(Arrays.asList("Planet")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_planet_109394007")));
+						put("w", new ArrayList<String>(Arrays.asList("")));
+						put("o", new ArrayList<String>(Arrays.asList("")));
+						put("n", new ArrayList<String>(Arrays.asList("")));
+					}}
+			);
+		
+	
+		
+		return fullClassMap;
+	}
+	
+
+
+	
+
+
+
+
+
+}

@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
+public class ClassMapping {
+	HashMap<String, HashMap<String, ArrayList<String>>> fullClassMap = new HashMap<String, HashMap<String, ArrayList<String>>>();
+	String className;
+	//Map<String, String> singleClassMap = new HashMap<String, String>();
+	
+	public ClassMapping() {
+		this.fullClassMap = initFullClassMap();
+	}
+
+	private HashMap<String, HashMap<String, ArrayList<String>>> initFullClassMap() {
+		HashMap<String, HashMap<String, ArrayList<String>>> fullClassMap = new HashMap<String, HashMap<String, ArrayList<String>>>();
+		
+		
+		//ACTOR
+		HashMap<String, ArrayList<String>> classMap = new HashMap<String, ArrayList<String>>()
+		{	
+			{
+				put("d", new ArrayList<String>(Arrays.asList("Actor")));
+				put("y", new ArrayList<String>(Arrays.asList("wordnet_actor_109767197")));
+				put("w", new ArrayList<String>(Arrays.asList("Q33999")));
+				put("o", new ArrayList<String>(Arrays.asList("Mx4rvVjaHZwpEbGdrcN5Y29ycA")));
+				put("n", new ArrayList<String>(Arrays.asList("actor")));
+			}
+		};
+		fullClassMap.put("Actor", classMap);
+		
+		//ATHLETE
+		fullClassMap.put("Athlete", 
+				new HashMap<String, ArrayList<String>>() {{
+					put("d",  new ArrayList<String>(Arrays.asList("Athlete")));
+					put("y", new ArrayList<String>(Arrays.asList("wordnet_athlete_109820263")));
+					put("w", new ArrayList<String>(Arrays.asList("Q2066131")));
+					put("o", new ArrayList<String>(Arrays.asList("Mx4rvVi--5wpEbGdrcN5Y29ycA")));
+					put("n", new ArrayList<String>(Arrays.asList("athlete")));
+				}}
+		);
+		fullClassMap.put("", 
+				new HashMap<String, ArrayList<String>>() {{
+					put("d",  new ArrayList<String>(Arrays.asList("")));
+					put("y", new ArrayList<String>(Arrays.asList("")));
+					put("w", new ArrayList<String>(Arrays.asList("")));
+					put("o", new ArrayList<String>(Arrays.asList("")));
+					put("n", new ArrayList<String>(Arrays.asList("")));
+				}}
+		);
+		
+		
+		return fullClassMap;
+	}
+	
+	public HashMap<String, ArrayList<String>> getClassMap(String className) {
+		
+		return this.fullClassMap.get(className);
+	}
+
+	
+
+
+
+
+
+}

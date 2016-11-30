@@ -3635,3 +3635,29 @@ java.lang.ClassCastException: org.eclipse.osgi.internal.framework.EquinoxConfigu
 
 !ENTRY org.eclipse.core.net 1 0 2016-11-28 10:35:30.196
 !MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.tigris.subversion.clientadapter.javahl 1 0 2016-11-30 09:43:54.368
+!MESSAGE Failed to load JavaHL Library.
+These are the errors that were encountered:
+no libsvnjavahl-1 in java.library.path
+no svnjavahl-1 in java.library.path
+no svnjavahl in java.library.path
+java.library.path = /opt/subversion
+
+!ENTRY org.eclipse.ui 4 4 2016-11-30 17:10:01.440
+!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.disable.grammar.constraints
+
+!ENTRY org.eclipse.ui 4 4 2016-11-30 17:10:01.444
+!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies
+
+!ENTRY org.eclipse.ui 4 4 2016-11-30 17:10:01.445
+!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.disable.grammar.constraints
+
+!ENTRY org.eclipse.ui 4 4 2016-11-30 17:10:01.445
+!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies
+
+!ENTRY org.eclipse.ui 4 4 2016-11-30 17:10:01.445
+!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.disable.grammar.constraints
+
+!ENTRY org.eclipse.ui 4 4 2016-11-30 17:10:01.446
+!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies

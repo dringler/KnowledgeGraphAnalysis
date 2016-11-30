@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;CountSameAs&apos; to &apos;InstanceOverlap&apos;&#x0A;- Original element: &apos;CountSameAs&apos;&#x0A;- Renamed element: &apos;CountSameAs&apos;&#x0A;- Update references to refactored element" description="Rename Java project &apos;CountSameAs&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=CountSameAs" name="InstanceOverlap" references="true" stamp="1480518760305" version="1.0"/>
+</session>
