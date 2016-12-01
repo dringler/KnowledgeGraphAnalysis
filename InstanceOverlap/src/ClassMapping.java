@@ -285,7 +285,7 @@ public class ClassMapping {
 						put("d",  new ArrayList<String>(Arrays.asList("Ship")));
 						put("y", new ArrayList<String>(Arrays.asList("wordnet_ship_104194289")));
 						put("w", new ArrayList<String>(Arrays.asList("Q11446")));//ship
-						put("o", new ArrayList<String>(Arrays.asList("55wpEbGdrcN5Y29ycA")));//watercraft
+						put("o", new ArrayList<String>(Arrays.asList("Mx4rvVi-55wpEbGdrcN5Y29ycA")));//watercraft
 						//put("n", new ArrayList<String>(Arrays.asList("")));
 					}}
 			);
