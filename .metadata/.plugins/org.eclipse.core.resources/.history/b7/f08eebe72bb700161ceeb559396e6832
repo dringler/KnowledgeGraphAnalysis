@@ -29,27 +29,25 @@ public class CountSameAs {
 		ClassMapping cM = new ClassMapping();
 		ArrayList<String> classNames = getClassNames();
 		
+		//initialize HashMaps for getting the instances of the kgClassNames
+		HashMap<String, HashSet<String>> dInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> yInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> oInstances = new HashMap<String, HashSet<String>>();
+		//HashMap<String, HashSet<String>> nInstances = new HashMap<String, HashSet<String>>();
+		//HashMap<String, HashSet<String>> wInstances = new HashMap<String, HashSet<String>>();
+		
+		//initialize the HashMaps for the sameAs counts
+		HashMap<String, Integer> d2oCountMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> d2yCountMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> y2dCountMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> o2dCountMap = new HashMap<String, Integer>();
+		
 		//get all instances of all classes
 		//for every class (can contain more than one className for each KG)
 		for (String className : classNames) {
 			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);
 			System.out.println(classMap);
-			
-			//initialize HashMaps for getting the instances of the kgClassNames
-			HashMap<String, HashSet<String>> dInstances = new HashMap<String, HashSet<String>>();
-			HashMap<String, HashSet<String>> yInstances = new HashMap<String, HashSet<String>>();
-			HashMap<String, HashSet<String>> oInstances = new HashMap<String, HashSet<String>>();
-			//HashMap<String, HashSet<String>> nInstances = new HashMap<String, HashSet<String>>();
-			//HashMap<String, HashSet<String>> wInstances = new HashMap<String, HashSet<String>>();
-			
-			//initialize the HashMaps for the sameAs counts
-			HashMap<String, Integer> d2oCountMap = new HashMap<String, Integer>();
-			HashMap<String, Integer> d2yCountMap = new HashMap<String, Integer>();
-			HashMap<String, Integer> y2dCountMap = new HashMap<String, Integer>();
-			HashMap<String, Integer> o2dCountMap = new HashMap<String, Integer>();
-			
 			String k = "";
-			String countString = "";
 			//dbpedia
 			if (d2y || d2o) {
 				k = "d";
@@ -67,15 +65,14 @@ public class CountSameAs {
 				//DBpedia to YAGO
 				if (d2y) {
 					Path d2yPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAs/yago_links.nt");
-					countString = "DBpedia:" + className + " to YAGO counts:";
-					getCounts("d", d2yPath, cM, className, dInstances, d2yCountMap, countString);
+					System.out.println("DBpedia to YAGO counts:");
+					getCounts("d", d2yPath, cM, className, dInstances.get(className), d2yCountMap);
 				}
 				//DBpedia to OpenCyc
 				if (d2o) {
 					Path d2oPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAs/opencyc_links.nt");
-					
-					countString = "DBpedia:" + className + " to OpenCyc counts:";
-					getCounts("d", d2oPath, cM, className, dInstances, d2oCountMap, countString);
+					System.out.println("DBpedia to OpenCyc counts:");
+					getCounts("d", d2oPath, cM, className, dInstances.get(className), d2oCountMap);
 				}
 			}
 			//yago
@@ -91,8 +88,8 @@ public class CountSameAs {
 				}
 				//count owl:sameAs link		
 				Path y2dPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/yagoDBpediaInstances.ttl");
-				countString = "YAGO:" + className + " to DBpedia counts:"; 
-				getCounts("y", y2dPath, cM, className, yInstances, y2dCountMap, countString);
+				System.out.println("DBpedia to YAGO counts:");
+				getCounts("y", y2dPath, cM, className, yInstances.get(className), y2dCountMap);
 			}
 			//opencyc
 			if (o2d) {
@@ -107,9 +104,8 @@ public class CountSameAs {
 				}
 				//count owl:sameAs link
 				Path o2dPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt");
-				
-				countString = "OpenCyc:" + className + " to DBpedia counts:"; 
-				getCounts("o", o2dPath, cM, className, oInstances, o2dCountMap, countString);
+				System.out.println("OpenCyc to DBpedia counts:");
+				getCounts("o", o2dPath, cM, className, oInstances.get(className), o2dCountMap);
 			}
 		}
 		
@@ -142,24 +138,24 @@ public class CountSameAs {
 
 	private static void getCounts(String kg, Path path, ClassMapping cM,
 			String className,
-			HashMap<String, HashSet<String>> kgInstances,
-			HashMap<String, Integer> dCountMap, String countString) {
+			HashSet<String> hashSet,
+			HashMap<String, Integer> dCountMap) {
 		try (Stream<String> stream = Files.lines(path)) {
-			stream.forEach(line -> checkAndCountLinks(line, kg, cM, className, kgInstances, dCountMap));
+			stream.forEach(line -> checkAndCountLinks(line, kg, cM, className, hashSet, dCountMap));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(countString + dCountMap);
+		System.out.println(dCountMap);
 		
 	}
 
 	private static void checkAndCountLinks(String line, String kg,
-			ClassMapping cM, String className, HashMap<String, HashSet<String>> instances,
+			ClassMapping cM, ArrayList<String> classNames, HashMap<String, HashSet<String>> instances,
 			HashMap<String, Integer> countMap) {
 		//split file on whitespace for DBpedia
 		String[] words = line.split("\\s+");
 		//for all classes
-		//for (String className : className) {
+		for (String className : classNames) {
 			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);
 			//for all kgClassNames
 			if (classMap.containsKey(kg)) {
@@ -190,7 +186,7 @@ public class CountSameAs {
 				}
 			}
 			
-		//}
+		}
 	}
 
 	/**

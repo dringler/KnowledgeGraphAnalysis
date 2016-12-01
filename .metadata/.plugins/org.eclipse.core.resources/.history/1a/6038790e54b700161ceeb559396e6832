@@ -29,18 +29,19 @@ public class CountSameAs {
 		ClassMapping cM = new ClassMapping();
 		ArrayList<String> classNames = getClassNames();
 		
+		//initialize HashMaps for getting the instances of the kgClassNames
+		HashMap<String, HashSet<String>> dInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> yInstances = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> oInstances = new HashMap<String, HashSet<String>>();
+		//HashMap<String, HashSet<String>> nInstances = new HashMap<String, HashSet<String>>();
+		//HashMap<String, HashSet<String>> wInstances = new HashMap<String, HashSet<String>>();
+		
+		
 		//get all instances of all classes
 		//for every class (can contain more than one className for each KG)
 		for (String className : classNames) {
 			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);
 			System.out.println(classMap);
-			
-			//initialize HashMaps for getting the instances of the kgClassNames
-			HashMap<String, HashSet<String>> dInstances = new HashMap<String, HashSet<String>>();
-			HashMap<String, HashSet<String>> yInstances = new HashMap<String, HashSet<String>>();
-			HashMap<String, HashSet<String>> oInstances = new HashMap<String, HashSet<String>>();
-			//HashMap<String, HashSet<String>> nInstances = new HashMap<String, HashSet<String>>();
-			//HashMap<String, HashSet<String>> wInstances = new HashMap<String, HashSet<String>>();
 			
 			//initialize the HashMaps for the sameAs counts
 			HashMap<String, Integer> d2oCountMap = new HashMap<String, Integer>();
