@@ -13,22 +13,12 @@ import java.util.stream.Stream;
 
 public class CountSameAs {
 
-	public static void main(String[] args) {
+
+	public void run(ArrayList<String> classNames, ClassMapping cM, boolean d2y, boolean d2o,
+			boolean y2d, boolean o2d) {
+		System.out.println("Start CountSameAs.run()");
 		long startTime = System.nanoTime();
-		
-		// PARAMETERS		
-		boolean d2y = true;
-		boolean d2o = true;
-		boolean y2d = true;
-		boolean o2d = true;
-		
-		//boolean nell = false; //3
-		//boolean wikidata = false; //4
-		
-		
-		ClassMapping cM = new ClassMapping();
-		ArrayList<String> classNames = getClassNames();
-		
+
 		//get all instances of all classes
 		//for every class (can contain more than one className for each KG)
 		for (String className : classNames) {
@@ -204,50 +194,5 @@ public class CountSameAs {
 		dInstances.get(kgClassName).add(words[0]);
 	}
 
-
-	private static ArrayList<String> getClassNames() {
-		ArrayList<String> classNames = new ArrayList<String>();
-		classNames.addAll(Arrays.asList(
-							//PERSON
-								"Agent",
-								"Person",
-								"Politician",
-								"Athlete",
-								"Actor",
-							//ORGANIZATION
-								"GovernmentOrganization",
-								"Company",
-								"PoliticalParty",
-							//PLACE
-								"Place",
-								"PopulatedPlace",
-								"City_Village_Town",
-								"Country",
-							//ART
-								"Work",
-								"MusicalWork",
-								"Album",
-								"Song",
-								"Single",
-								"Movie",
-								"Book",
-							//EVENT	
-								"Event",
-								"MilitaryConflict",
-								"SocietalEvent",
-								"SportsEvent",
-							//TRANSPORT
-								"Vehicle",
-								"Automobile",
-								"Ship",
-								"Spacecraft",
-							//OTHER
-								"ChemicalElement_Substance",
-								"CelestialBody_Object",
-								"Planet"
-							));
-		return classNames;
-	}
-	
 	
 }
