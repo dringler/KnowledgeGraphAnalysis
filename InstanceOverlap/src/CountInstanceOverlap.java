@@ -4,7 +4,6 @@ import java.util.Arrays;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 
-
 public class CountInstanceOverlap {
 
 	public static void main(String[] args) {
@@ -12,7 +11,7 @@ public class CountInstanceOverlap {
 		ClassMapping cM = new ClassMapping();
 		ArrayList<String> classNames = getClassNames();
 		
-		// COUNT SAME AS LINKS
+	// COUNT SAME AS LINKS
 		// PARAMETERS		
 		boolean d2y = true;
 		boolean d2o = true;
@@ -21,14 +20,32 @@ public class CountInstanceOverlap {
 		CountSameAs same = new CountSameAs();
 		//same.run(classNames, cM, d2y, d2o, y2d, o2d);
 		
-		// COUNT INSTANCE OVERLAP USING STRING SIMILARITY MEASURES
+	// COUNT INSTANCE OVERLAP USING STRING SIMILARITY MEASURES
+		// PARAMETERS: string similarity measures and thresholds
+		boolean exactMatch = true;
+		boolean jaccard = true;
+		double jaccardT = 1.0;
+		boolean jaro = true;
+		double jaroT = 1.0;
+		boolean scaledLevenstein = true;
+		double scaledLevensteinT = 1.0;
+		boolean tfidf = true;
+		double tfidfT = 1.0;
+		boolean jaroWinkler = true;
+		double jaroWinklerT = 1.0;
 		
-		CountStringSimilarity stringSim = new CountStringSimilarity();
+		StringMeasures stringMeasures = new StringMeasures(exactMatch,
+				jaccard, jaccardT, 
+				jaro, jaroT, 
+				scaledLevenstein, scaledLevensteinT, 
+				tfidf, tfidfT, 
+				jaroWinkler, jaroWinklerT);
+		
 		//configure log4j for secondstring library
 		org.apache.log4j.BasicConfigurator.configure();
 		LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
 		
-		StringMeasures stringMeasures = new StringMeasures();
+		CountStringSimilarity stringSim = new CountStringSimilarity();
 		stringSim.run(classNames, cM, stringMeasures);
 		
 
