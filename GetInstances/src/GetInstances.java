@@ -24,8 +24,8 @@ public class GetInstances {
 		
 		boolean dbpedia = false; //0
 		boolean yago = false; //1
-		boolean opencyc = true; //2
-		boolean nell = false; //3
+		boolean opencyc = false; //2
+		boolean nell = true; //3
 		boolean wikidata = false; //4
 		
 		String fType1  = "";
@@ -183,6 +183,11 @@ public class GetInstances {
 									allLabels = label;
 								} else {
 									allLabels = allLabels + "\t" + label;
+								}
+							}
+							if (kg == 3) {//special case for NELL
+								if(allLabels.contains("\" \"")){
+									allLabels = allLabels.replace("\" \"", "\"\t\"");
 								}
 							}
 						}			
@@ -658,7 +663,7 @@ public class GetInstances {
 		HashSet<String> classNameArray = new HashSet<String>();
 		classNameArray.addAll(Arrays.asList(
 							//PERSON
-                 				"humanagent",
+								"humanagent",
                  				"agent",
                  				"person",
                  				"politician",
