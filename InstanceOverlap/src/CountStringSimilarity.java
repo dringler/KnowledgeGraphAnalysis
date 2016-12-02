@@ -19,8 +19,8 @@ public class CountStringSimilarity {
 		//result Object: HashMap<stringMeasureName, <HashMap<x2y, intScore>>
 		HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
 		
-		//instanceLabels: HashMap<k, <HashMap<kgClass, <HashSet<englishLabels>>>
-		HashMap<String, HashMap<String, HashSet<String>>> instanceLabels = new HashMap<String, HashMap<String, HashSet<String>>>();
+		//instanceLabels: HashMap<k, <HashMap<kgClass,<HashMap<instanceURI, <HashSet<englishLabels>>>>
+		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> instanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
 		
 		//for each class
 		for (String className : classNames) {
@@ -32,7 +32,11 @@ public class CountStringSimilarity {
 			
 			//get instances for each kgClass with all labels
 			instanceLabels = getInstanceLabels(classMap);
-			
+			System.out.println(instanceLabels.get("d"));
+			System.out.println(instanceLabels.get("y"));
+			System.out.println(instanceLabels.get("n"));
+			System.out.println(instanceLabels.get("o"));
+			System.out.println(instanceLabels.get("w"));
 			
 			
 			//print results
@@ -43,15 +47,17 @@ public class CountStringSimilarity {
 		System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
 	}
 
-	private HashMap<String, HashMap<String, HashSet<String>>> getInstanceLabels(
+	private HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> getInstanceLabels(
 			HashMap<String, ArrayList<String>> classMap) {
-		HashMap<String, HashMap<String, HashSet<String>>> instanceLabels = new HashMap<String, HashMap<String, HashSet<String>>>();
-		//HashMap<String, HashSet<String>> instanceLabelsForSingleKgClass = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> instanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
+		
 		for (String k : classMap.keySet()) {
 		    for (String kgClass : classMap.get(k)) {
 		    	//System.out.println(kgClass);
 		    	//get all instance labels for the kgClass and save them in the instanceLabels object
-		    	instanceLabels.put(k, getInstanceLabelsForKgClass(k, kgClass));
+		    	HashMap<String, HashMap<String, HashSet<String>>> instanceLabelsForSingleKgClass = new HashMap<String, HashMap<String,HashSet<String>>>();
+		    	instanceLabelsForSingleKgClass.put(kgClass, getInstanceLabelsForKgClass(k, kgClass)); 
+		    	instanceLabels.put(k, instanceLabelsForSingleKgClass);
 		    }
 		}
 		return instanceLabels;
@@ -67,7 +73,7 @@ public class CountStringSimilarity {
 		System.out.println(k + ": "+kgClass);
 		switch (k) {
 			case "d":
-				System.out.println("d found");
+				
 				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/");
 				break;
 			case "y":
@@ -108,7 +114,7 @@ public class CountStringSimilarity {
 		HashSet<String> allLabels = new HashSet<String>();
 		for (int i = 1; i < words.length; i++) {
 			allLabels.add(words[i]);
-			System.out.println(words[i]);
+			//System.out.println(words[i]);
 		}
 		
 		instanceLabelsForSingleKgClass.put(words[0], allLabels);		
