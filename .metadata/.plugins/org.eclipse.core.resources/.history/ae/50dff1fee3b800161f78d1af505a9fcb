@@ -3,9 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Stream;
 
 
@@ -65,7 +67,12 @@ public class CountStringSimilarity {
 				break;
 			}
 		}
-				
+			
+			
+
+			
+		
+		
 		return results;
 	}
 
@@ -81,7 +88,7 @@ public class CountStringSimilarity {
 				
 				}
 			}
-	
+			
 		}
 		
 		
@@ -96,16 +103,12 @@ public class CountStringSimilarity {
 				//for each instance in yago
 				for (Entry<String, HashSet<String>> yagoInstanceWithLabels : kgClasses.get(kgClass).entrySet()) {
 					for (String yagoLabel : yagoInstanceWithLabels.getValue()) {
-						/*double jaccardScore = stringMeasures.getJaccardScore(label, yagoLabel);
+						double jaccardScore = stringMeasures.getJaccardScore(label, yagoLabel);
 						double jaroScore = stringMeasures.getJaroScore(label, yagoLabel);
 						double jwScore = stringMeasures.getJaroWinklerScore(label, yagoLabel);
 						double slS = stringMeasures.getScaledLevenstein(label, yagoLabel);
 						double tfidf = stringMeasures.getTfidfScore(label, yagoLabel);
 						System.out.println(label + " AND " + yagoLabel + ": " + jaccardScore + ", " + jaroScore + ", " + jwScore + ", " + slS + ", " + tfidf);
-						*/
-						System.out.println(label + " AND " + yagoLabel);
-						System.out.println(stringMeasures.getSimilarityScores(label, yagoLabel));
-						System.out.println(stringMeasures.getSimilarityResult(label, yagoLabel));
 						
 					}
 				}
