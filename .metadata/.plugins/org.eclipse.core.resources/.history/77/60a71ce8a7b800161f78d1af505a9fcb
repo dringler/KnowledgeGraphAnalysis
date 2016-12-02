@@ -1,0 +1,27 @@
+import com.wcohen.ss.*;
+import com.wcohen.ss.api.StringWrapper;
+
+public class StringMeasures {
+	private Jaccard jaccard;
+	private Jaro jaro;
+	private ScaledLevenstein scaledLevenstein;
+	private TFIDF tdidf;
+	
+	public StringMeasures() {
+		this.jaccard = new Jaccard();
+		this.jaro = new Jaro();
+		this.scaledLevenstein = new ScaledLevenstein();
+		this.tdidf = new TFIDF();
+		
+	}
+	
+	public double getJaccardScore(String s1, String s2) {
+		jaccard
+		double score = 0.0;
+		
+		return score;
+	}
+	
+	
+
+}

@@ -1,0 +1,12 @@
+import com.wcohen.ss.*;
+
+public class StringMeasures {
+	
+	
+	public StringMeasures() {
+		//this.allMeasures = initMeasures();
+	}
+	
+	Jaccard jacc = new Jaccard();
+
+}

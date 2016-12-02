@@ -6,38 +6,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Stream;
 
 
 public class CountStringSimilarity {
 
-	public void run(ArrayList<String> classNames, ClassMapping cM) {
+	public void run(ArrayList<String> classNames, ClassMapping cM, StringMeasures stringMeasures) {
 		System.out.println("Start CountStringSimilarity.run()");
 		long startTime = System.nanoTime();
 		
 		
-		//result Object: HashMap<stringMeasureName, <HashMap<x2y, intScore>>
-		HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
-		
-		//instanceLabels: HashMap<k, <HashMap<kgClass,<HashMap<instanceURI, <HashSet<englishLabels>>>>
-		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> instanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
-		
 		//for each class
 		for (String className : classNames) {
-			//clear all objects
-			results.clear();
-			instanceLabels.clear();
+			//result Object: HashMap<stringMeasureName, <HashMap<x2y, intScore>>
+			HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
+		
+			//instanceLabels: HashMap<k, <HashMap<kgClass,<HashMap<instanceURI, <HashSet<englishLabels>>>>
+			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> instanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
 			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);//key: d,w,y,o,n ; value:kgC
 			System.out.println(classMap);
 			
 			//get instances for each kgClass with all labels
 			instanceLabels = getInstanceLabels(classMap);
-			System.out.println(instanceLabels.get("d"));
+			/*System.out.println(instanceLabels.get("d"));
 			System.out.println(instanceLabels.get("y"));
 			System.out.println(instanceLabels.get("n"));
 			System.out.println(instanceLabels.get("o"));
 			System.out.println(instanceLabels.get("w"));
-			
+			*/
+			results = getMatchedStringCounts(instanceLabels, stringMeasures);
 			
 			//print results
 			System.out.println(results);
@@ -46,6 +45,82 @@ public class CountStringSimilarity {
 		
 		System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
 	}
+
+	private HashMap<String, HashMap<String, Integer>> getMatchedStringCounts(
+			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> instanceLabels,
+			StringMeasures stringMeasures) {
+		HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
+		//for each kg
+		for (String k : instanceLabels.keySet()) {
+			switch (k) {
+			case "d":
+				//results.putAll(
+				compareDtoOthers(instanceLabels, stringMeasures);
+				break;
+			case "y":
+				break;
+			case "o":
+				break;
+			case "n":
+				break;
+			case "w":
+				break;
+			}
+		}
+			
+			
+
+			
+		
+		
+		return results;
+	}
+
+	private void compareDtoOthers(
+			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> instanceLabels,
+			StringMeasures stringMeasures) {
+		String fK = "d";
+		
+		//for each kgClass
+		for (String kgClass :instanceLabels.get(fK).keySet()) {
+			for (Entry<String, HashSet<String>> instanceWithLabels : instanceLabels.get(fK).get(kgClass).entrySet()) {
+				compareLabelsWithYago(instanceWithLabels.getValue(), instanceLabels.get("y"), stringMeasures);
+				
+				}
+			}
+			
+		}
+		
+		
+		//return null;
+	private void compareLabelsWithYago(HashSet<String> labels,
+			HashMap<String, HashMap<String, HashSet<String>>> kgClasses,
+			StringMeasures stringMeasures) {	
+		// for each label
+		for (String label : labels) {
+			//for each kg class in yago
+			for (String kgClass : kgClasses.keySet()) {
+				//for each instance in yago
+				for (Entry<String, HashSet<String>> yagoInstanceWithLabels : kgClasses.get(kgClass).entrySet()) {
+					for (String yagoLabel : yagoInstanceWithLabels.getValue()) {
+						double jaccardScore = stringMeasures.getJaccardScore(label, yagoLabel);
+						double jaroScore = stringMeasures.getJaroScore(label, yagoLabel);
+						double jwScore = stringMeasures.getJaroWinklerScore(label, yagoLabel);
+						double slS = stringMeasures.getScaledLevenstein(label, yagoLabel);
+						double tfidf = stringMeasures.getTfidfScore(label, yagoLabel);
+						System.out.println(label + " AND " + yagoLabel + ": " + jaccardScore + ", " + jaroScore + ", " + jwScore + ", " + slS + ", " + tfidf);
+						
+					}
+				}
+				
+			}
+			
+		}
+		
+	}
+
+
+	
 
 	private HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> getInstanceLabels(
 			HashMap<String, ArrayList<String>> classMap) {
@@ -70,23 +145,23 @@ public class CountStringSimilarity {
 		//get file paths 
 		Path filePath = null;				
 		
-		System.out.println(k + ": "+kgClass);
+		//System.out.println(k + ": "+kgClass);
 		switch (k) {
 			case "d":
 				
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/");
+				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabelTest/");
 				break;
 			case "y":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabel/");
+				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabelTest/");
 				break;
 			case "o":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabel/");
+				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabelTest/");
 				break;
 			case "n":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabel/");
+				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabelTest/");
 				break;
 			case "w":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabel/");
+				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabelTest/");
 				break;
 			default:
 				System.out.println("error in getInstanceLabelsForKgClass(). No matching k found");

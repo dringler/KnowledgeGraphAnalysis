@@ -1,0 +1,29 @@
+import com.wcohen.ss.*;
+
+public class StringMeasures {
+	private Jaccard jaccard;
+	private Jaro jaro;
+	private ScaledLevenstein scaledLevenstein;
+	private TFIDF tdidf;
+	
+	public StringMeasures() {
+		this.jaccard = new Jaccard();
+		this.jaro = new Jaro();
+		this.scaledLevenstein = new ScaledLevenstein();
+		this.tdidf = new TFIDF();
+	}
+	
+	public double getJaccardScore(String s1, String s2) {
+		return jaccard.score(jaccard.prepare(s1), jaccard.prepare(s2));
+	}
+	public double getJaroScore(String s1, String s2) {
+		return jaro.score(jaro.prepare(s1), jaro.prepare(s2));
+	}
+	public double getScaledLevenstein(String s1, String s2) {
+		return scaledLevenstein.score(scaledLevenstein.prepare(s1), scaledLevenstein.prepare(s2));
+	}
+	public double getTfidfScore(String s1, String s2) {
+		return tdidf.score(tdidf.prepare(s1), tdidf.prepare(s2));
+	}
+	
+}
