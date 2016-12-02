@@ -194,6 +194,8 @@ public class GetInstances {
 										allLabels = allLabels.replace("\"", "");
 									}
 									allLabels = allLabels.substring(0, allLabels.length()-1);
+								} else {
+									System.out.println(instancesWithLabel.get(instance) + " has no label");
 								}
 							}
 						}			

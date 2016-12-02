@@ -186,15 +186,14 @@ public class GetInstances {
 								}
 							}
 							if (kg == 3) {//special case for NELL
-								if (allLabels.length()>0) {
-									if(allLabels.contains("\" \"")){
-										allLabels = allLabels.replace("\" \"", "\t");		
-									}
-									if(allLabels.contains("\"")) {
-										allLabels = allLabels.replace("\"", "");
-									}
-									allLabels = allLabels.substring(0, allLabels.length()-1);
+								if(allLabels.contains("\" \"")){
+									allLabels = allLabels.replace("\" \"", "\t");		
 								}
+								if(allLabels.contains("\"")) {
+									allLabels = allLabels.replace("\"", "");
+								}
+								System.out.println(allLabels);
+								allLabels = allLabels.substring(0, allLabels.length()-1);
 							}
 						}			
 						instanceWithLabel.add(instance + "\t" + allLabels);			

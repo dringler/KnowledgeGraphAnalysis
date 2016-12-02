@@ -186,7 +186,7 @@ public class GetInstances {
 								}
 							}
 							if (kg == 3) {//special case for NELL
-								if (allLabels.length()>0) {
+								if (allLabels != "") {
 									if(allLabels.contains("\" \"")){
 										allLabels = allLabels.replace("\" \"", "\t");		
 									}
@@ -194,6 +194,8 @@ public class GetInstances {
 										allLabels = allLabels.replace("\"", "");
 									}
 									allLabels = allLabels.substring(0, allLabels.length()-1);
+								} else {
+									System.out.println(instancesWithLabel.get(instance) + " has no label");
 								}
 							}
 						}			

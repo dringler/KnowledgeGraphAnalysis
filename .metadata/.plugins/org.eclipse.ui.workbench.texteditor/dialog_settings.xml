@@ -2,29 +2,31 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="kg ==" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="kg =="/>
-			<item value="instanceOb"/>
-			<item value="instanceO"/>
-			<item value="instance"/>
-			<item value="lineclass"/>
-			<item value="fi"/>
-			<item value="execSelect"/>
-			<item value="sparqlSer"/>
+			<item value="Hashset"/>
+			<item value="55wpEbGdrcN5Y29ycA"/>
+			<item value="same"/>
+			<item value="fInstanceTypes"/>
+			<item value="fInstanceTypesTransitive"/>
+			<item value="classnameof"/>
+			<item value="&lt;http://sw.opencyc.org/concept/Mx4rvVjRL5wpEbGdrcN5Y29ycA&gt;"/>
+			<item value="&lt;http://sw.opencyc.org/concept/Mx4rvVjQs5wpEbGdrcN5Y29ycA&gt;"/>
 		</list>
 		<list key="replacehistory">
+			<item value="fType2"/>
+			<item value="fType1"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="265" key="DIALOG_WIDTH"/>
 		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText-Regular" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
-		<item value="969" key="DIALOG_X_ORIGIN"/>
-		<item value="74" key="DIALOG_Y_ORIGIN"/>
+		<item value="1409" key="DIALOG_X_ORIGIN"/>
+		<item value="217" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
