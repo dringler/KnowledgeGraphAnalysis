@@ -2,7 +2,6 @@ INDEX VERSION 1.127+/Users/curtis/git/SeminarPaper/.metadata/.plugins/org.eclips
 528420801.index
 729983126.index
 1334409215.index
-2679129877.index
 160850558.index
 1366533809.index
 3360118260.index

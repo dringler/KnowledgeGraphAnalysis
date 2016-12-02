@@ -1,0 +1,90 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
+
+public class CountStringSimilarity {
+
+	public void run(ArrayList<String> classNames, ClassMapping cM) {
+		System.out.println("Start CountStringSimilarity.run()");
+		long startTime = System.nanoTime();
+		
+		//get file paths 
+		Path dPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/");
+		Path yPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabel/");
+		Path oPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabel/");
+		Path nPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabel/");
+		Path wPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabel/");
+		ArrayList<Path> filePaths = new ArrayList<Path>();
+		filePaths.addAll(Arrays.asList(dPath, yPath, oPath, nPath, wPath));
+		
+		//result Object: HashMap<stringMeasureName, <HashMap<x2y, intScore>>
+		HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
+		
+		//instanceLabels: HashMap<kgName, <HashMap<kgClass, <HashSet<englishLabels>>>
+		HashMap<String, HashMap<String, HashSet<String>>> instanceLabels = new HashMap<String, HashMap<String, HashSet<String>>>();
+		
+		//for each class
+		for (String className : classNames) {
+			//clear all objects
+			results.clear();
+			instanceLabels.clear();
+			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);//key: d,w,y,o,n ; value:kgC
+			System.out.println(classMap);
+			
+			//get instances for each kgClass with all labels
+			instanceLabels = getInstanceLabels(classMap, filePaths);
+			
+			
+			
+			//print results
+			System.out.println(results);
+		}
+			
+		
+		System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
+	}
+
+	private HashMap<String, HashMap<String, HashSet<String>>> getInstanceLabels(
+			HashMap<String, ArrayList<String>> classMap, ArrayList<Path> filePaths) {
+		HashMap<String, HashMap<String, HashSet<String>>> instanceLabels = new HashMap<String, HashMap<String, HashSet<String>>>();
+		HashMap<String, HashSet<String>> instanceLabelsForSingleKgClass = new HashMap<String, HashSet<String>>();
+		for (String k : classMap.keySet()) {
+		    for (String kgClass : classMap.get(k)) {
+		    	//System.out.println(kgClass);
+		    	//get all instance labels for the kgClass and save them in the instanceLabels object
+		    	instanceLabelsForSingleKgClass = getInstanceLabelsForKgClass(k, kgClass, filePaths);
+		    	
+		    }
+		}
+		return instanceLabels;
+	}
+
+	private HashMap<String, HashSet<String>> getInstanceLabelsForKgClass(
+			String k, String kgClass, ArrayList<Path> filePaths) {
+		HashMap<String, HashSet<String>> instanceLabelsForSingleKgClass = new HashMap<String, HashSet<String>>();
+		
+		System.out.println(k + ": "+kgClass);
+		switch (k) {
+			case "d":
+				System.out.println("d found");
+				break;
+			case "y":
+				break;
+			case "w":
+				break;
+			case "n":
+				break;
+			case "o":
+				break;
+			default:
+				System.out.println("error in getInstanceLabelsForKgClass(). No matching k found");
+		}
+		
+		return instanceLabelsForSingleKgClass;
+	}
+
+}
