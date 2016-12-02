@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+
 
 public class CountInstanceOverlap {
 
@@ -21,7 +24,12 @@ public class CountInstanceOverlap {
 		// COUNT INSTANCE OVERLAP USING STRING SIMILARITY MEASURES
 		
 		CountStringSimilarity stringSim = new CountStringSimilarity();
-		stringSim.run(classNames, cM);
+		//configure log4j for secondstring library
+		org.apache.log4j.BasicConfigurator.configure();
+		LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
+		
+		StringMeasures stringMeasures = new StringMeasures();
+		stringSim.run(classNames, cM, stringMeasures);
 		
 
 	}
@@ -63,8 +71,8 @@ public class CountInstanceOverlap {
 								"Ship",
 								"Spacecraft",
 							//OTHER
-								"ChemicalElement_Substance",
-								"CelestialBody_Object",*/
+								"ChemicalElement_Substance",*/
+								"CelestialBody_Object",
 								"Planet"
 							));
 		return classNames;
