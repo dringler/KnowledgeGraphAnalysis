@@ -162,17 +162,13 @@ public class StringMeasures {
 			//check sim measure & check threshold
 			if (entry.getKey().equals(this.jaccardS)) {
 				results.put(this.jaccardS, checkThreshold(entry.getValue().doubleValue(), this.jaccardT));
-			}
-			if (entry.getKey().equals(this.jaroS)) {
+			}else if (entry.getKey().equals(this.jaroS)) {
 				results.put(this.jaroS, checkThreshold(entry.getValue().doubleValue(), this.jaroT));
-			}
-			if (entry.getKey().equals(this.scaledLevensteinS)) {
+			}else if (entry.getKey().equals(this.scaledLevensteinS)) {
 				results.put(this.scaledLevensteinS, checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT));
-			}
-			if (entry.getKey().equals(this.tfidfS)) {
+			} else if (entry.getKey().equals(this.tfidfS)) {
 				results.put(this.tfidfS, checkThreshold(entry.getValue().doubleValue(), this.tfidfT));
-			}
-			if (entry.getKey().equals(this.jaroWinklerS)) {
+			} else if (entry.getKey().equals(this.jaroWinklerS)) {
 				results.put(this.jaroWinklerS, checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT));
 			}		
 		}
