@@ -1,0 +1,11 @@
+import java.util.HashMap;
+
+
+public class CountStringSimilarityResults {
+	
+	public CountStringSimilarityResults() {
+	//HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
+	}
+	
+	
+}
