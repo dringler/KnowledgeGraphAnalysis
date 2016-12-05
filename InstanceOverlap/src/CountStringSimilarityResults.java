@@ -1,8 +1,8 @@
 import java.util.HashMap;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 
 public class CountStringSimilarityResults {
@@ -10,20 +10,22 @@ public class CountStringSimilarityResults {
 	//private HashMap<String, HashMap<String, HashMap<String, Integer>>> simResults  = new HashMap<String, HashMap<String, HashMap<String, Integer>>>();
 	
 	//Triple<x2y, kgClass, simMeasure>, instanceCount
-	private HashMap<Triple<String, String, String>, Integer> simResultsT = new HashMap<Triple<String,String,String>, Integer>(); 
+	//private HashMap<Triple<String, String, String>, Integer> simResultsT = new HashMap<Triple<String,String,String>, Integer>(); 
+	private HashMap<Pair<String, String>, Integer>  simResultsP = new HashMap<Pair<String, String>, Integer>();
 	
 	public CountStringSimilarityResults() {
 	
 	}
-	
-	public void addInstanceCount(String x2y, String kgClass, String simMeasure) {
-		ImmutableTriple<String, String, String> t = new ImmutableTriple<String,String,String>(x2y, kgClass, simMeasure);
-		
+	//fK, fromKgClass, tK, toKgClass,
+	public void addInstanceCount(String fK, String fromKgClass, String tK, String toKgClass, String simMeasure) {
+		//ImmutableTriple<String, String, String> t = new ImmutableTriple<String,String,String>(x2y, kgClass, simMeasure);
+		String key = getKey(fK, fromKgClass, tK, toKgClass);
+		ImmutablePair<String, String> p = new ImmutablePair<String, String>(key, simMeasure);
 		//check if t is already in simResultT
-		if (simResultsT.containsKey(t)) {
-			simResultsT.put(t, simResultsT.get(t) + 1);//increase count
+		if (this.simResultsP.containsKey(p)) {	
+			this.simResultsP.put(p, this.simResultsP.get(p) + 1);//increase count
 		} else {
-			simResultsT.put(t, 1);//inizialize count
+			this.simResultsP.put(p, 1);//inizialize count
 		}
 	}
 	
@@ -31,16 +33,22 @@ public class CountStringSimilarityResults {
 	   * Get the number of instances that overlap
 	   * @param x2y (fromKG-toKG, available values:d,y,o,n,w. e.g. d2y)
 	   * @param kgClass (class of the fromKG)
-	   * @param simMeasure (exactMatch, jaccard, jaro, scaledLevenstein, tfidf, jaroWinkler)
 	   * @return int (instance overlap count)
 	   */
-	public int getInstanceOverlapCount(String x2y, String kgClass, String simMeasure) {
+	public int getInstanceOverlapCount(String key, String simMeasure) {
 		//return this.simResults.get(x2y).get(kgClass).get(simMeasure);
-		ImmutableTriple<String, String, String> t = new ImmutableTriple<String,String,String>(x2y, kgClass, simMeasure);
-		return this.simResultsT.get(t);
+		//ImmutableTriple<String, String, String> t = new ImmutableTriple<String,String,String>(x2y, kgClass, simMeasure);
+		//String key = getKey(fK, fromKgClass, tK, toKgClass);
+		ImmutablePair<String, String> p = new ImmutablePair<String, String>(key, simMeasure);
+		return this.simResultsP.get(p);
 	}
-	public Set<Triple<String, String, String>> getTriples() {
-		return simResultsT.keySet();
+	private String getKey(String fK, String fromKgClass, String tK,
+			String toKgClass) {
+		String key = fK + "_" + fromKgClass + "_2_" + tK + "_" + toKgClass;
+		return key;
+	}
+	public Set<Pair<String, String>> getPairs() {
+		return this.simResultsP.keySet();
 		
 	}
 	
