@@ -23,27 +23,30 @@ public class CountInstanceOverlap {
 	// COUNT INSTANCE OVERLAP USING STRING SIMILARITY MEASURES
 		// PARAMETERS: string similarity measures and thresholds
 		boolean exactMatch = true;
-		boolean jaccard = true;
-		double jaccardT = 0.9;
-		boolean jaro = true;
+		boolean jaccard = false;
+		double jaccardT = 0.5;
+		boolean jaro = false;
 		double jaroT = 0.9;
-		boolean scaledLevenstein = true;
-		double scaledLevensteinT = 0.9;
-		boolean tfidf = true;
-		double tfidfT = 0.9;
-		boolean jaroWinkler = true;
+		boolean scaledLevenstein = false;
+		double scaledLevensteinT = 0.4;
+		boolean tfidf = false;
+		double tfidfT = 0.7;
+		boolean jaroWinkler = false;
 		double jaroWinklerT = 0.9;
+		boolean softTfidf = true;
+		double softTfidfT = 0.7;
 		
 		StringMeasures stringMeasures = new StringMeasures(exactMatch,
 				jaccard, jaccardT, 
 				jaro, jaroT, 
 				scaledLevenstein, scaledLevensteinT, 
 				tfidf, tfidfT, 
-				jaroWinkler, jaroWinklerT);
+				jaroWinkler, jaroWinklerT,
+				softTfidf, softTfidfT);
 		
 		//configure log4j for secondstring library
 		org.apache.log4j.BasicConfigurator.configure();
-		LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
+		//LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
 		
 		CountStringSimilarity stringSim = new CountStringSimilarity();
 		stringSim.run(classNames, cM, stringMeasures);
@@ -88,8 +91,8 @@ public class CountInstanceOverlap {
 								"Ship",
 								"Spacecraft",
 							//OTHER
-								"ChemicalElement_Substance",*/
-								"CelestialBody_Object",
+								"ChemicalElement_Substance",
+								"CelestialBody_Object",*/
 								"Planet"
 							));
 		return classNames;
