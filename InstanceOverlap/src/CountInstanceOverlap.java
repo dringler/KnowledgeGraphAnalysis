@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-
 public class CountInstanceOverlap {
 
 	public static void main(String[] args) {
@@ -13,28 +10,32 @@ public class CountInstanceOverlap {
 		
 	// COUNT SAME AS LINKS
 		// PARAMETERS		
-		boolean d2y = true;
+		/*boolean d2y = true;
 		boolean d2o = true;
 		boolean y2d = true;
 		boolean o2d = true;
 		CountSameAs same = new CountSameAs();
 		//same.run(classNames, cM, d2y, d2o, y2d, o2d);
-		
+		*/
 	// COUNT INSTANCE OVERLAP USING STRING SIMILARITY MEASURES
+		boolean useSamples = false;
 		// PARAMETERS: string similarity measures and thresholds
 		boolean exactMatch = true;
 		boolean jaccard = false;
 		double jaccardT = 0.5;
 		boolean jaro = false;
 		double jaroT = 0.9;
-		boolean scaledLevenstein = false;
-		double scaledLevensteinT = 0.4;
+		boolean scaledLevenstein = true;
+		double scaledLevensteinT = 0.8;
 		boolean tfidf = false;
 		double tfidfT = 0.7;
-		boolean jaroWinkler = false;
-		double jaroWinklerT = 0.9;
+		boolean jaroWinkler = true;
+		double jaroWinklerT = 0.8;
 		boolean softTfidf = true;
-		double softTfidfT = 0.7;
+		double softTfidfT = 0.8;
+		boolean internalSoftTfidf = true;
+		String internalSoftTfidfS = "jaroWinkler"; //"jaroWinkler", "jaccard", or "scaledLevenstein"
+		double internalSoftTfidfT = 0.9;
 		
 		StringMeasures stringMeasures = new StringMeasures(exactMatch,
 				jaccard, jaccardT, 
@@ -42,14 +43,14 @@ public class CountInstanceOverlap {
 				scaledLevenstein, scaledLevensteinT, 
 				tfidf, tfidfT, 
 				jaroWinkler, jaroWinklerT,
-				softTfidf, softTfidfT);
+				softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
 		
 		//configure log4j for secondstring library
 		org.apache.log4j.BasicConfigurator.configure();
 		//LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
 		
 		CountStringSimilarity stringSim = new CountStringSimilarity();
-		stringSim.run(classNames, cM, stringMeasures);
+		stringSim.run(classNames, cM, stringMeasures, useSamples);
 		
 
 	}
