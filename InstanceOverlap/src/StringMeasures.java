@@ -1,4 +1,6 @@
 import com.wcohen.ss.*;
+import com.wcohen.ss.api.StringWrapper;
+import com.wcohen.ss.tokens.SimpleTokenizer;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -12,6 +14,7 @@ public class StringMeasures {
 	private boolean jaroWinkler;
 	private boolean exactMatch;
 	private boolean softTfidf;
+	private boolean internalSoftTfidf;
 	//classes
 	private Jaccard jaccardC;
 	private Jaro jaroC;
@@ -19,6 +22,9 @@ public class StringMeasures {
 	private TFIDF tfidfC;
 	private JaroWinkler jaroWinklerC;
 	private SoftTFIDF softTfidfC;
+	private Jaccard softTfidfJaccardC;
+	private JaroWinkler softTfidfJaroWinklerC;
+	private ScaledLevenstein softTfidfScaledLevensteinC;
 	//thresholds
 	private double jaccardT;
 	private double jaroT;
@@ -26,6 +32,7 @@ public class StringMeasures {
 	private double tfidfT;
 	private double jaroWinklerT;
 	private double softTfidfT;
+	private double internalSoftTfidfT;
 	//strings
 	private String jaccardS = "jaccard";
 	private String jaroS = "jaro";
@@ -34,7 +41,7 @@ public class StringMeasures {
 	private String jaroWinklerS ="jaroWinkler";
 	private String exactMatchS = "exactMatch";
 	private String softTfidfS = "softTfidf";
-	
+	private String internalSoftTfidfS; 
 	/**
 	   * StringMeasures constructor
 	   * @param exactMatch boolean
@@ -50,9 +57,15 @@ public class StringMeasures {
 	   * @param jaroWinklerT threshold value (double)
 	   * @param softTfidf boolean
 	   * @param softTfidfT threshold value (double) 
+	   * @param internalSoftTfidf  boolean: true if internal sim measure should be used for softTFIDF
+	   * @param internalSoftTfidfS internal sim measure for softTFIDF ("jaroWinkler", "jaccard", or "scaledLevenstein")
+	   * @param internalSoftTfidfT threshold value for internal sim measure of softTFIDF
 	   */
-	public StringMeasures(boolean exactMatch, boolean jaccard, double jaccardT, boolean jaro, double jaroT, boolean scaledLevenstein, double scaledLevensteinT, boolean tfidf, double tfidfT, boolean jaroWinkler, double jaroWinklerT, boolean softTfidf, double softTfidfT) {		
+	public StringMeasures(boolean exactMatch, boolean jaccard, double jaccardT, boolean jaro, double jaroT, boolean scaledLevenstein, double scaledLevensteinT, boolean tfidf, double tfidfT, boolean jaroWinkler, double jaroWinklerT, boolean softTfidf, double softTfidfT, boolean internalSoftTfidf, String internalSoftTfidfS, double internalSoftTfidfT) {		
+		String config = "";
 		this.exactMatch = exactMatch;
+		if (exactMatch)
+			config = "exactMatch, ";
 		this.jaccard = jaccard;
 		this.jaro = jaro;
 		this.scaledLevenstein = scaledLevenstein;
@@ -62,28 +75,59 @@ public class StringMeasures {
 		
 		if (jaccard) {
 			this.jaccardC = new Jaccard();
-			this.jaccardT = jaccardT;		
+			this.jaccardT = jaccardT;
+			config = config + "jaccard ("+ jaccardT+"), ";
 		}
 		if (jaro) {
 			this.jaroC = new Jaro();
 			this.jaroT = jaroT;
+			config = config + "jaro ("+ jaroT+"), ";
 		}
 		if (scaledLevenstein) {
 		 this.scaledLevensteinC = new ScaledLevenstein();
 		 this.scaledLevensteinT = scaledLevensteinT;
+		 config = config + "scaledLevenstein ("+ scaledLevensteinT+"), ";
 		}
 		if (tfidf) {
 			this.tfidfC = new TFIDF();
-			this.tfidfT = tfidfT;		
+			this.tfidfT = tfidfT;
+			config = config + "tfidf ("+ tfidfT+"), ";
 		}
 		if (jaroWinkler) {
 			this.jaroWinklerC = new JaroWinkler();
 			this.jaroWinklerT = jaroWinklerT;
+			config = config + "jaroWinkler ("+ jaroWinklerT+"), ";
 		}
 		if (softTfidf) {
-			this.softTfidfC = new SoftTFIDF();
 			this.softTfidfT = softTfidfT;
+			config = config + "softTfidf ("+ softTfidfT+"), ";
+			this.internalSoftTfidf = internalSoftTfidf;
+			if (internalSoftTfidf) {
+				//set threshold and internal sim measure string
+				this.internalSoftTfidfT = internalSoftTfidfT;
+				this.internalSoftTfidfS = internalSoftTfidfS;
+				//get internal sim measure
+				if (internalSoftTfidfS.equals(this.jaccardS)) {
+					this.softTfidfJaccardC = new Jaccard();
+					this.softTfidfC = new SoftTFIDF(new SimpleTokenizer(true, true), this.softTfidfJaccardC , internalSoftTfidfT);
+					config = config + "internalSoftTfidf:jaccard ("+ internalSoftTfidfT+"), ";
+				} else if (internalSoftTfidfS.equals(this.jaroWinklerS)) {
+					this.softTfidfJaroWinklerC = new JaroWinkler();
+					this.softTfidfC = new SoftTFIDF(new SimpleTokenizer(true, true), softTfidfJaroWinklerC , internalSoftTfidfT);
+					config = config + "internalSoftTfidf:jaroWinkler ("+ internalSoftTfidfT+"), ";
+				} else if (internalSoftTfidfS.equals(this.scaledLevensteinS)) {
+					this.softTfidfScaledLevensteinC = new ScaledLevenstein();
+					this.softTfidfC = new SoftTFIDF(new SimpleTokenizer(true, true), softTfidfScaledLevensteinC , internalSoftTfidfT);
+					config = config + "internalSoftTfidf:scaledLevenstein ("+ internalSoftTfidfT+"), ";
+				} else {
+					System.out.println("Internal SoftTFIDF sim measure not found. Please use jaccard, jaroWinkler or scaledLevenstein.");
+				}
+			} else { //use without internal sim measure
+				this.softTfidfC = new SoftTFIDF();
+			}
+			
 		}
+		System.out.println("Configuration: " + config.substring(0, config.length()-2));
 	}
 	
 	public double getJaccardScore(String s1, String s2) {
@@ -179,28 +223,28 @@ public class StringMeasures {
 			//check sim measure & check threshold
 			if (entry.getKey().equals(this.jaccardS)) {
 				results.put(this.jaccardS, checkThreshold(entry.getValue().doubleValue(), this.jaccardT));
-				if (checkThreshold(entry.getValue().doubleValue(), this.jaccardT))
-					System.out.println(s1 + " matched with " + s2);
+				/*if (checkThreshold(entry.getValue().doubleValue(), this.jaccardT))
+					System.out.println(s1 + " matched with " + s2);*/
 			} else if (entry.getKey().equals(this.jaroS)) {
 				results.put(this.jaroS, checkThreshold(entry.getValue().doubleValue(), this.jaroT));
-				if (checkThreshold(entry.getValue().doubleValue(), this.jaroT))
-					System.out.println(s1 + " matched with " + s2);
+				/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroT))
+					System.out.println(s1 + " matched with " + s2);*/
 			} else if (entry.getKey().equals(this.scaledLevensteinS)) {
 				results.put(this.scaledLevensteinS, checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT));
-				if (checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT))
-					System.out.println(s1 + " matched with " + s2);
+				/*if (checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT))
+					System.out.println(s1 + " matched with " + s2);*/
 			} else if (entry.getKey().equals(this.tfidfS)) {
 				results.put(this.tfidfS, checkThreshold(entry.getValue().doubleValue(), this.tfidfT));	
-				if (checkThreshold(entry.getValue().doubleValue(), this.tfidfT))
-					System.out.println(s1 + " matched with " + s2);
+				/*if (checkThreshold(entry.getValue().doubleValue(), this.tfidfT))
+					System.out.println(s1 + " matched with " + s2);*/
 			} else if (entry.getKey().equals(this.jaroWinklerS)) {
 				results.put(this.jaroWinklerS, checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT));
-				if (checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT))
-					System.out.println(s1 + " matched with " + s2);
+				/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT))
+					System.out.println(s1 + " matched with " + s2);*/
 			} else if (entry.getKey().equals(this.softTfidfS)) {
 				results.put(this.softTfidfS, checkThreshold(entry.getValue().doubleValue(), this.softTfidfT));
-				if (checkThreshold(entry.getValue().doubleValue(), this.softTfidfT))
-					System.out.println(s1 + " matched with " + s2);
+				/*if (checkThreshold(entry.getValue().doubleValue(), this.softTfidfT))
+					System.out.println(s1 + " matched with " + s2);*/
 			}
 		}
 		return results;
@@ -243,6 +287,63 @@ public class StringMeasures {
 			instanceResults.put(this.softTfidfS, false);
 		}
 		return instanceResults;
+	}
+	/**
+	   * Check if TFIDF or SoftTFIDF is used 
+	 * @param kKgClassInstanceLabels 
+	   * @return boolean
+	   */
+	public boolean checkTFIDF() {
+		if (this.tfidf || this.softTfidf)
+			return true;
+		return false;
+	}
+
+	public void trainTFIDF(HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels
+			//Collection<HashSet<String>> labels,
+			//HashMap<String, HashMap<String, HashSet<String>>> toKgClasses
+			) {
+		System.out.println("TRAIN TFIDF");
+		//reset
+		
+		if (this.internalSoftTfidf) {
+			if (this.internalSoftTfidfS.endsWith(this.jaccardS)) {
+				this.softTfidfJaccardC = new Jaccard();
+				this.softTfidfC = new SoftTFIDF(new SimpleTokenizer(true, true), this.softTfidfJaccardC , this.internalSoftTfidfT);
+			} else if (this.internalSoftTfidfS.equals(this.jaroWinklerS)) {
+				this.softTfidfJaroWinklerC = new JaroWinkler();
+				this.softTfidfC = new SoftTFIDF(new SimpleTokenizer(true, true), softTfidfJaroWinklerC , this.internalSoftTfidfT);
+			} else if (this.internalSoftTfidfS.equals(this.scaledLevensteinS)) {
+				this.softTfidfScaledLevensteinC = new ScaledLevenstein();
+				this.softTfidfC = new SoftTFIDF(new SimpleTokenizer(true, true), softTfidfScaledLevensteinC , this.internalSoftTfidfT);
+			}
+		} else {
+			this.softTfidfC = new SoftTFIDF();
+		}
+		
+		this.tfidfC = new TFIDF();
+		
+		//train on labels
+		Set<StringWrapper> labelsW = new HashSet<StringWrapper>();
+		
+		//for each KG
+		for (String fk : kKgClassInstanceLabels.keySet()) {
+			//for each kg class
+			for (String kgClass : kKgClassInstanceLabels.get(fk).keySet()) {
+				for (String instance : kKgClassInstanceLabels.get(fk).get(kgClass).keySet()) {
+					for (String label : kKgClassInstanceLabels.get(fk).get(kgClass).get(instance)) {
+						labelsW.add(this.tfidfC.prepare(label));
+					}
+				}
+			}
+		}
+		if (this.softTfidf)
+			this.softTfidfC.train(new BasicStringWrapperIterator(labelsW.iterator()));
+		if (this.tfidf)
+			this.tfidfC.train(new BasicStringWrapperIterator(labelsW.iterator()));
+		
+		System.out.println("TFIDF is trained on labels with collection size of " + this.softTfidfC.getCollectionSize());
+		
 	}
 
 }
