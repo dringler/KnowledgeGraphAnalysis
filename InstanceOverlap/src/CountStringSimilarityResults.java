@@ -12,6 +12,8 @@ public class CountStringSimilarityResults {
 	//Triple<x2y, kgClass, simMeasure>, instanceCount
 	//private HashMap<Triple<String, String, String>, Integer> simResultsT = new HashMap<Triple<String,String,String>, Integer>(); 
 	private HashMap<Pair<String, String>, Integer>  simResultsP = new HashMap<Pair<String, String>, Integer>();
+	//private HashMap<Pair<String, String>, HashSet<Pair<String, String>>>  simResultsI = new HashMap<Pair<String, String>, HashSet<Pair<String, String>>>();
+	//private boolean saveMatchedLabels = true;
 	
 	public CountStringSimilarityResults() {
 	
