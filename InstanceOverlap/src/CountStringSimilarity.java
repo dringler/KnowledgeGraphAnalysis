@@ -10,10 +10,10 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 
 
 public class CountStringSimilarity {
+	private boolean useSamples; 
 	//similarity measure strings
 	private String jaccardS = "jaccard";
 	private String jaroS = "jaro";
@@ -24,8 +24,9 @@ public class CountStringSimilarity {
 	private String softTfidfS = "softTfidf";
 
 
-	public void run(ArrayList<String> classNames, ClassMapping cM, StringMeasures stringMeasures) {
+	public void run(ArrayList<String> classNames, ClassMapping cM, StringMeasures stringMeasures, boolean useSamples) {
 		System.out.println("Start CountStringSimilarity.run()");
+		this.useSamples = useSamples;
 		long startTime = System.nanoTime();
 		
 		
@@ -48,6 +49,7 @@ public class CountStringSimilarity {
 			System.out.println(instanceLabels.get("o"));
 			System.out.println(instanceLabels.get("w"));
 			*/
+			
 			getMatchedStringCounts(results, kKgClassInstanceLabels, stringMeasures);
 			
 			//print results
@@ -65,7 +67,11 @@ public class CountStringSimilarity {
 	private void getMatchedStringCounts(
 			CountStringSimilarityResults results, HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels,
 			StringMeasures stringMeasures) {
-		//HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();
+		//HashMap<String, HashMap<String, Integer>> results = new HashMap<String, HashMap<String, Integer>>();	
+		//train TFIDF model for each KG class
+		if (stringMeasures.checkTFIDF()) {
+			stringMeasures.trainTFIDF(kKgClassInstanceLabels);
+		}
 		//for each kg
 		for (String fk : kKgClassInstanceLabels.keySet()) {
 			switch (fk) {
@@ -76,28 +82,28 @@ public class CountStringSimilarity {
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures);
 					break;
 				case "y":
-					comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures);
 					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures);
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures);
 					break;
 				case "o":
-					comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
-					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures);
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures);
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures);
 					break;
 				case "n":
-					comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
-					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures);
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures);
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures);
 					break;
 				case "w":
-					comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
-					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures);
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures);
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures);
+					//comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures);
 					break;
 				}
 			}
@@ -129,6 +135,7 @@ public class CountStringSimilarity {
 		//for each kg class in other kg
 			for (String toKgClass : toKgClasses.keySet()) {
 				//for each instance in other kg
+				//System.out.println(fK + "_" + fromKgClass + " to " + tK + "_" + toKgClass);
 				for (Entry<String, HashSet<String>> otherKGinstanceWithLabels : toKgClasses.get(toKgClass).entrySet()) {
 					
 					// instanceResults<SimMeasure, booleanMatch>
@@ -141,11 +148,12 @@ public class CountStringSimilarity {
 						for (String otherLabel : otherKGinstanceWithLabels.getValue()) {
 							if (otherLabel != null && !otherLabel.equals("null")) {
 							
-								//System.out.println(label + " AND " + yagoLabel);
-								//System.out.println(stringMeasures.getSimilarityScores(label, yagoLabel));
+								//System.out.println(label + " AND " + otherLabel);
+								//System.out.println(stringMeasures.getSimilarityScores(label, otherLabel));
 								
 								simResults = stringMeasures.getSimilarityResult(label, otherLabel);
-								//System.out.println(label + " and " + otherLabel + ": "+ simResults);
+								//if (simResults.get("softTfidf"))
+								//	System.out.println(label + " and " + otherLabel + ": "+ simResults);
 
 								//update instanceResults
 								instanceResults = updateInstanceResults(instanceResults, simResults);
@@ -231,20 +239,19 @@ public class CountStringSimilarity {
 		//System.out.println(k + ": "+kgClass);
 		switch (k) {
 			case "d":
-				
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabelTest/");
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/");
 				break;
 			case "y":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabelTest/");
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabel/");
 				break;
 			case "o":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabelTest/");
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabel/");
 				break;
 			case "n":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabelTest/");
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabel/");
 				break;
 			case "w":
-				filePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabelTest/");
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabel/");
 				break;
 			default:
 				System.out.println("error in getInstanceLabelsForKgClass(). No matching k found");
