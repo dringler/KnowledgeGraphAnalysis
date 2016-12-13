@@ -38,8 +38,6 @@
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -47,4 +45,18 @@
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.util.stream.Stream"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="org.apache.log4j.BasicConfigurator"/>
+<fullyQualifiedTypeName name="org.apache.log4j.Logger"/>
+<fullyQualifiedTypeName name="org.apache.log4j.LogManager"/>
+<fullyQualifiedTypeName name="org.apache.log4j.Level"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Triple"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutableTriple"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Pair"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutablePair"/>
+<fullyQualifiedTypeName name="com.wcohen.ss.api.StringWrapperIterator"/>
+<fullyQualifiedTypeName name="com.wcohen.ss.api.StringWrapper"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="com.wcohen.ss.tokens.SimpleTokenizer"/>
 </qualifiedTypeNameHistroy>
