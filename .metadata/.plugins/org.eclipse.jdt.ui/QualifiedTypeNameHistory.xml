@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.mysql.jdbc.Connection"/>
-<fullyQualifiedTypeName name="BulkInsert.BulkInsertable"/>
-<fullyQualifiedTypeName name="BulkInsert.IBulkInsertable"/>
 <fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.Timestamp"/>
@@ -24,7 +21,6 @@
 <fullyQualifiedTypeName name="org.apache.jena.query.QueryFactory"/>
 <fullyQualifiedTypeName name="org.apache.jena.sparql.engine.http.QueryEngineHTTP"/>
 <fullyQualifiedTypeName name="java.io.FileOutputStream"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="org.apache.jena.rdf.model.Model"/>
 <fullyQualifiedTypeName name="org.apache.jena.rdf.model.ModelFactory"/>
 <fullyQualifiedTypeName name="java.io.FileInputStream"/>
@@ -35,14 +31,12 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
-<fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.util.stream.Stream"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
@@ -53,10 +47,17 @@
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
 <fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Triple"/>
 <fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutableTriple"/>
-<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Pair"/>
-<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutablePair"/>
 <fullyQualifiedTypeName name="com.wcohen.ss.api.StringWrapperIterator"/>
 <fullyQualifiedTypeName name="com.wcohen.ss.api.StringWrapper"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="com.wcohen.ss.tokens.SimpleTokenizer"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Pair"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.nio.file.Files"/>
+<fullyQualifiedTypeName name="java.io.FileWriter"/>
+<fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.nio.file.StandardOpenOption"/>
+<fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutablePair"/>
+<fullyQualifiedTypeName name="java.io.BufferedWriter"/>
 </qualifiedTypeNameHistroy>
