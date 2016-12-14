@@ -1,41 +1,41 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
+public class InstanceOverlapMain {
 
-public class CountInstanceOverlap {
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		ClassMapping cM = new ClassMapping();
 		ArrayList<String> classNames = getClassNames();
 		
-	// COUNT SAME AS LINKS
+	// SAME AS LINKS
 		// PARAMETERS		
-		boolean d2y = true;
+		/*boolean d2y = true;
 		boolean d2o = true;
 		boolean y2d = true;
 		boolean o2d = true;
 		CountSameAs same = new CountSameAs();
-		//same.run(classNames, cM, d2y, d2o, y2d, o2d);
+		same.run(classNames, cM, d2y, d2o, y2d, o2d);
+		*/
+	// INSTANCE MATCHES USING STRING SIMILARITY MEASURES
 		
-	// COUNT INSTANCE OVERLAP USING STRING SIMILARITY MEASURES
+		/*boolean useSamples = false;
 		// PARAMETERS: string similarity measures and thresholds
 		boolean exactMatch = false;
 		boolean jaccard = false;
 		double jaccardT = 0.5;
 		boolean jaro = false;
 		double jaroT = 0.9;
-		boolean scaledLevenstein = false;
-		double scaledLevensteinT = 0.4;
+		boolean scaledLevenstein = true;
+		double scaledLevensteinT = 0.9;
 		boolean tfidf = false;
 		double tfidfT = 0.7;
-		boolean jaroWinkler = false;
-		double jaroWinklerT = 0.8;
-		boolean softTfidf = true;
-		double softTfidfT = 0.5;
-		boolean internalSoftTfidf = true;
+		boolean jaroWinkler = true;
+		double jaroWinklerT = 0.9;
+		boolean softTfidf = false;
+		double softTfidfT = 0.8;
+		boolean internalSoftTfidf = false;
 		String internalSoftTfidfS = "jaroWinkler"; //"jaroWinkler", "jaccard", or "scaledLevenstein"
 		double internalSoftTfidfT = 0.9;
 		
@@ -52,8 +52,12 @@ public class CountInstanceOverlap {
 		//LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
 		
 		CountStringSimilarity stringSim = new CountStringSimilarity();
-		stringSim.run(classNames, cM, stringMeasures);
+		stringSim.run(classNames, cM, stringMeasures, useSamples);
+		*/
 		
+		//CALCULATE ESTIMATED INSTANCE OVERLAP
+		EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
+		overlap.run(classNames, cM);
 
 	}
 	
@@ -61,7 +65,7 @@ public class CountInstanceOverlap {
 		ArrayList<String> classNames = new ArrayList<String>();
 		classNames.addAll(Arrays.asList(
 							//PERSON
-								/*"Agent",
+							/*	"Agent",
 								"Person",
 								"Politician",
 								"Athlete",

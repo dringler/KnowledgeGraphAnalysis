@@ -70,8 +70,8 @@ public class CountSameAs {
 				//count owl:sameAs link		
 				//DBpedia to YAGO
 				if (d2y) {
-					Path d2yPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAs/yago_links.nt");
-					Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/d2y/");
+					Path d2yPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAsFiles/yago_links.nt");
+					Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/d2y/owlSameAs/");
 					countString = "DBpedia:" + className + " to YAGO counts:";
 					getCounts("d", d2yPath, cM, className, dInstances, d2yCountMap, countString, d2yPairMap, sameAsPairsPath);
 					if (d2yPairMap.get(className) != null)
@@ -80,8 +80,8 @@ public class CountSameAs {
 				}
 				//DBpedia to OpenCyc
 				if (d2o) {
-					Path d2oPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAs/opencyc_links.nt");
-					Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/d2o/");
+					Path d2oPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/owlSameAsFiles/opencyc_links.nt");
+					Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/d2o/owlSameAs/");
 					countString = "DBpedia:" + className + " to OpenCyc counts:";
 					getCounts("d", d2oPath, cM, className, dInstances, d2oCountMap, countString, d2oPairMap, sameAsPairsPath);
 					if (d2oPairMap.get(className) != null)
@@ -101,7 +101,7 @@ public class CountSameAs {
 				}
 				//count owl:sameAs link		
 				Path y2dPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/yagoDBpediaInstances.ttl");
-				Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/y2d/");
+				Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/y2d/owlSameAs/");
 				countString = "YAGO:" + className + " to DBpedia counts:"; 
 				getCounts("y", y2dPath, cM, className, yInstances, y2dCountMap, countString, y2dPairMap, sameAsPairsPath);
 				if (y2dPairMap.get(className) != null)
@@ -121,7 +121,7 @@ public class CountSameAs {
 				//count owl:sameAs link
 				Path o2dPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt");
 				
-				Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/o2d/");
+				Path sameAsPairsPath = Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/o2d/owlSameAs/");
 				
 				countString = "OpenCyc:" + className + " to DBpedia counts:"; 
 				getCounts("o", o2dPath, cM, className, oInstances, o2dCountMap, countString, o2dPairMap, sameAsPairsPath);
