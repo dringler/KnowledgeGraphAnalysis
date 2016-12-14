@@ -345,5 +345,54 @@ public class StringMeasures {
 		System.out.println("TFIDF is trained on labels with collection size of " + this.softTfidfC.getCollectionSize());
 		
 	}
+	public double getJaccardT() {
+		return jaccardT;
+	}
+
+	public double getJaroT() {
+		return jaroT;
+	}
+
+	public double getScaledLevensteinT() {
+		return scaledLevensteinT;
+	}
+
+	public double getTfidfT() {
+		return tfidfT;
+	}
+
+	public double getJaroWinklerT() {
+		return jaroWinklerT;
+	}
+
+	public double getSoftTfidfT() {
+		return softTfidfT;
+	}
+
+	public double getInternalSoftTfidfT() {
+		return internalSoftTfidfT;
+	}
+
+	public List<String> getUsedMeasures() {
+		List<String> usedMeasures = new ArrayList<String>();
+		if (this.exactMatch)
+			usedMeasures.add(this.exactMatchS);
+		if (this.jaccard)
+			usedMeasures.add(this.jaccardS);
+		if (this.jaro)
+			usedMeasures.add(this.jaroS);
+		if (this.jaroWinkler)
+			usedMeasures.add(this.jaroWinklerS);
+		if (this.scaledLevenstein)
+			usedMeasures.add(this.scaledLevensteinS);
+		if (this.softTfidf)
+			usedMeasures.add(this.softTfidfS);
+		if (this.tfidf)
+			usedMeasures.add(this.tfidfS);
+		return usedMeasures;
+	}
+
+
+
 
 }
