@@ -303,7 +303,7 @@ public class StringMeasures {
 			//Collection<HashSet<String>> labels,
 			//HashMap<String, HashMap<String, HashSet<String>>> toKgClasses
 			) {
-		System.out.println("TRAIN TFIDF");
+		//System.out.println("TRAIN TFIDF");
 		//reset
 		
 		if (this.internalSoftTfidf) {
@@ -342,7 +342,7 @@ public class StringMeasures {
 		if (this.tfidf)
 			this.tfidfC.train(new BasicStringWrapperIterator(labelsW.iterator()));
 		
-		System.out.println("TFIDF is trained on labels with collection size of " + this.softTfidfC.getCollectionSize());
+		//System.out.println("TFIDF is trained on labels with collection size of " + this.softTfidfC.getCollectionSize());
 		
 	}
 	public double getJaccardT() {
@@ -371,6 +371,38 @@ public class StringMeasures {
 
 	public double getInternalSoftTfidfT() {
 		return internalSoftTfidfT;
+	}
+	
+	public void setJaccardT(double jaccardT) {
+		this.jaccardT = jaccardT;
+	}
+
+	public void setJaroT(double jaroT) {
+		this.jaroT = jaroT;
+	}
+
+	public void setScaledLevensteinT(double scaledLevensteinT) {
+		this.scaledLevensteinT = scaledLevensteinT;
+	}
+
+	public void setTfidfT(double tfidfT) {
+		this.tfidfT = tfidfT;
+	}
+
+	public void setJaroWinklerT(double jaroWinklerT) {
+		this.jaroWinklerT = jaroWinklerT;
+	}
+
+	public void setSoftTfidfT(double softTfidfT) {
+		this.softTfidfT = softTfidfT;
+	}
+
+	public void setInternalSoftTfidfT(double internalSoftTfidfT) {
+		this.internalSoftTfidfT = internalSoftTfidfT;
+	}
+	
+	public void setExactMatch(boolean exactMatch) {
+		this.exactMatch = exactMatch;
 	}
 
 	public List<String> getUsedMeasures() {

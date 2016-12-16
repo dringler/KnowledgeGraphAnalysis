@@ -132,14 +132,19 @@ public class EstimatedInstanceOverlap {
 		    String line;
 		    while ((line = br.readLine()) != null) {
 		    	String[] values = line.split("\t");
-		    	//delete yago link for d2y case
-				if (values[1].contains("http://yago-knowledge.org/resource/")) {
-					//delete <http://yago-knowledge.org/resource/WORD_TO_KEEP>
-					values[1] = "<" + values[1].substring(36, values[1].length());
-				}
-		    	Pair<String, String> p = new ImmutablePair<String, String>(values[0], values[1]);
-		    	pairSet.add(p);
+		    	if(values.length > 1) {
+			    	//delete yago link for d2y case
+					if (values[1].contains("http://yago-knowledge.org/resource/")) {
+						//delete <http://yago-knowledge.org/resource/WORD_TO_KEEP>
+						values[1] = "<" + values[1].substring(36, values[1].length());
+					}
+			    	Pair<String, String> p = new ImmutablePair<String, String>(values[0], values[1]);
+			    	pairSet.add(p);
+		    	}
 		    }
+		    br.close();
+		} catch (FileNotFoundException fnfe){
+			//System.out.println("no instances found for " + fileName);
 		}
 		return pairSet;
 	}

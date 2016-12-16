@@ -9,7 +9,6 @@ public class CountStringSimilarityResults {
 	//x2y<kgClass<simMeasure, instanceCount>
 	//private HashMap<String, HashMap<String, HashMap<String, Integer>>> simResults  = new HashMap<String, HashMap<String, HashMap<String, Integer>>>();
 	
-	//Triple<x2y, kgClass, simMeasure>, instanceCount
 	//private HashMap<Triple<String, String, String>, Integer> simResultsT = new HashMap<Triple<String,String,String>, Integer>(); 
 	private HashMap<Pair<String, String>, Integer>  simResultsP = new HashMap<Pair<String, String>, Integer>();
 	//private HashMap<Pair<String, String>, HashSet<Pair<String, String>>>  simResultsI = new HashMap<Pair<String, String>, HashSet<Pair<String, String>>>();

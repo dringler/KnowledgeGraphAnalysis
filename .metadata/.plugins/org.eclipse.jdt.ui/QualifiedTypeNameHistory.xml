@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.Timestamp"/>
-<fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="org.apache.commons.logging.Log"/>
 <fullyQualifiedTypeName name="org.apache.jena.atlas.logging.Log"/>
@@ -37,7 +35,6 @@
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.stream.Stream"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="org.apache.log4j.BasicConfigurator"/>
@@ -50,14 +47,17 @@
 <fullyQualifiedTypeName name="com.wcohen.ss.api.StringWrapperIterator"/>
 <fullyQualifiedTypeName name="com.wcohen.ss.api.StringWrapper"/>
 <fullyQualifiedTypeName name="com.wcohen.ss.tokens.SimpleTokenizer"/>
-<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Pair"/>
 <fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.io.FileWriter"/>
-<fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.file.StandardOpenOption"/>
 <fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutablePair"/>
 <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.Pair"/>
+<fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.util.stream.Stream"/>
+<fullyQualifiedTypeName name="java.nio.file.Files"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.FileReader"/>
+<fullyQualifiedTypeName name="org.apache.commons.lang3.tuple.ImmutablePair"/>
 </qualifiedTypeNameHistroy>

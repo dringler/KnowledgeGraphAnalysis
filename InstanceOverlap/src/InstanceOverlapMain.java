@@ -20,44 +20,86 @@ public class InstanceOverlapMain {
 		*/
 	// INSTANCE MATCHES USING STRING SIMILARITY MEASURES
 		
-		/*boolean useSamples = false;
+		//configure log4j for secondstring library
+		org.apache.log4j.BasicConfigurator.configure();
+		//LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
+		
+		boolean useSamples = true;
 		// PARAMETERS: string similarity measures and thresholds
-		boolean exactMatch = false;
-		boolean jaccard = false;
-		double jaccardT = 0.5;
-		boolean jaro = false;
-		double jaroT = 0.9;
+		boolean exactMatch = true;
+		boolean jaccard = true;
+		double jaccardT = 1.0;
+		boolean jaro = true;
+		double jaroT = 1.0;
 		boolean scaledLevenstein = true;
-		double scaledLevensteinT = 0.9;
+		double scaledLevensteinT = 1.0;
 		boolean tfidf = false;
-		double tfidfT = 0.7;
+		double tfidfT = 1.0;
 		boolean jaroWinkler = true;
-		double jaroWinklerT = 0.9;
-		boolean softTfidf = false;
-		double softTfidfT = 0.8;
+		double jaroWinklerT = 1.0;
+		boolean softTfidf = true;
+		double softTfidfT = 1.0;
 		boolean internalSoftTfidf = false;
 		String internalSoftTfidfS = "jaroWinkler"; //"jaroWinkler", "jaccard", or "scaledLevenstein"
 		double internalSoftTfidfT = 0.9;
 		
+		classNames.clear();
+		useSamples = false;
+	//set param	
+		double threshold = 1.0; //1.0, 0.9, 0.8
+		//classNames.add("Planet"); //done for 1, .9, .8
+		//classNames.add("Automobile"); //done for 1, .9, .8
+		classNames.add("Song"); //done for
+		
+		
+		
+		if (threshold == 1.0)
+			exactMatch = true;
+		else
+			exactMatch = false;
+		
 		StringMeasures stringMeasures = new StringMeasures(exactMatch,
+				jaccard, threshold, 
+				jaro, threshold, 
+				scaledLevenstein, threshold, 
+				tfidf, threshold, 
+				jaroWinkler, threshold,
+				softTfidf, threshold, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
+			
+		/*StringMeasures stringMeasures = new StringMeasures(exactMatch,
 				jaccard, jaccardT, 
 				jaro, jaroT, 
 				scaledLevenstein, scaledLevensteinT, 
 				tfidf, tfidfT, 
 				jaroWinkler, jaroWinklerT,
-				softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
-		
-		//configure log4j for secondstring library
-		org.apache.log4j.BasicConfigurator.configure();
-		//LogManager.getRootLogger().setLevel(Level.OFF); //set console logger off
+				softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);*/
 		
 		CountStringSimilarity stringSim = new CountStringSimilarity();
 		stringSim.run(classNames, cM, stringMeasures, useSamples);
-		*/
+		
+		/*double[] tArray = {0.9, 0.8};
+		//double[] tArray = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
+		stringMeasures.setExactMatch(false);
+		
+		for (double newT : tArray) {
+			//set new thresholds
+			stringMeasures.setInternalSoftTfidfT(newT);
+			stringMeasures.setJaccardT(newT);
+			stringMeasures.setJaroT(newT);
+			stringMeasures.setJaroWinklerT(newT);
+			stringMeasures.setScaledLevensteinT(newT);
+			stringMeasures.setSoftTfidfT(newT);
+			stringMeasures.setTfidfT(newT);
+			//rerun
+			stringSim.run(classNames, cM, stringMeasures, useSamples);
+			System.out.println("Done with " + newT);
+		}*/
 		
 		//CALCULATE ESTIMATED INSTANCE OVERLAP
-		EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
-		overlap.run(classNames, cM);
+		//EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
+		//overlap.run(classNames, cM);
+		
+		System.out.println("DONE");
 
 	}
 	
@@ -84,7 +126,7 @@ public class InstanceOverlapMain {
 								"MusicalWork",
 								"Album",
 								"Song",
-								"Single",
+								/*"Single",
 								"Movie",
 								"Book",
 							//EVENT	
@@ -95,7 +137,7 @@ public class InstanceOverlapMain {
 							//TRANSPORT
 								"Vehicle",
 								"Automobile",
-								"Ship",
+								/*"Ship",
 								"Spacecraft",
 							//OTHER
 								"ChemicalElement_Substance",
