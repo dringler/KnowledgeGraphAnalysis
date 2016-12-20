@@ -18,10 +18,10 @@ public class CountStringSimilarityResults {
 	
 	}
 	//fK, fromKgClass, tK, toKgClass,
-	public void addInstanceCount(String fK, String fromKgClass, String tK, String toKgClass, String simMeasure) {
+	public void addInstanceCount(String fK, String fromKgClass, String tK, String toKgClass, String simMeasure, Double t) {
 		//ImmutableTriple<String, String, String> t = new ImmutableTriple<String,String,String>(x2y, kgClass, simMeasure);
 		String key = getKey(fK, fromKgClass, tK, toKgClass);
-		ImmutablePair<String, String> p = new ImmutablePair<String, String>(key, simMeasure);
+		ImmutablePair<String, String> p = new ImmutablePair<String, String>(key, simMeasure+t.toString());
 		//check if t is already in simResultT
 		if (this.simResultsP.containsKey(p)) {	
 			this.simResultsP.put(p, this.simResultsP.get(p) + 1);//increase count

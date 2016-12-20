@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="System.out" key="selection"/>
+		<item value="exact" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="exact"/>
 			<item value="system.out"/>
 			<item value="stream"/>
 			<item value="Paths.get(&quot;/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/&quot;);"/>
@@ -15,7 +16,6 @@
 			<item value="write(Path"/>
 			<item value="write("/>
 			<item value="write"/>
-			<item value="options"/>
 		</list>
 		<list key="replacehistory">
 			<item value="fType2"/>

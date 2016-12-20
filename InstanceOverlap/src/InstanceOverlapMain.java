@@ -46,25 +46,22 @@ public class InstanceOverlapMain {
 		classNames.clear();
 		useSamples = false;
 	//set param	
-		double threshold = 1.0; //1.0, 0.9, 0.8
-		//classNames.add("Planet"); //done for 1, .9, .8
+		//double threshold = 0.8; //1.0, 0.9, 0.8
+		classNames.add("Planet"); //done for 1, .9, .8
 		//classNames.add("Automobile"); //done for 1, .9, .8
-		classNames.add("Song"); //done for
+		//classNames.add("Song"); //done for 1, .9
 		
+		ArrayList<Double> thresholds = new ArrayList<Double>();
+		thresholds.add(1.0);
+		thresholds.add(0.9);
+		thresholds.add(0.8);
 		
-		
-		if (threshold == 1.0)
+		/*if (threshold == 1.0)
 			exactMatch = true;
 		else
-			exactMatch = false;
+			exactMatch = false;*/
 		
-		StringMeasures stringMeasures = new StringMeasures(exactMatch,
-				jaccard, threshold, 
-				jaro, threshold, 
-				scaledLevenstein, threshold, 
-				tfidf, threshold, 
-				jaroWinkler, threshold,
-				softTfidf, threshold, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
+		StringMeasures stringMeasures = new StringMeasures(thresholds);
 			
 		/*StringMeasures stringMeasures = new StringMeasures(exactMatch,
 				jaccard, jaccardT, 
@@ -75,7 +72,7 @@ public class InstanceOverlapMain {
 				softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);*/
 		
 		CountStringSimilarity stringSim = new CountStringSimilarity();
-		stringSim.run(classNames, cM, stringMeasures, useSamples);
+		stringSim.run(classNames, cM, stringMeasures, useSamples, thresholds);
 		
 		/*double[] tArray = {0.9, 0.8};
 		//double[] tArray = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
@@ -96,8 +93,22 @@ public class InstanceOverlapMain {
 		}*/
 		
 		//CALCULATE ESTIMATED INSTANCE OVERLAP
-		//EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
-		//overlap.run(classNames, cM);
+		classNames.clear();
+		classNames.add("Planet");
+		//classNames.add("Automobile");
+		//classNames.add("Song");
+		
+		ArrayList<String> stringM = new ArrayList<String>();
+		stringM.add("exactMatch");
+		stringM.add("jaccard");
+		stringM.add("jaro");
+		stringM.add("jaroWinkler");
+		stringM.add("scaledLevenstein");
+		stringM.add("softTfidf");
+		
+		
+		EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
+		overlap.run(classNames, cM, stringM, thresholds);
 		
 		System.out.println("DONE");
 

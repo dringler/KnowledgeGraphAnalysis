@@ -5,6 +5,9 @@ import com.wcohen.ss.tokens.SimpleTokenizer;
 import java.util.*;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 public class StringMeasures {
 	//boolean
 	private boolean jaccard;
@@ -33,6 +36,7 @@ public class StringMeasures {
 	private double jaroWinklerT;
 	private double softTfidfT;
 	private double internalSoftTfidfT;
+	private List<Double> thresholds;
 	//strings
 	private String jaccardS = "jaccard";
 	private String jaroS = "jaro";
@@ -42,6 +46,23 @@ public class StringMeasures {
 	private String exactMatchS = "exactMatch";
 	private String softTfidfS = "softTfidf";
 	private String internalSoftTfidfS; 
+	//keys
+	private Pair<String, Double> exactMatchPair = new ImmutablePair<String, Double>(this.exactMatchS, 1.0);
+	private Pair<String, Double> jaccardPair1 = new ImmutablePair<String, Double>(this.jaccardS, 1.0);
+	private Pair<String, Double> jaccardPair9 = new ImmutablePair<String, Double>(this.jaccardS, 0.9);
+	private Pair<String, Double> jaccardPair8 = new ImmutablePair<String, Double>(this.jaccardS, 0.8);
+	private Pair<String, Double> jaroPair1 = new ImmutablePair<String, Double>(this.jaroS, 1.0);
+	private Pair<String, Double> jaroPair9 = new ImmutablePair<String, Double>(this.jaroS, 0.9);
+	private Pair<String, Double> jaroPair8 = new ImmutablePair<String, Double>(this.jaroS, 0.8);
+	private Pair<String, Double> jaroWinklerPair1 = new ImmutablePair<String, Double>(this.jaroWinklerS, 1.0);
+	private Pair<String, Double> jaroWinklerPair9 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.9);
+	private Pair<String, Double> jaroWinklerPair8 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.8);
+	private Pair<String, Double> scaledLevensteinPair1 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 1.0);
+	private Pair<String, Double> scaledLevensteinPair9 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.9);
+	private Pair<String, Double> scaledLevensteinPair8 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.8);
+	private Pair<String, Double> softTfidfPair1 = new ImmutablePair<String, Double>(this.softTfidfS, 1.0);
+	private Pair<String, Double> softTfidfPair9 = new ImmutablePair<String, Double>(this.softTfidfS, 0.9);
+	private Pair<String, Double> softTfidfPair8 = new ImmutablePair<String, Double>(this.softTfidfS, 0.8);
 	/**
 	   * StringMeasures constructor
 	   * @param exactMatch boolean
@@ -129,7 +150,28 @@ public class StringMeasures {
 		}
 		System.out.println("Configuration: " + config.substring(0, config.length()-2));
 	}
-	
+	/**
+	   * StringMeasures constructor
+	   * exactMatch, jaccard, jaro, scaledLevenstein, jaroWinkler, softTfidf
+	   * 
+	   */
+	public StringMeasures(ArrayList<Double> thresholds) {
+		this.thresholds = thresholds;
+		
+		this.exactMatch = true;
+		this.jaccard = true;
+		this.jaro = true;
+		this.scaledLevenstein = true;
+		this.jaroWinkler = true;
+		this.softTfidf = true;
+		
+		this.jaccardC = new Jaccard();
+		this.jaroC = new Jaro();
+		this.scaledLevensteinC = new ScaledLevenstein();
+		this.jaroWinklerC = new JaroWinkler();
+		this.softTfidfC = new SoftTFIDF();
+	}
+
 	public double getJaccardScore(String s1, String s2) {
 		return jaccardC.score(jaccardC.prepare(s1), jaccardC.prepare(s2));
 	}
@@ -209,45 +251,97 @@ public class StringMeasures {
 	   * Get similarity results for two strings s1 and s2
 	   * @param s1
 	   * @param s2
+	 * @param thresholds 
 	   * @return HashMap<String, Boolean> with similarity measure name and result
 	   */
-	public HashMap<String, Boolean> getSimilarityResult(String s1, String s2) {
-		HashMap<String, Boolean> results = new HashMap<String, Boolean>();
+	public HashMap<Pair<String, Double>, Boolean> getSimilarityResult(String s1, String s2, ArrayList<Double> thresholds) {
+		HashMap<Pair<String, Double>, Boolean> results = new HashMap<Pair<String, Double>, Boolean>();
 		if (this.exactMatch) {
-			results.put(this.exactMatchS, getExactMatch(s1, s2));
+			
+			results.put(getKeyPair(this.exactMatchS, 1.0), getExactMatch(s1, s2));
 		}
 		//check scores against thresholds
 		HashMap<String, Double> resultScores = getSimilarityScores(s1, s2);
 		//get all scores
 		for (Entry<String, Double> entry : resultScores.entrySet()) {
-			//check sim measure & check threshold
-			if (entry.getKey().equals(this.jaccardS)) {
-				results.put(this.jaccardS, checkThreshold(entry.getValue().doubleValue(), this.jaccardT));
-				/*if (checkThreshold(entry.getValue().doubleValue(), this.jaccardT))
-					System.out.println(s1 + " matched with " + s2);*/
-			} else if (entry.getKey().equals(this.jaroS)) {
-				results.put(this.jaroS, checkThreshold(entry.getValue().doubleValue(), this.jaroT));
-				/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroT))
-					System.out.println(s1 + " matched with " + s2);*/
-			} else if (entry.getKey().equals(this.scaledLevensteinS)) {
-				results.put(this.scaledLevensteinS, checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT));
-				/*if (checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT))
-					System.out.println(s1 + " matched with " + s2);*/
-			} else if (entry.getKey().equals(this.tfidfS)) {
-				results.put(this.tfidfS, checkThreshold(entry.getValue().doubleValue(), this.tfidfT));	
-				/*if (checkThreshold(entry.getValue().doubleValue(), this.tfidfT))
-					System.out.println(s1 + " matched with " + s2);*/
-			} else if (entry.getKey().equals(this.jaroWinklerS)) {
-				results.put(this.jaroWinklerS, checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT));
-				/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT))
-					System.out.println(s1 + " matched with " + s2);*/
-			} else if (entry.getKey().equals(this.softTfidfS)) {
-				results.put(this.softTfidfS, checkThreshold(entry.getValue().doubleValue(), this.softTfidfT));
-				/*if (checkThreshold(entry.getValue().doubleValue(), this.softTfidfT))
-					System.out.println(s1 + " matched with " + s2);*/
+			//for each threshold
+			for (Double t : thresholds) {
+				//check sim measure & check threshold
+				if (entry.getKey().equals(this.jaccardS)) {
+					results.put(getKeyPair(this.jaccardS, t), checkThreshold(entry.getValue().doubleValue(), t));
+					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaccardT))
+						System.out.println(s1 + " matched with " + s2);*/
+				} else if (entry.getKey().equals(this.jaroS)) {
+					results.put(getKeyPair(this.jaroS, t), checkThreshold(entry.getValue().doubleValue(), t));
+					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroT))
+						System.out.println(s1 + " matched with " + s2);*/
+				} else if (entry.getKey().equals(this.scaledLevensteinS)) {
+					results.put(getKeyPair(this.scaledLevensteinS, t), checkThreshold(entry.getValue().doubleValue(), t));
+					/*if (checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT))
+						System.out.println(s1 + " matched with " + s2);*/
+				/*} else if (entry.getKey().equals(this.tfidfS)) {
+					results.put(getKeyPair(this.tfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));	
+					/*if (checkThreshold(entry.getValue().doubleValue(), this.tfidfT))
+						System.out.println(s1 + " matched with " + s2);*/
+				} else if (entry.getKey().equals(this.jaroWinklerS)) {
+					results.put(getKeyPair(this.jaroWinklerS, t), checkThreshold(entry.getValue().doubleValue(), t));
+					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT))
+						System.out.println(s1 + " matched with " + s2);*/
+				} else if (entry.getKey().equals(this.softTfidfS)) {
+					results.put(getKeyPair(this.softTfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));
+					/*if (checkThreshold(entry.getValue().doubleValue(), this.softTfidfT))
+						System.out.println(s1 + " matched with " + s2);*/
+				}
 			}
 		}
 		return results;
+	}
+	private Pair<String, Double> getKeyPair(String simMeasure, Double t) {
+		switch(simMeasure) {
+		case "exactMatch":
+			return getExactMatchPair();
+		case "jaccard":
+			if (t == 1.0)
+				return getJaccardPair1();
+			else if (t == 0.9)
+				return getJaccardPair9();
+			else if (t == 0.8)
+				return getJaccardPair8();
+			break;
+		case "jaro":
+			if (t == 1.0)
+				return getJaroPair1();
+			else if (t == 0.9)
+				return getJaroPair9();
+			else if (t == 0.8)
+				return getJaroPair8();
+			break;
+		case "scaledLevenstein":
+			if (t == 1.0)
+				return getScaledLevensteinPair1();
+			else if (t == 0.9)
+				return getScaledLevensteinPair9();
+			else if (t == 0.8)
+				return getScaledLevensteinPair8();
+			break;
+		case "jaroWinkler":
+			if (t == 1.0)
+				return getJaroWinklerPair1();
+			else if (t == 0.9)
+				return getJaroWinklerPair9();
+			else if (t == 0.8)
+				return getJaroWinklerPair8();
+			break;
+		case "softTfidf":
+			if (t == 1.0)
+				return getSoftTfidfPair1();
+			else if (t == 0.9)
+				return getSoftTfidfPair9();
+			else if (t == 0.8)
+				return getSoftTfidfPair8();
+			break;
+		}
+		return null;
 	}
 	/**
 	   * Check if value is at least the threshold (v>=t) 
@@ -261,30 +355,33 @@ public class StringMeasures {
 	}
 	/**
 	   * Get blank HashMap with all similarity measures 
+	 * @param thresholds2 
 	   * @return HashMap
 	   */
-	public HashMap<String, Boolean> getBlankInstanceResultsContainer() {
-		HashMap<String, Boolean> instanceResults = new HashMap<String, Boolean>();
+	public HashMap<Pair<String,Double>, Boolean> getBlankInstanceResultsContainer(ArrayList<Double> thresholds2) {
+		HashMap<Pair<String,Double>, Boolean> instanceResults = new HashMap<Pair<String, Double>, Boolean>();
 		if (this.exactMatch) {
-			instanceResults.put(this.exactMatchS, false);
-		}	
-		if (this.jaccard) {
-			instanceResults.put(this.jaccardS, false);
+			instanceResults.put(getKeyPair(this.exactMatchS, 1.0), false);
 		}
-		if (this.jaro) {
-			instanceResults.put(this.jaroS, false);
-		}
-		if (this.scaledLevenstein) {
-			instanceResults.put(this.scaledLevensteinS, false);
-		}
-		if (this.tfidf) {
-			instanceResults.put(this.tfidfS, false);
-		}
-		if (this.jaroWinkler) {
-			instanceResults.put(this.jaroWinklerS, false);
-		}
-		if (this.softTfidf) {
-			instanceResults.put(this.softTfidfS, false);
+		for (Double t : thresholds) {			
+			if (this.jaccard) {
+				instanceResults.put(getKeyPair(this.jaccardS, t), false);
+			}
+			if (this.jaro) {
+				instanceResults.put(getKeyPair(this.jaroS, t), false);
+			}
+			if (this.scaledLevenstein) {
+				instanceResults.put(getKeyPair(this.scaledLevensteinS, t), false);
+			}
+			if (this.tfidf) {
+				instanceResults.put(getKeyPair(this.tfidfS, t), false);
+			}
+			if (this.jaroWinkler) {
+				instanceResults.put(getKeyPair(this.jaroWinklerS, t), false);
+			}
+			if (this.softTfidf) {
+				instanceResults.put(getKeyPair(this.softTfidfS, t), false);
+			}
 		}
 		return instanceResults;
 	}
@@ -424,7 +521,54 @@ public class StringMeasures {
 		return usedMeasures;
 	}
 
-
+	public Pair<String, Double> getExactMatchPair() {
+		return exactMatchPair;
+	}
+	public Pair<String, Double> getJaccardPair1() {
+		return jaccardPair1;
+	}
+	public Pair<String, Double> getJaccardPair9() {
+		return jaccardPair9;
+	}
+	public Pair<String, Double> getJaccardPair8() {
+		return jaccardPair8;
+	}
+	public Pair<String, Double> getJaroPair1() {
+		return jaroPair1;
+	}
+	public Pair<String, Double> getJaroPair9() {
+		return jaroPair9;
+	}
+	public Pair<String, Double> getJaroPair8() {
+		return jaroPair8;
+	}
+	public Pair<String, Double> getJaroWinklerPair1() {
+		return jaroWinklerPair1;
+	}
+	public Pair<String, Double> getJaroWinklerPair9() {
+		return jaroWinklerPair9;
+	}
+	public Pair<String, Double> getJaroWinklerPair8() {
+		return jaroWinklerPair8;
+	}
+	public Pair<String, Double> getScaledLevensteinPair1() {
+		return scaledLevensteinPair1;
+	}
+	public Pair<String, Double> getScaledLevensteinPair9() {
+		return scaledLevensteinPair9;
+	}
+	public Pair<String, Double> getScaledLevensteinPair8() {
+		return scaledLevensteinPair8;
+	}
+	public Pair<String, Double> getSoftTfidfPair1() {
+		return softTfidfPair1;
+	}
+	public Pair<String, Double> getSoftTfidfPair9() {
+		return softTfidfPair9;
+	}
+	public Pair<String, Double> getSoftTfidfPair8() {
+		return softTfidfPair8;
+	}
 
 
 }
