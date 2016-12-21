@@ -28,47 +28,43 @@ public class CountStringSimilarity {
 	private String softTfidfS = "softTfidf";
 
 
-	public void run(ArrayList<String> classNames, ClassMapping cM, StringMeasures stringMeasures, boolean useSamples, ArrayList<Double> thresholds) {
+	public void run(String className, ClassMapping cM, StringMeasures stringMeasures, boolean useSamples, ArrayList<Double> thresholds) {
 		System.out.println("Start CountStringSimilarity.run()");
 		this.useSamples = useSamples;
 		//long startTime = System.nanoTime();
+			
+		CountStringSimilarityResults results = new CountStringSimilarityResults();
+		/*StringSimilarityPairs resultPairsD2y = new StringSimilarityPairs();
+		StringSimilarityPairs resultPairsD2o = new StringSimilarityPairs();
+		StringSimilarityPairs resultPairsY2d = new StringSimilarityPairs();
+		StringSimilarityPairs resultPairsO2d = new StringSimilarityPairs();*/
+	
+		//instanceLabels: HashMap<k, <HashMap<kgClass,<HashMap<instanceURI, <HashSet<englishLabels>>>>
+		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
+		HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);//key: d,w,y,o,n ; value:kgC
+		System.out.println(classMap);
 		
+		//get instances for each kgClass with all labels
+		kKgClassInstanceLabels = getInstanceLabels(classMap);
+		/*System.out.println(instanceLabels.get("d"));
+		System.out.println(instanceLabels.get("y"));
+		System.out.println(instanceLabels.get("n"));
+		System.out.println(instanceLabels.get("o"));
+		System.out.println(instanceLabels.get("w"));
+		*/
+			
+		//getMatchedStringCounts(results, kKgClassInstanceLabels, stringMeasures);
 		
-		//for each class
-		for (String className : classNames) {
+		getMatchedStringPairs(results, kKgClassInstanceLabels, stringMeasures, thresholds);
 			
-			CountStringSimilarityResults results = new CountStringSimilarityResults();
-			/*StringSimilarityPairs resultPairsD2y = new StringSimilarityPairs();
-			StringSimilarityPairs resultPairsD2o = new StringSimilarityPairs();
-			StringSimilarityPairs resultPairsY2d = new StringSimilarityPairs();
-			StringSimilarityPairs resultPairsO2d = new StringSimilarityPairs();*/
-		
-			//instanceLabels: HashMap<k, <HashMap<kgClass,<HashMap<instanceURI, <HashSet<englishLabels>>>>
-			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
-			HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);//key: d,w,y,o,n ; value:kgC
-			System.out.println(classMap);
-			
-			//get instances for each kgClass with all labels
-			kKgClassInstanceLabels = getInstanceLabels(classMap);
-			/*System.out.println(instanceLabels.get("d"));
-			System.out.println(instanceLabels.get("y"));
-			System.out.println(instanceLabels.get("n"));
-			System.out.println(instanceLabels.get("o"));
-			System.out.println(instanceLabels.get("w"));
-			*/
-			
-			//getMatchedStringCounts(results, kKgClassInstanceLabels, stringMeasures);
-			
-			getMatchedStringPairs(results, kKgClassInstanceLabels, stringMeasures, thresholds);
-			
-			//print results
-			/*Set<Pair<String, String>> allPairs = results.getPairs();
-			for (Pair<String,String> p : allPairs) {
-				System.out.println(p.getLeft() + "_" + p.getRight() +  ":" + results.getInstanceOverlapCount(p.getLeft(), p.getRight()));
-			}
-			*/
-			
+		//print results
+		/*Set<Pair<String, String>> allPairs = results.getPairs();
+		for (Pair<String,String> p : allPairs) {
+			System.out.println(p.getLeft() + "_" + p.getRight() +  ":" + results.getInstanceOverlapCount(p.getLeft(), p.getRight()));
 		}
+		*/
+			
+		
 		
 		//long startTime = System.nanoTime();
 		//System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
@@ -148,7 +144,7 @@ public class CountStringSimilarity {
 		// pairs <SimMeasure, threshold>, <fromURI, toURI>>
 		HashMap<Pair<String,Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults = new HashMap<Pair<String, Double>, HashSet<Pair<String, String>>>();
 		//for each kgClass
-		long startTime = System.nanoTime();
+		//long startTime = System.nanoTime();
 		for (String kgClass :kKgClassInstanceLabels.get(fk).keySet()) {
 			
 			//init 
@@ -160,23 +156,41 @@ public class CountStringSimilarity {
 				}
 			}
 			
-			int counter = 0;
-			for (Entry<String, HashSet<String>> instanceWithLabels : kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()) {
+			if (kKgClassInstanceLabels.get(tk) != null) {
 				
-				//to kg
-				if(kKgClassInstanceLabels.get(tk) != null) {
-					compareLabelsWithOtherKG(results, fk, kgClass, instanceWithLabels, tk, kKgClassInstanceLabels.get(tk), stringMeasures, thresholds, kgClassInstancePairResults, getPairs);
-				}
-				counter +=1;
-				if (counter % 1000 == 0) {
-					System.out.println(counter + " instances compared for " + fk + "2" + tk + ":" + kgClass + " in  " + ((System.nanoTime() - startTime)/1000000000) + " seconds.");
-					startTime = System.nanoTime();
+				//for each kg class in other kg
+				
+				for (String toKgClass : kKgClassInstanceLabels.get(tk).keySet()) {
+					Counter counter = new Counter();
+					//compare instanceLabels
+					kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()
+						.stream()
+						.parallel()
+						.forEach(instanceWithLabels -> {compareLabelsWithOtherKG(results, fk, kgClass, instanceWithLabels, tk, kKgClassInstanceLabels.get(tk).get(toKgClass), toKgClass, stringMeasures, thresholds, kgClassInstancePairResults, getPairs);
+							counter.increase();}
+								);
+					
+					
+					/*
+					for (Entry<String, HashSet<String>> instanceWithLabels : kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()) {
+						
+						//to kg
+						if(kKgClassInstanceLabels.get(tk) != null) {
+							compareLabelsWithOtherKG(results, fk, kgClass, instanceWithLabels, tk, kKgClassInstanceLabels.get(tk), stringMeasures, thresholds, kgClassInstancePairResults, getPairs);
+						}
+						counter +=1;
+						if (counter % 1000 == 0) {
+							System.out.println(counter + " instances compared for " + fk + "2" + tk + ":" + kgClass + " in  " + ((System.nanoTime() - startTime)/1000000000) + " seconds.");
+							startTime = System.nanoTime();
+						}
+					}
+					*/
+					//save results to disk
+					//System.out.println(kgClassInstancePairResults);
+					saveInstancePairResultsToDisk(fk, tk, kgClass, toKgClass, kgClassInstancePairResults, stringMeasures);
+					kgClassInstancePairResults.clear();
 				}
 			}
-			//save results to disk
-			//System.out.println(kgClassInstancePairResults);
-			saveInstancePairResultsToDisk(fk, tk, kgClass, kgClassInstancePairResults, stringMeasures);
-			kgClassInstancePairResults.clear();
 		}
 	
 	}
@@ -184,13 +198,13 @@ public class CountStringSimilarity {
 		
 		private void saveInstancePairResultsToDisk(String fk, String tk,
 			String kgClass,
-			HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults,
+			String toKgClass, HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults,
 			StringMeasures stringMeasures) {
 			for (Pair<String, Double> simMeasurePair : kgClassInstancePairResults.keySet()) {
 				//String threshold = getThreshold(simMeasure, stringMeasures);//1.0 for exact match
 				String simMeasure = simMeasurePair.getLeft();
 				Double threshold = simMeasurePair.getRight();
-				Path savePath = Paths.get("/Users/curtis/SeminarPaper_KG_files/simMeasureResults/"+fk+"2"+tk+"_"+kgClass+"_"+simMeasure+"_"+threshold+".tsv");
+				Path savePath = Paths.get("./simMeasureResults/"+fk+"2"+tk+"_"+kgClass+"_"+toKgClass+"_"+simMeasure+"_"+threshold+".tsv");
 				savePairsToDisk(savePath, kgClassInstancePairResults.get(simMeasurePair));
 				/*switch (fk) {
 					case "d":
@@ -258,21 +272,20 @@ public class CountStringSimilarity {
 	}
 
 	private void compareLabelsWithOtherKG(CountStringSimilarityResults results, String fK, String fromKgClass, Entry<String, HashSet<String>> instanceWithLabels,
-			String tK, HashMap<String, HashMap<String, HashSet<String>>> toKgClasses,
-			StringMeasures stringMeasures, ArrayList<Double> thresholds, HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults, boolean getPairs) {	
+			String tK, HashMap<String, HashSet<String>> otherKGinstancesWithLabels,
+			String toKgClass, StringMeasures stringMeasures, ArrayList<Double> thresholds, HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults, boolean getPairs) {	
 		
 		String fromURI = instanceWithLabels.getKey();
 		HashSet<String> labels = instanceWithLabels.getValue();
 		
 		//simResults <SimMeasure, threshold>, match>
 		HashMap<Pair<String, Double>, Boolean> simResults = new HashMap<Pair<String,Double>, Boolean>();	
-		//for each kg class in other kg
-			for (String toKgClass : toKgClasses.keySet()) {
+		
 				//for each instance in other kg
 				//System.out.println(fK + "_" + fromKgClass + " to " + tK + "_" + toKgClass);
-				for (Entry<String, HashSet<String>> otherKGinstanceWithLabels : toKgClasses.get(toKgClass).entrySet()) {
+				for (Entry<String, HashSet<String>> otherKGinstanceWithLabels : otherKGinstancesWithLabels.entrySet()) {
 					String toURI = otherKGinstanceWithLabels.getKey();
-					// instanceResults<SimMeasure, booleanMatch>
+					// instanceResults<SimMeasure, threshold>, booleanMatch>
 					HashMap<Pair<String, Double>, Boolean> instanceResults = stringMeasures.getBlankInstanceResultsContainer(thresholds);
 					
 						
@@ -344,7 +357,7 @@ public class CountStringSimilarity {
 					}
 				}
 			}		
-		}	
+		
 	}
 
 
@@ -353,7 +366,6 @@ public class CountStringSimilarity {
 	private HashMap<Pair<String, Double>, Boolean> updateInstanceResults(
 			HashMap<Pair<String, Double>, Boolean> instanceResults, HashMap<Pair<String, Double>, Boolean> simResults) {
 		// get all string similarity measures
-//UPDATE
 		for (Pair<String, Double> instanceResultS : instanceResults.keySet()) {
 			//if string sim measure is not true
 			if (!instanceResults.get(instanceResultS)) {
@@ -391,8 +403,10 @@ public class CountStringSimilarity {
 		HashMap<String, HashSet<String>> instanceLabelsForSingleKgClass = new HashMap<String, HashSet<String>>();
 		
 		//get file paths 
-		Path filePath = null;				
+		Path filePath = null;	
 		
+		filePath = Paths.get("./InstanceLabels/");
+		/*
 		//System.out.println(k + ": "+kgClass);
 		switch (k) {
 			case "d":
@@ -413,6 +427,7 @@ public class CountStringSimilarity {
 			default:
 				System.out.println("error in getInstanceLabelsForKgClass(). No matching k found");
 		}
+		*/
 		instanceLabelsForSingleKgClass = readFile(filePath, kgClass);
 		
 		return instanceLabelsForSingleKgClass;
