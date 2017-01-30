@@ -11,6 +11,7 @@ start = time.time()
 
 #readFile = 'OpenCyc/opencyc-latest_sample.nt'
 readFile = '../../../SeminarPaper_KG_files/OpenCyc/opencyc-latest.nt'
+writeFile = '../../../SeminarPaper_KG_files/OpenCyc/o2d_sameAsLinksOnly.nt'
 
 kgCountDict = {} #key:class, value:count
 
@@ -63,24 +64,27 @@ def countClasses(o):
 print('START')
 try:
     f = open(readFile, 'r')
+    w = open(writeFile, 'w')
     lineCounter = 0
     for line in f:
         splittedLine = line.rstrip('\n').split()
         s, p, o = getSPO(splittedLine)
-        if (p == owlSameAs and any(kgName in o.lower() for kgName in kgNames)):
-            #print line
-            addToCount(o)
-        #if "wordnet" in line.lower():
-        #    print line
+        #if (p == owlSameAs and any(kgName in o.lower() for kgName in kgNames)):
+        #    addToCount(o)
+        if (p == owlSameAs and 'dbpedia' in o):
+            w.write(line)
         lineCounter += 1
         if (lineCounter % lineProgress == 0):
             print ('{} lines read'.format(lineCounter))
         #if (lineCounter > 100):
         #    break
     f.close()
+    w.close()
     for k,v in kgCountDict.iteritems():
         print ('{}: {} owl:sameAs links'.format(k, v))
+    #print('YAGO')
     #print (yagoSet)
+    #print ('NELL')
     #print (nellSet)
     #for i in synsetSet:
     #    print i

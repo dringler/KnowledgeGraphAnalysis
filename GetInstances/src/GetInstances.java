@@ -435,7 +435,7 @@ public class GetInstances {
 	}
 
 	/**
-	  * Get class name of URI
+	  * Get class name of URI with the letter of the kg in front
 	  * @param uriString
 	  * @returns substring
 	 */
@@ -443,19 +443,19 @@ public class GetInstances {
 		String returnString = "";
 		if (kg ==0) {
 			//"<http://dbpedia.org/ontology/CLASSNAME_TO_KEEP>"
-			returnString = o.substring(29, o.length()-1);
+			returnString = "d_" + o.substring(29, o.length()-1);
 		} else if (kg == 1) { //YAGO
 			//"<CLASSNAME_TO_KEEP> ."
-			returnString = o.substring(1, o.length()-3);
+			returnString = "y_" + o.substring(1, o.length()-3);
 		} else if (kg == 2) {
 			//<http://sw.opencyc.org/concept/CLASSNAME_TO_KEEP>
-			returnString = o.substring(31, o.length()-1);
+			returnString = "o_" + o.substring(31, o.length()-1);
 		} else if (kg == 3) { //NELL
 			//"concept:CLASSNAME_TO_KEEP"
-			returnString = o.substring(8, o.length());
+			returnString = "n_" + o.substring(8, o.length());
 		} else if (kg == 4) {
 			//<http://www.wikidata.org/entity/CLASSNAME_TO_KEEP>
-			returnString = o.substring(32, o.length()-1);
+			returnString = "w_" + o.substring(32, o.length()-1);
 		}
 		//System.out.println("getClassNameOfURI: " + returnString);
 		return returnString;

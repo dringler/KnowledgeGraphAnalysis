@@ -18,6 +18,7 @@ public class StringMeasures {
 	private boolean exactMatch;
 	private boolean softTfidf;
 	private boolean internalSoftTfidf;
+	private boolean all;
 	//classes
 	private Jaccard jaccardC;
 	private Jaro jaroC;
@@ -46,6 +47,7 @@ public class StringMeasures {
 	private String exactMatchS = "exactMatch";
 	private String softTfidfS = "softTfidf";
 	private String internalSoftTfidfS; 
+	private String allS = "all";
 	//keys
 	private Pair<String, Double> exactMatchPair = new ImmutablePair<String, Double>(this.exactMatchS, 1.0);
 	private Pair<String, Double> jaccardPair1 = new ImmutablePair<String, Double>(this.jaccardS, 1.0);
@@ -63,6 +65,7 @@ public class StringMeasures {
 	private Pair<String, Double> softTfidfPair1 = new ImmutablePair<String, Double>(this.softTfidfS, 1.0);
 	private Pair<String, Double> softTfidfPair9 = new ImmutablePair<String, Double>(this.softTfidfS, 0.9);
 	private Pair<String, Double> softTfidfPair8 = new ImmutablePair<String, Double>(this.softTfidfS, 0.8);
+	private Pair<String, Double> allPair = new ImmutablePair<String, Double>(this.allS, 1.0);
 	/**
 	   * StringMeasures constructor
 	   * @param exactMatch boolean
@@ -82,7 +85,7 @@ public class StringMeasures {
 	   * @param internalSoftTfidfS internal sim measure for softTFIDF ("jaroWinkler", "jaccard", or "scaledLevenstein")
 	   * @param internalSoftTfidfT threshold value for internal sim measure of softTFIDF
 	   */
-	public StringMeasures(boolean exactMatch, boolean jaccard, double jaccardT, boolean jaro, double jaroT, boolean scaledLevenstein, double scaledLevensteinT, boolean tfidf, double tfidfT, boolean jaroWinkler, double jaroWinklerT, boolean softTfidf, double softTfidfT, boolean internalSoftTfidf, String internalSoftTfidfS, double internalSoftTfidfT) {		
+	public StringMeasures(boolean exactMatch, boolean jaccard, double jaccardT, boolean jaro, double jaroT, boolean scaledLevenstein, double scaledLevensteinT, boolean tfidf, double tfidfT, boolean jaroWinkler, double jaroWinklerT, boolean softTfidf, double softTfidfT, boolean internalSoftTfidf, String internalSoftTfidfS, double internalSoftTfidfT, boolean all) {		
 		String config = "";
 		this.exactMatch = exactMatch;
 		if (exactMatch)
@@ -93,6 +96,7 @@ public class StringMeasures {
 		this.tfidf = tfidf;
 		this.jaroWinkler = jaroWinkler;
 		this.softTfidf = softTfidf;
+		this.all = all;
 		
 		if (jaccard) {
 			this.jaccardC = new Jaccard();
@@ -164,6 +168,7 @@ public class StringMeasures {
 		this.scaledLevenstein = true;
 		this.jaroWinkler = true;
 		this.softTfidf = true;
+		this.all = true;
 		
 		this.jaccardC = new Jaccard();
 		this.jaroC = new Jaro();
@@ -204,6 +209,10 @@ public class StringMeasures {
 		}
 		return score;
 	}
+	public double getAllScore(String s1, String s2) {
+		double score = 1.0;
+		return score;
+	}
 	/**
 	   * Check if two strings are equal
 	   * @param s1
@@ -215,6 +224,9 @@ public class StringMeasures {
 			return true;
 		}
 		return false;
+	}
+	public boolean getAllMatch(String s1, String s2) {
+		return true;
 	}
 	/**
 	   * Get similarity scores for two strings s1 and s2
@@ -245,6 +257,9 @@ public class StringMeasures {
 		if (this.softTfidf) {
 			resultScores.put(this.softTfidfS, getSoftTfidfScore(s1, s2));
 		}
+		if (this.all) {
+			resultScores.put(this.allS, getAllScore(s1,s2));
+		}
 		return resultScores;
 	}
 	/**
@@ -256,9 +271,11 @@ public class StringMeasures {
 	   */
 	public HashMap<Pair<String, Double>, Boolean> getSimilarityResult(String s1, String s2, ArrayList<Double> thresholds) {
 		HashMap<Pair<String, Double>, Boolean> results = new HashMap<Pair<String, Double>, Boolean>();
-		if (this.exactMatch) {
-			
+		if (this.exactMatch) {	
 			results.put(getKeyPair(this.exactMatchS, 1.0), getExactMatch(s1, s2));
+		}
+		if (this.all) {
+			results.put(getKeyPair(this.allS, 1.0), getAllMatch(s1, s2));
 		}
 		//check scores against thresholds
 		HashMap<String, Double> resultScores = getSimilarityScores(s1, s2);
@@ -300,6 +317,8 @@ public class StringMeasures {
 		switch(simMeasure) {
 		case "exactMatch":
 			return getExactMatchPair();
+		case "all":
+			return getAllMatchPair();
 		case "jaccard":
 			if (t == 1.0)
 				return getJaccardPair1();
@@ -362,6 +381,9 @@ public class StringMeasures {
 		HashMap<Pair<String,Double>, Boolean> instanceResults = new HashMap<Pair<String, Double>, Boolean>();
 		if (this.exactMatch) {
 			instanceResults.put(getKeyPair(this.exactMatchS, 1.0), false);
+		}
+		if (this.all) {
+			instanceResults.put(getKeyPair(this.allS, 1.0), false);
 		}
 		for (Double t : thresholds) {			
 			if (this.jaccard) {
@@ -501,11 +523,17 @@ public class StringMeasures {
 	public void setExactMatch(boolean exactMatch) {
 		this.exactMatch = exactMatch;
 	}
+	
+	public void setAllMatch(boolean all) {
+		this.all = all;
+	}
 
 	public List<String> getUsedMeasures() {
 		List<String> usedMeasures = new ArrayList<String>();
 		if (this.exactMatch)
 			usedMeasures.add(this.exactMatchS);
+		if (this.all)
+			usedMeasures.add(this.allS);
 		if (this.jaccard)
 			usedMeasures.add(this.jaccardS);
 		if (this.jaro)
@@ -523,6 +551,9 @@ public class StringMeasures {
 
 	public Pair<String, Double> getExactMatchPair() {
 		return exactMatchPair;
+	}
+	public Pair<String, Double> getAllMatchPair() {
+		return allPair;
 	}
 	public Pair<String, Double> getJaccardPair1() {
 		return jaccardPair1;

@@ -26,9 +26,10 @@ public class CountStringSimilarity {
 	private String jaroWinklerS ="jaroWinkler";
 	private String exactMatchS = "exactMatch";
 	private String softTfidfS = "softTfidf";
+	private String allS = "all";
 
 
-	public void run(String className, ClassMapping cM, StringMeasures stringMeasures, boolean useSamples, ArrayList<Double> thresholds) {
+	public HashMap<String, HashMap<String, Integer>> run(String className, ClassMapping cM, StringMeasures stringMeasures, boolean useSamples, ArrayList<Double> thresholds) {
 		System.out.println("Start CountStringSimilarity.run()");
 		this.useSamples = useSamples;
 		//long startTime = System.nanoTime();
@@ -41,6 +42,7 @@ public class CountStringSimilarity {
 	
 		//instanceLabels: HashMap<k, <HashMap<kgClass,<HashMap<instanceURI, <HashSet<englishLabels>>>>
 		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
+		HashMap<String, HashMap<String, Integer>> kKgClassInstanceCounts = new HashMap<String, HashMap<String, Integer>>();
 		HashMap<String, ArrayList<String>> classMap = cM.getClassMap(className);//key: d,w,y,o,n ; value:kgC
 		System.out.println(classMap);
 		
@@ -52,6 +54,13 @@ public class CountStringSimilarity {
 		System.out.println(instanceLabels.get("o"));
 		System.out.println(instanceLabels.get("w"));
 		*/
+		for (String k : kKgClassInstanceLabels.keySet()) {
+			for (String kgClass : kKgClassInstanceLabels.get(k).keySet()) {
+				HashMap<String, Integer> kgClassMap = new HashMap<>();
+				kgClassMap.put(kgClass, kKgClassInstanceLabels.get(k).get(kgClass).size());
+				kKgClassInstanceCounts.put(k, kgClassMap);		
+			}
+		}
 			
 		//getMatchedStringCounts(results, kKgClassInstanceLabels, stringMeasures);
 		
@@ -64,7 +73,7 @@ public class CountStringSimilarity {
 		}
 		*/
 			
-		
+		return kKgClassInstanceCounts;
 		
 		//long startTime = System.nanoTime();
 		//System.out.println("EXECUTION TIME: " +  ((System.nanoTime() - startTime)/1000000000) + " seconds." );
@@ -84,16 +93,29 @@ public class CountStringSimilarity {
 				case "d":
 					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with D2Y");
+					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
+					System.out.println("Done with D2W");
 					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
 					System.out.println("Done with D2O");
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
+					System.out.println("Done with D2N");
 					break;
 				case "y":
-					comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					System.out.println("Done with Y2D");
+					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					System.out.println("Done with Y2W");
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					System.out.println("Done with Y2O");
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					System.out.println("Done with Y2N");
 					break;
+				case "w":
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					System.out.println("Done with W2O");
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					System.out.println("Done with W2N");
 				case "o":
-					comparefKtK(fk, "d", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					System.out.println("Done with O2D");
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					System.out.println("Done with O2N");
 					break;
 			}
 		}
@@ -101,7 +123,7 @@ public class CountStringSimilarity {
 		
 	}
 
-	private void getMatchedStringCounts(
+	/*private void getMatchedStringCounts(
 			CountStringSimilarityResults results, HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels,
 			StringMeasures stringMeasures, ArrayList<Double> thresholds) {
 		boolean getPairs = false;
@@ -115,28 +137,28 @@ public class CountStringSimilarity {
 			switch (fk) {
 				case "d":
 					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);					
 					break;
 				case "y":
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+					break;
+				case "w":
+		//			comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
+		//			comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);					
 					break;
 				case "o":
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					break;
-				case "n":
-					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					break;
 				
 				}
 			}
 				
 		//return results;
-	}
+	}*/
 
 	private void comparefKtK(String fk, String tk,
 			CountStringSimilarityResults results, HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels,
@@ -245,7 +267,7 @@ public class CountStringSimilarity {
 			
 		}
 
-	private String getThreshold(String simMeasure,
+	/*private String getThreshold(String simMeasure,
 				StringMeasures stringMeasures) {
 		Double t = 1.0;
 			switch(simMeasure) {
@@ -269,7 +291,7 @@ public class CountStringSimilarity {
 					break;
 			}
 			return t.toString();
-	}
+	}*/
 
 	private void compareLabelsWithOtherKG(CountStringSimilarityResults results, String fK, String fromKgClass, Entry<String, HashSet<String>> instanceWithLabels,
 			String tK, HashMap<String, HashSet<String>> otherKGinstancesWithLabels,
@@ -326,31 +348,34 @@ public class CountStringSimilarity {
 					if(instanceResults.get(simMeasureP)) {
 						//check which similarity measure
 						if (simMeasureP.getLeft().equals(jaccardS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaccardS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaccardS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						} else if (simMeasureP.getLeft().equals(jaroS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						} else if (simMeasureP.getLeft().equals(scaledLevensteinS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, scaledLevensteinS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, scaledLevensteinS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						} else if (simMeasureP.getLeft().equals(tfidfS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, tfidfS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, tfidfS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						} else if (simMeasureP.getLeft().equals(jaroWinklerS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroWinklerS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroWinklerS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						} else if (simMeasureP.getLeft().equals(exactMatchS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, exactMatchS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, exactMatchS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
+						} else if (simMeasureP.getLeft().equals(allS)) {
+							if (getPairs)
+								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						} else if (simMeasureP.getLeft().equals(softTfidfS)) {
-							results.addInstanceCount(fK, fromKgClass, tK, toKgClass, softTfidfS, simMeasureP.getRight());
+							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, softTfidfS, simMeasureP.getRight());
 							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 						}
@@ -384,7 +409,7 @@ public class CountStringSimilarity {
 		
 		for (String k : classMap.keySet()) {
 			
-			if (k.equals("d") || k.equals("y") || k.equals("o")) {
+			if (k.equals("d") || k.equals("y") || k.equals("w") ||k.equals("o") || k.equals("n")) {
 			
 			    for (String kgClass : classMap.get(k)) {
 			    	//System.out.println(kgClass);
@@ -428,15 +453,16 @@ public class CountStringSimilarity {
 				System.out.println("error in getInstanceLabelsForKgClass(). No matching k found");
 		}
 		*/
-		instanceLabelsForSingleKgClass = readFile(filePath, kgClass);
+		instanceLabelsForSingleKgClass = readFile(filePath, k, kgClass);
 		
 		return instanceLabelsForSingleKgClass;
 	}
 
 	private HashMap<String, HashSet<String>> readFile(Path filePath,
+			String k,
 			String kgClass) {
 		HashMap<String, HashSet<String>> instanceLabelsForSingleKgClass = new HashMap<String, HashSet<String>>();
-		Path fileName = Paths.get(filePath + "/" + kgClass + "InstancesWithLabels.txt");
+		Path fileName = Paths.get(filePath + "/" + k + "_" + kgClass + "InstancesWithLabels.txt");
 		try (Stream<String> stream = Files.lines(fileName)) {
 			stream.forEach(line -> addLineToHashMap(line, kgClass, instanceLabelsForSingleKgClass));
 		} catch (IOException e) {
