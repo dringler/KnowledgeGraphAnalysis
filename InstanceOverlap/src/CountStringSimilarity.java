@@ -91,29 +91,34 @@ public class CountStringSimilarity {
 		for (String fk : kKgClassInstanceLabels.keySet()) {
 			switch (fk) {
 				case "d":
+					System.out.println("Start comparing D2Y");
 					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					System.out.println("Done with D2Y");
+					System.out.println("Done with D2Y. Start comparing D2W");
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
-					System.out.println("Done with D2W");
+					System.out.println("Done with D2W. Start comparing D2O");
 					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
-					System.out.println("Done with D2O");
+					System.out.println("Done with D2O. Start comparing D2N");
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
 					System.out.println("Done with D2N");
 					break;
 				case "y":
+					System.out.println("Start comparing Y2W");
 					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					System.out.println("Done with Y2W");
+					System.out.println("Done with Y2W. Start comparing Y2O");
 					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					System.out.println("Done with Y2O");
+					System.out.println("Done with Y2O. Start comparing Y2N");
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with Y2N");
 					break;
 				case "w":
+					System.out.println("Start comparing W2O");
 					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
-					System.out.println("Done with W2O");
+					System.out.println("Done with W2O. Start comparing W2N");
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with W2N");
+					break;
 				case "o":
+					System.out.println("Start comparing O2N");
 					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with O2N");
 					break;
@@ -183,13 +188,14 @@ public class CountStringSimilarity {
 				//for each kg class in other kg
 				
 				for (String toKgClass : kKgClassInstanceLabels.get(tk).keySet()) {
-					Counter counter = new Counter();
+					//Counter counter = new Counter();
 					//compare instanceLabels
 					kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()
 						.stream()
 						.parallel()
 						.forEach(instanceWithLabels -> {compareLabelsWithOtherKG(results, fk, kgClass, instanceWithLabels, tk, kKgClassInstanceLabels.get(tk).get(toKgClass), toKgClass, stringMeasures, thresholds, kgClassInstancePairResults, getPairs);
-							counter.increase();}
+							//counter.increase();
+							}
 								);
 					
 					
