@@ -90,19 +90,16 @@ public class EstimatedInstanceOverlap {
 											String fromKgInstanceCount = getInstanceCount(kKgInstanceCount, x, kgClass); 
 											String toKgInstanceCount = getInstanceCount(kKgInstanceCount, y, toKgClass);
 											
-											if (kKgInstanceCount.containsKey(y)) {
-												if (kKgInstanceCount.get(y).containsKey(toKgClass)) {
-													toKgInstanceCount = kKgInstanceCount.get(y).get(toKgClass).toString();
-													String results = x2y+", "+
-																	kgClass + ", " + fromKgInstanceCount + ", " +
-																	toKgClass + ", "+ toKgInstanceCount+ ", " +
-																	simMeasure + ", " + threshold + ", "+
-																	precision + ", " + recall + ", "+ fMeasure + ", " +
-																	estimatedOverlap  + ", " + r_p.size()  + ", " +
-																	a.size() + ", " + a_p.size();
-													writer.write(results + "\n");
-												}
-											}
+											toKgInstanceCount = kKgInstanceCount.get(y).get(toKgClass).toString();
+											String results = x2y+", "+
+															kgClass + ", " + fromKgInstanceCount + ", " +
+															toKgClass + ", "+ toKgInstanceCount+ ", " +
+															simMeasure + ", " + threshold + ", "+
+															precision + ", " + recall + ", "+ fMeasure + ", " +
+															estimatedOverlap  + ", " + r_p.size()  + ", " +
+															a.size() + ", " + a_p.size();
+											writer.write(results + "\n");
+											
 											//System.out.println(results);
 										}
 									}//end for threshold : thresholds	

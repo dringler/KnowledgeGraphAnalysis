@@ -56,14 +56,9 @@ public class CountStringSimilarity {
 		*/
 		for (String k : kKgClassInstanceLabels.keySet()) {
 			for (String kgClass : kKgClassInstanceLabels.get(k).keySet()) {
-				int kgClassSize = kKgClassInstanceLabels.get(k).get(kgClass).size();			
-				if (kKgClassInstanceCounts.containsKey(k)) {
-					kKgClassInstanceCounts.get(k).put(kgClass, kgClassSize);
-				} else {
-					HashMap<String, Integer> kgClassMap = new HashMap<>();
-					kgClassMap.put(kgClass, kgClassSize);
-					kKgClassInstanceCounts.put(k, kgClassMap);
-				}
+				HashMap<String, Integer> kgClassMap = new HashMap<>();
+				kgClassMap.put(kgClass, kKgClassInstanceLabels.get(k).get(kgClass).size());
+				kKgClassInstanceCounts.put(k, kgClassMap);		
 			}
 		}
 		
@@ -76,7 +71,7 @@ public class CountStringSimilarity {
 		
 			
 		//getMatchedStringCounts(results, kKgClassInstanceLabels, stringMeasures);
-		getMatchedStringPairs(results, kKgClassInstanceLabels, stringMeasures, thresholds, blocks);
+		getMatchedStringPairs(results, kKgClassInstanceLabels, stringMeasures, thresholds);
 			
 		//print results
 		/*Set<Pair<String, String>> allPairs = results.getPairs();
@@ -94,7 +89,6 @@ public class CountStringSimilarity {
 	private HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> createBlocks(
 			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels) {
 		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks = new HashMap<>();
-		System.out.println("Start creating blocks...");
 		//for each k
 		for (String k : kKgClassInstanceLabels.keySet()) {
 			//for each kgClass
@@ -107,75 +101,29 @@ public class CountStringSimilarity {
 						for (String token : label.split("\\s+")) {
 							//check if token already exists in blocks
 							if (blocks.containsKey(token)) {
-								//check if block for token contains k
-								if (blocks.get(token).containsKey(k)) {
-									//check if block for token and k contains kgClass 
-									if (blocks.get(token).get(k).containsKey(kgClass)) {
-										//add URI to block
-										blocks.get(token).get(k).get(kgClass).add(uri);
-									} else {//!blocks.get(token).get(k).containsKey(kgClass) -> create new hashmap for kgclass
-										HashSet<String> uriSet = createHashSet(uri);
-										blocks.get(token).get(k).put(kgClass, uriSet);
-									}					
-								} else {//!blocks.get(token).containsKey(k) -> create new hashmap for k
-									HashMap<String, HashSet<String>> kgClassWithURI = createHashMapWithHashSet(kgClass, uri);
-									blocks.get(token).put(k, kgClassWithURI);
-								}
-							} else {//!blocks.containsKey(token) -> create new block
-								HashMap<String, HashMap<String, HashSet<String>>> kKGClassWithURI = createDoubleHashMapWithHashSet(k, kgClass, uri);
-								blocks.put(token,kKGClassWithURI);
+								blocks.get(token).put(key, value)
+							} else {
+								
 							}
-						}//end for each token
-					}//end for each label
-				}//end for each instance URI
-			}//end for each kgClass		
-		}//end for each k
-		System.out.println(blocks.size() + " blocks created.");
-		return blocks;
-	}
-	/*
-	 * Create a new HashMap<String, HashMap<String, HashSet<String>>> with the params
-	 * @param k1 key for the top HashMap
-	 * @param k2 key for the second HashMap 
-	 * @param initValue for the HashSet
-	 */
-	private HashMap<String, HashMap<String, HashSet<String>>> createDoubleHashMapWithHashSet(
-			String k1, String k2, String initValue) {
-		HashMap<String, HashMap<String, HashSet<String>>> map1 = new HashMap<>();
-		HashMap<String, HashSet<String>> map2 = createHashMapWithHashSet(k2, initValue);
-		map1.put(k1, map2);
-		return map1;
-	}
-
-	/*
-	 * Create a new HashSet<String>> with the init value
-	 * @param initValue for the HashSet
-	 */
-	private HashSet<String> createHashSet(String initValue) {
-		HashSet<String> set = new HashSet<>();
-		set.add(initValue);
-		return set;
-	}
-
-	/*
-	 * Create a new HashMap<String, HashSet<String>> with the params
-	 * @param key for the HashMap
-	 * @param initValue for the HashSet
-	 */
-	private HashMap<String, HashSet<String>> createHashMapWithHashSet(
-			String key, String initValue) {
-		HashMap<String, HashSet<String>> map = new HashMap<>();
-		HashSet<String> set = createHashSet(initValue);
-		map.put(key, set);	
-		return map;
+						}
+						
+						//else -> create new object for token and add
+					}
+					
+					
+				}
+			}
+			
+		}
+		
+		
+		return null;
 	}
 
 	private void getMatchedStringPairs(
 			CountStringSimilarityResults results,
 			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels,
-			StringMeasures stringMeasures, 
-			ArrayList<Double> thresholds,
-			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks) {
+			StringMeasures stringMeasures, ArrayList<Double> thresholds) {
 		boolean getPairs = true;
 		if (stringMeasures.checkTFIDF()) {
 			stringMeasures.trainTFIDF(kKgClassInstanceLabels);
@@ -185,34 +133,34 @@ public class CountStringSimilarity {
 			switch (fk) {
 				case "d":
 					System.out.println("Start comparing D2Y");
-					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "y", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with D2Y. Start comparing D2W");
-					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
 					System.out.println("Done with D2W. Start comparing D2O");
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
 					System.out.println("Done with D2O. Start comparing D2N");
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);	
 					System.out.println("Done with D2N");
 					break;
 				case "y":
 					System.out.println("Start comparing Y2W");
-					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "w", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with Y2W. Start comparing Y2O");
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with Y2O. Start comparing Y2N");
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with Y2N");
 					break;
 				case "w":
 					System.out.println("Start comparing W2O");
-					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "o", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with W2O. Start comparing W2N");
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with W2N");
 					break;
 				case "o":
 					System.out.println("Start comparing O2N");
-					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs, blocks);
+					comparefKtK(fk, "n", results, kKgClassInstanceLabels, stringMeasures, thresholds, getPairs);
 					System.out.println("Done with O2N");
 					break;
 			}
@@ -259,12 +207,8 @@ public class CountStringSimilarity {
 	}*/
 
 	private void comparefKtK(String fk, String tk,
-			CountStringSimilarityResults results, 
-			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels,
-			StringMeasures stringMeasures, 
-			ArrayList<Double> thresholds, 
-			boolean getPairs, 
-			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks) {
+			CountStringSimilarityResults results, HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels,
+			StringMeasures stringMeasures, ArrayList<Double> thresholds, boolean getPairs) {
 		// pairs <SimMeasure, threshold>, <fromURI, toURI>>
 		HashMap<Pair<String,Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults = new HashMap<Pair<String, Double>, HashSet<Pair<String, String>>>();
 		//for each kgClass
@@ -284,54 +228,17 @@ public class CountStringSimilarity {
 				//for each kg class in other kg
 				
 				for (String toKgClass : kKgClassInstanceLabels.get(tk).keySet()) {
-					System.out.println("Comparing " + fk +": " + kgClass + " with " + tk + ": " + toKgClass);
+					//Counter counter = new Counter();
 					//compare instanceLabels
-					
-					//BLOCKING
-					//for each block
-					int blockCounter = 0;
-					//blocks: HashMap<token, <HashMap<k, HashMap<kgClass, <HashSet<URIs>>>>>>
-					for (String block : blocks.keySet()) {
-						//check if block contains fk and tk
-						if (blocks.get(block).containsKey(fk) && blocks.get(block).containsKey(tk)) {
-							if (blocks.get(block).get(fk).containsKey(kgClass) && blocks.get(block).get(tk).containsKey(toKgClass)) {
-								HashMap<String, HashSet<String>> entries1 = getInstaceLabelsFromBlocks(blocks.get(block).get(fk).get(kgClass),
-										kKgClassInstanceLabels.get(fk).get(kgClass));
-								HashMap<String, HashSet<String>> entries2 = getInstaceLabelsFromBlocks(blocks.get(block).get(tk).get(toKgClass),
-										kKgClassInstanceLabels.get(tk).get(toKgClass));
-								
-								
-								entries1.entrySet()
-								.stream()
-								.parallel()
-								.forEach(instanceWithLabels -> {compareLabelsWithOtherKG(results, 
-																	fk, kgClass, instanceWithLabels, tk, 
-																	entries2,
-																	//kKgClassInstanceLabels.get(tk).get(toKgClass), 
-																	toKgClass, stringMeasures, thresholds, 
-																	kgClassInstancePairResults, getPairs);
-								});
-								
-							} //block does not contain kgClass or toKgClass (or both)
-						} //block does not contain fk or tk (or both)
-						blockCounter++;
-						if (blockCounter % (blocks.size()/10) == 0) {
-							System.out.println(blockCounter + " of " + blocks.size() + " blocks processed.");
-						}
-					}//done with blocking
-					
-					//no blocking
-					/*kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()
+					kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()
 						.stream()
 						.parallel()
-						.forEach(instanceWithLabels -> {compareLabelsWithOtherKG(results, 
-															fk, kgClass, instanceWithLabels, tk, 
-															kKgClassInstanceLabels.get(tk).get(toKgClass), 
-															toKgClass, stringMeasures, thresholds, 
-															kgClassInstancePairResults, getPairs);
-						});
+						.forEach(instanceWithLabels -> {compareLabelsWithOtherKG(results, fk, kgClass, instanceWithLabels, tk, kKgClassInstanceLabels.get(tk).get(toKgClass), toKgClass, stringMeasures, thresholds, kgClassInstancePairResults, getPairs);
+							//counter.increase();
+							}
+								);
 					
-					*/
+					
 					/*
 					for (Entry<String, HashSet<String>> instanceWithLabels : kKgClassInstanceLabels.get(fk).get(kgClass).entrySet()) {
 						
@@ -356,32 +263,10 @@ public class CountStringSimilarity {
 	
 	}
 		
-		/*
-		 * Return all instances with all labels that are in the block
-		 * @param hashSet with uris in the block
-		 * @param hashMap with all uris and labels
-		 */
-		private HashMap<String, HashSet<String>> getInstaceLabelsFromBlocks(
-			HashSet<String> urisInBlock, 
-			HashMap<String, HashSet<String>> allURIsWithLabels) {
-			
-			HashMap<String, HashSet<String>> results = new HashMap<>();
-			for (String uriInBlock : urisInBlock) {
-				if (allURIsWithLabels.containsKey(uriInBlock)) {
-					results.put(uriInBlock, allURIsWithLabels.get(uriInBlock));
-				//} else {
-				//	System.out.println(uriInBlock + " is not in allURIsWithLabels");
-				}
-			}		
-		return results;
-	}
-
-		private void saveInstancePairResultsToDisk(String fk, 
-				String tk,
+		
+		private void saveInstancePairResultsToDisk(String fk, String tk,
 			String kgClass,
-			String toKgClass, 
-			HashMap<Pair<String, Double>, 
-			HashSet<Pair<String, String>>> kgClassInstancePairResults,
+			String toKgClass, HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults,
 			StringMeasures stringMeasures) {
 			for (Pair<String, Double> simMeasurePair : kgClassInstancePairResults.keySet()) {
 				//String threshold = getThreshold(simMeasure, stringMeasures);//1.0 for exact match
@@ -454,17 +339,9 @@ public class CountStringSimilarity {
 			return t.toString();
 	}*/
 
-	private void compareLabelsWithOtherKG(CountStringSimilarityResults results, 
-			String fK, 
-			String fromKgClass, 
-			Entry<String, HashSet<String>> instanceWithLabels,
-			String tK, 
-			HashMap<String, HashSet<String>> otherKGinstancesWithLabels,
-			String toKgClass, 
-			StringMeasures stringMeasures, 
-			ArrayList<Double> thresholds, 
-			HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults, 
-			boolean getPairs) {	
+	private void compareLabelsWithOtherKG(CountStringSimilarityResults results, String fK, String fromKgClass, Entry<String, HashSet<String>> instanceWithLabels,
+			String tK, HashMap<String, HashSet<String>> otherKGinstancesWithLabels,
+			String toKgClass, StringMeasures stringMeasures, ArrayList<Double> thresholds, HashMap<Pair<String, Double>, HashSet<Pair<String, String>>> kgClassInstancePairResults, boolean getPairs) {	
 		
 		String fromURI = instanceWithLabels.getKey();
 		HashSet<String> labels = instanceWithLabels.getValue();
@@ -518,43 +395,35 @@ public class CountStringSimilarity {
 						//check which similarity measure
 						if (simMeasureP.getLeft().equals(jaccardS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaccardS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(jaroS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(scaledLevensteinS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, scaledLevensteinS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(tfidfS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, tfidfS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(jaroWinklerS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroWinklerS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(exactMatchS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, exactMatchS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(allS)) {
-							if (getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if (getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						} else if (simMeasureP.getLeft().equals(softTfidfS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, softTfidfS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs)
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
-							}
 						}
 					}
 				}
@@ -591,15 +460,9 @@ public class CountStringSimilarity {
 			    for (String kgClass : classMap.get(k)) {
 			    	//System.out.println(kgClass);
 			    	//get all instance labels for the kgClass and save them in the instanceLabels object
-			    	
-			    	HashMap<String, HashSet<String>> instanceLabelsForKgClass= getInstanceLabelsForKgClass(k, kgClass);			    	 
-			    	if (instanceLabels.containsKey(k)) {
-			    		instanceLabels.get(k).put(kgClass, instanceLabelsForKgClass);
-			    	} else {
-			    		HashMap<String, HashMap<String, HashSet<String>>> instanceLabelsForSingleKgClass = new HashMap<String, HashMap<String,HashSet<String>>>();
-			    		instanceLabelsForSingleKgClass.put(kgClass, instanceLabelsForKgClass);
-			    		instanceLabels.put(k, instanceLabelsForSingleKgClass);
-			    	}			    			    	
+			    	HashMap<String, HashMap<String, HashSet<String>>> instanceLabelsForSingleKgClass = new HashMap<String, HashMap<String,HashSet<String>>>();
+			    	instanceLabelsForSingleKgClass.put(kgClass, getInstanceLabelsForKgClass(k, kgClass)); 
+			    	instanceLabels.put(k, instanceLabelsForSingleKgClass);
 			    }
 			}
 		}
@@ -612,8 +475,32 @@ public class CountStringSimilarity {
 		
 		//get file paths 
 		Path filePath = null;	
+		
 		filePath = Paths.get("./InstanceLabels/");
+		/*
+		//System.out.println(k + ": "+kgClass);
+		switch (k) {
+			case "d":
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/DBpedia/resultsWithLabel/");
+				break;
+			case "y":
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/YAGO/resultsWithLabel/");
+				break;
+			case "o":
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/OpenCyc/resultsWithLabel/");
+				break;
+			case "n":
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/NELL/resultsWithLabel/");
+				break;
+			case "w":
+				filePath = this.useSamples ? Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabelTest/") : Paths.get("/Users/curtis/SeminarPaper_KG_files/Wikidata/resultsWithLabel/");
+				break;
+			default:
+				System.out.println("error in getInstanceLabelsForKgClass(). No matching k found");
+		}
+		*/
 		instanceLabelsForSingleKgClass = readFile(filePath, k, kgClass);
+		
 		return instanceLabelsForSingleKgClass;
 	}
 

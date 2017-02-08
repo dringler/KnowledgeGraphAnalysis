@@ -168,7 +168,7 @@ public class StringMeasures {
 		this.scaledLevenstein = true;
 		this.jaroWinkler = true;
 		this.softTfidf = true;
-		this.all = true;
+		this.all = false;
 		
 		this.jaccardC = new Jaccard();
 		this.jaroC = new Jaro();

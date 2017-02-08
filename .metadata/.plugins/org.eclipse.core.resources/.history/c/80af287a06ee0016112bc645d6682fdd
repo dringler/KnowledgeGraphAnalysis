@@ -518,42 +518,42 @@ public class CountStringSimilarity {
 						//check which similarity measure
 						if (simMeasureP.getLeft().equals(jaccardS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaccardS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(jaroS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(scaledLevensteinS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, scaledLevensteinS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(tfidfS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, tfidfS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(jaroWinklerS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, jaroWinklerS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(exactMatchS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, exactMatchS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if(getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(allS)) {
-							if (getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
+							if (getPairs) {
 								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						} else if (simMeasureP.getLeft().equals(softTfidfS)) {
 							//results.addInstanceCount(fK, fromKgClass, tK, toKgClass, softTfidfS, simMeasureP.getRight());
-							if(getPairs && kgClassInstancePairResults.containsKey(simMeasureP)) {
-								kgClassInstancePairResults.get(simMeasureP).add(uriPair);
+							if(getPairs) {
+								//kgClassInstancePairResults.get(simMeasureP).add(uriPair);
 							}
 						}
 					}
