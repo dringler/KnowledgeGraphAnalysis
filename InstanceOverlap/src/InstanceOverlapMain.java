@@ -13,11 +13,11 @@ public class InstanceOverlapMain {
 		
 		ArrayList<Double> thresholds = new ArrayList<Double>();
 		thresholds.add(1.0);
+		thresholds.add(0.95);
 		thresholds.add(0.9);
-		thresholds.add(0.8);
 		
 		StringMeasures stringMeasures = new StringMeasures(thresholds);
-		//StringMeasures stringMeasures = new StringMeasures(exactMatch, jaccard, jaccardT, jaro, jaroT, scaledLevenstein, scaledLevensteinT, tfidf, tfidfT, jaroWinkler, jaroWinklerT,softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
+		//StringMeasures stringMeasures = new StringMeasures(exactMatch, jaccard, jaccardT, jaro, jaroT, scaledLevenstein, scaledLevensteinT, mongeElkan, mongeElkanT, tfidf, tfidfT, jaroWinkler, jaroWinklerT,softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
 		
 		ArrayList<String> stringM = new ArrayList<String>();
 		//stringM.add("all");
@@ -26,7 +26,9 @@ public class InstanceOverlapMain {
 		stringM.add("jaro");
 		stringM.add("jaroWinkler");
 		stringM.add("scaledLevenstein");
-		stringM.add("softTfidf");
+		stringM.add("mongeElkan");
+		
+		//stringM.add("softTfidf");
 		
 		//configure log4j for secondstring library
 		org.apache.log4j.BasicConfigurator.configure();
@@ -86,7 +88,7 @@ public class InstanceOverlapMain {
 		
 		// SAME AS LINKS
 			// PARAMETERS		
-			boolean d2y = true;
+			/*boolean d2y = true;
 			boolean d2w = true;
 			boolean d2o = true;
 			boolean d2n = true;
@@ -98,6 +100,7 @@ public class InstanceOverlapMain {
 			boolean o2n = true;
 			CountSameAs same = new CountSameAs();
 			same.run(className, cM, d2y, d2w, d2o, d2n, y2w, y2o, y2n, w2o, w2n, o2n);
+			*/
 			
 		// INSTANCE MATCHES USING STRING SIMILARITY MEASURES	
 			CountStringSimilarity stringSim = new CountStringSimilarity();
