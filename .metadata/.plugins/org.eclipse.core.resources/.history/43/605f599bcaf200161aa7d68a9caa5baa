@@ -197,7 +197,7 @@ public class CountStringSimilarity {
 			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels) {
 		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks = new HashMap<>();
 		System.out.println("Start creating blocks...");
-		//HashSet<String> stopWords = getStopWordsSet();
+		HashSet<String> stopWords = getStopWordsSet();
 		//for each k
 		for (String k : kKgClassInstanceLabels.keySet()) {
 			//for each kgClass
@@ -211,13 +211,7 @@ public class CountStringSimilarity {
 						for (String token : label.split("\\s+")) {
 							//lower case
 							token = token.toLowerCase();
-							if (!token.equals("") && 
-									!token.equals("null") && 
-									token.length() >= 4 && 
-									!token.contains("(") && 
-									!token.contains(")") //&& 
-									//!stopWords.contains(token)
-									) {
+							if (!token.equals("") && !token.equals("null") && token.length() >= 4 && !token.contains("(") && !token.contains(")") && !stopWords.contains(token)) {
 								//create blocking key
 								blockingKey = token;
 //								blockingKey += token.subSequence(0, 3);

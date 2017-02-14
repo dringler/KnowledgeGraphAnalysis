@@ -215,7 +215,7 @@ public class CountStringSimilarity {
 									!token.equals("null") && 
 									token.length() >= 4 && 
 									!token.contains("(") && 
-									!token.contains(")") //&& 
+									!token.contains(")") && 
 									//!stopWords.contains(token)
 									) {
 								//create blocking key
