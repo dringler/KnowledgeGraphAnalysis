@@ -23,7 +23,15 @@ import org.apache.commons.lang3.tuple.Pair;
 
 
 public class EstimatedInstanceOverlap {
-
+	/**
+	 * Calculate Estimated Instance Overlap and save results to disk (estimatedOverlap folder)
+	 * @param className
+	 * @param cM
+	 * @param stringM
+	 * @param thresholds
+	 * @param kKgInstanceCount
+	 * @throws IOException
+	 */
 	public void run(String className, 
 			ClassMapping cM, 
 			ArrayList<String> stringM, 
@@ -34,9 +42,9 @@ public class EstimatedInstanceOverlap {
 		Date date = new Date();
 		
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("./estimatedOverlap/estimatedInstanceOverlap_"+className+"_wBlocking_"+df.format(date)+".csv"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("./estimatedOverlap/estimatedInstanceOverlap_"+className+"_wBlocking_tokenBk4_"+df.format(date)+".csv"));
 			
-			String header = "x2y, fromKgClass, fromInstanceCount, toKgClass, toInstanceCount, simMeasure, threshold, precision, recall, fMeasure, estimatedOverlap, owlSameAs links, matching alignment, partial matching alignment";			
+			String header = "x2y, fromKgClass, fromInstanceCount, toKgClass, toInstanceCount, simMeasure, threshold, precision, recall, fMeasure, estimatedOverlap, owlSameAs links, matching alignment, partial matching alignment, tp";			
 			writer.write(header + "\n");
 			//for each x2y (d2y, d2o, y2d, o2d)
 			//String x2y = "d2y";
@@ -65,19 +73,23 @@ public class EstimatedInstanceOverlap {
 						//for each class in other kg
 						if (classMap.get(y) != null) {
 							for (String toKgClass : classMap.get(y)) {
-								// read partial gold standard (owl:sameAs links)							
+								// read partial gold standard (owl:sameAs links)	
+								System.out.println("Reading gold standard for "+  x2y + kgClass + "_" + toKgClass + "...");
 								HashSet<Pair<String, String>> r_p = readGoldStandard(x, x2y, kgClass, toKgClass);
-								System.out.println("gold standard for "+  x2y + kgClass + "_" + toKgClass + " read with size: " + r_p.size());
+								System.out.println("Gold standard for received with size: " + r_p.size());
 								//for each simMeasure
 								for (String simMeasure : stringM) {
-								
+					
 									//for each threshold
 									for (Double threshold : thresholds) {
 										if (! ((simMeasure.equals("exactMatch") || simMeasure.equals("all")) && threshold != 1.0)) {
 											// read matching alignment
+											System.out.println("Calculate estimated overlap for " + simMeasure + " with threshold: " + threshold);
+											System.out.println("Loading string matching alignment...");
 											HashSet<Pair<String, String>> a = readStringMatchingAlignment(x, x2y, kgClass, toKgClass, simMeasure, threshold);
 											//System.out.println("a.size(): " + a.size());
 											//get partial matching alignment: parallelized withinin method
+											System.out.println("String matching alignment loaded. Get partial matching alginment...");
 											Set<Pair<String, String>> a_p = getPartialMatchingAlignment(a, r_p);
 											//System.out.println("a_p.size(): " + a_p.size());
 											
@@ -99,7 +111,7 @@ public class EstimatedInstanceOverlap {
 																	simMeasure + ", " + threshold + ", "+
 																	precision + ", " + recall + ", "+ fMeasure + ", " +
 																	estimatedOverlap  + ", " + r_p.size()  + ", " +
-																	a.size() + ", " + a_p.size();
+																	a.size() + ", " + a_p.size() + ", " +  tp;
 													writer.write(results + "\n");
 												}
 											}
@@ -120,9 +132,17 @@ public class EstimatedInstanceOverlap {
 		}	
 		
 	}
+	/**
+	 * Get instance count for a kgClass as String
+	 * @param kKgInstanceCount
+	 * @param k
+	 * @param kgClass
+	 * @return
+	 */
 	private String getInstanceCount(
 			HashMap<String, HashMap<String, Integer>> kKgInstanceCount,
-			String k, String kgClass) {
+			String k, 
+			String kgClass) {
 		if (kKgInstanceCount.get(k) != null) {
 			if (kKgInstanceCount.get(k).get(kgClass) != null) {
 				return kKgInstanceCount.get(k).get(kgClass).toString(); 	
@@ -130,6 +150,12 @@ public class EstimatedInstanceOverlap {
 		}
 		return "0";
 	}
+	/**
+	 * Get TP (true positive) matches
+	 * @param r_p
+	 * @param a_p
+	 * @return number of TPs
+	 */
 	private int getTruePositives(Set<Pair<String, String>> r_p,
 			Set<Pair<String, String>> a_p) {
 		/*int tp = 0;
@@ -139,7 +165,7 @@ public class EstimatedInstanceOverlap {
 					tp += 1;
 				}
 			}
-		}*/
+		}*/		
 		//parallelize
 		Set<Pair<String, String>> tpPairs = r_p.stream()
 				.parallel()
@@ -151,12 +177,13 @@ public class EstimatedInstanceOverlap {
 	}
 	/**
 	   * Defined as the subset of A which contains all elements in A which share at least one entity with an element in R′
-	   * @param A
-	   * @param R'
+	   * @param a A
+	   * @param r_p R'
 	   * @return HashSet<Pair<String, String> containing all pairs in the partial alignment
 	   */
 	private Set<Pair<String, String>> getPartialMatchingAlignment(
-			HashSet<Pair<String, String>> a, HashSet<Pair<String, String>> r_p) {
+			HashSet<Pair<String, String>> a, 
+			HashSet<Pair<String, String>> r_p) {
 			
 		//get left and right entity of the partial gold standard R'
 		Set<String> leftEntities = new HashSet<String>();
@@ -190,11 +217,16 @@ public class EstimatedInstanceOverlap {
 		//parallelize
 		Set<Pair<String, String>> a_p = getAp(a, leftEntities, rightEntities);	
 		//System.out.println("a_p.size(): " + a_p.size() + " a_pP.size(): " + a_pP.size());
-		
 		return a_p;
 		
 	}
-
+	/**
+	   * Defined as the subset of A which contains all elements in A which share at least one entity with an element in R′
+	   * @param a A
+	   * @param leftEntities
+	   * @param rightEntities
+	   * @return a_p A':HashSet<Pair<String, String> containing all pairs in the partial alignment
+	   */
 	private Set<Pair<String, String>> getAp(HashSet<Pair<String, String>> a,
 			Set<String> leftEntities, Set<String> rightEntities) {
 		 Set<Pair<String, String>> a_p = a.stream()
@@ -203,7 +235,7 @@ public class EstimatedInstanceOverlap {
 				.collect(Collectors.toSet());
 		return a_p;
 	}
-	private synchronized void addPairToA_p(Pair<String, String> a_pair,
+	/*private synchronized void addPairToA_p(Pair<String, String> a_pair,
 			HashSet<Pair<String, String>> a_p) {
 		a_p.add(a_pair);		
 	}
@@ -211,28 +243,54 @@ public class EstimatedInstanceOverlap {
 			HashSet<String> leftEntities, HashSet<String> rightEntities) {
 		leftEntities.add(r_p_pair.getLeft());
 		rightEntities.add(r_p_pair.getRight());
-	}
-	private HashSet<Pair<String, String>> readStringMatchingAlignment(String k,
-			String x2y, String kgClass, String toKgClass, String simMeasure, Double threshold) throws FileNotFoundException, IOException {	
-		//String fileName = getFolderPath(k, x2y) + simMeasure + "/" + threshold + "/" + kgClass+".tsv";
-		//String fileName = "/Users/curtis/SeminarPaper_KG_files/simMeasureResults/"+x2y+"_"+kgClass+"_"+simMeasure+"_"+threshold+".tsv";		
+	}*/
+	/**
+	 * Read String Matching Alignment from Disk (in simMeasureResults folder)
+	 * @param k
+	 * @param x2y
+	 * @param kgClass
+	 * @param toKgClass
+	 * @param simMeasure
+	 * @param threshold
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private HashSet<Pair<String, String>> readStringMatchingAlignment(
+			String k,
+			String x2y, 
+			String kgClass, 
+			String toKgClass, 
+			String simMeasure, 
+			Double threshold) throws FileNotFoundException, IOException {			
 		String fileName = "./simMeasureResults/"+x2y+"_"+kgClass+"_"+toKgClass+"_"+simMeasure+"_"+threshold+".tsv";
 		return readPairs(fileName);
 	}
-
+	/**
+	 * Read gold standard from file (in owlSameAs folder)
+	 * @param k
+	 * @param x2y
+	 * @param kgClass
+	 * @param toKgClass
+	 * @return
+	 * @throws IOException
+	 */
 	private HashSet<Pair<String, String>> readGoldStandard(String k,
 			String x2y, String kgClass, String toKgClass) throws IOException {
-		
-		//String fileName = getFolderPath(k, x2y) + "owlSameAs/"+kgClass+".tsv";
 		String fileName = "./owlSameAs/"+x2y+"/"+kgClass + "_" + toKgClass +".tsv";
 		return readPairs(fileName);
 	}
 
 	
-
+	/**
+	 * Read file from disk
+	 * @param fileName
+	 * @return pairSet (HashSet<Pair<String, String>>)
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	private HashSet<Pair<String, String>> readPairs(String fileName) throws FileNotFoundException, IOException {
-		HashSet<Pair<String, String>> pairSet = new HashSet<Pair<String, String>>();
-		
+		HashSet<Pair<String, String>> pairSet = new HashSet<Pair<String, String>>();	
 		//parallelize
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 		    String line;
@@ -260,20 +318,4 @@ public class EstimatedInstanceOverlap {
 		return pairSet;
 	}
 	
-	/*private String getFolderPath(String k, String x2y) {
-		String folder = "";
-		switch(k) {
-		case "d":
-			folder = "DBpedia"; 
-			break;
-		case "y":
-			folder ="YAGO";
-			break;
-		case "o":
-			folder = "OpenCyc";
-			break;
-		}
-		return "/Users/curtis/SeminarPaper_KG_files/"+folder+"/"+x2y+"/";
-	}*/
-
 }
