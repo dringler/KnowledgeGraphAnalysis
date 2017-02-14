@@ -4,6 +4,7 @@ import com.wcohen.ss.tokens.SimpleTokenizer;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -15,6 +16,7 @@ public class StringMeasures {
 	private boolean scaledLevenstein;
 	private boolean tfidf;
 	private boolean jaroWinkler;
+	private boolean mongeElkan;
 	private boolean exactMatch;
 	private boolean softTfidf;
 	private boolean internalSoftTfidf;
@@ -25,6 +27,7 @@ public class StringMeasures {
 	private ScaledLevenstein scaledLevensteinC;
 	private TFIDF tfidfC;
 	private JaroWinkler jaroWinklerC;
+	private MongeElkan mongeElkanC;
 	private SoftTFIDF softTfidfC;
 	private Jaccard softTfidfJaccardC;
 	private JaroWinkler softTfidfJaroWinklerC;
@@ -33,6 +36,7 @@ public class StringMeasures {
 	private double jaccardT;
 	private double jaroT;
 	private double scaledLevensteinT;
+	private double mongeElkanT;
 	private double tfidfT;
 	private double jaroWinklerT;
 	private double softTfidfT;
@@ -44,6 +48,7 @@ public class StringMeasures {
 	private String scaledLevensteinS = "scaledLevenstein";
 	private String tfidfS = "tfidf";
 	private String jaroWinklerS ="jaroWinkler";
+	private String mongeElkanS ="mongeElkan";
 	private String exactMatchS = "exactMatch";
 	private String softTfidfS = "softTfidf";
 	private String internalSoftTfidfS; 
@@ -51,20 +56,23 @@ public class StringMeasures {
 	//keys
 	private Pair<String, Double> exactMatchPair = new ImmutablePair<String, Double>(this.exactMatchS, 1.0);
 	private Pair<String, Double> jaccardPair1 = new ImmutablePair<String, Double>(this.jaccardS, 1.0);
+	private Pair<String, Double> jaccardPair95 = new ImmutablePair<String, Double>(this.jaccardS, 0.95);
 	private Pair<String, Double> jaccardPair9 = new ImmutablePair<String, Double>(this.jaccardS, 0.9);
-	private Pair<String, Double> jaccardPair8 = new ImmutablePair<String, Double>(this.jaccardS, 0.8);
 	private Pair<String, Double> jaroPair1 = new ImmutablePair<String, Double>(this.jaroS, 1.0);
+	private Pair<String, Double> jaroPair95 = new ImmutablePair<String, Double>(this.jaroS, 0.95);
 	private Pair<String, Double> jaroPair9 = new ImmutablePair<String, Double>(this.jaroS, 0.9);
-	private Pair<String, Double> jaroPair8 = new ImmutablePair<String, Double>(this.jaroS, 0.8);
 	private Pair<String, Double> jaroWinklerPair1 = new ImmutablePair<String, Double>(this.jaroWinklerS, 1.0);
+	private Pair<String, Double> jaroWinklerPair95 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.95);
 	private Pair<String, Double> jaroWinklerPair9 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.9);
-	private Pair<String, Double> jaroWinklerPair8 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.8);
+	private Pair<String, Double> mongeElkanPair1 = new ImmutablePair<String, Double>(this.mongeElkanS, 1.0);
+	private Pair<String, Double> mongeElkanPair95 = new ImmutablePair<String, Double>(this.mongeElkanS, 0.95);
+	private Pair<String, Double> mongeElkanPair9 = new ImmutablePair<String, Double>(this.mongeElkanS, 0.9);
 	private Pair<String, Double> scaledLevensteinPair1 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 1.0);
+	private Pair<String, Double> scaledLevensteinPair95 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.95);
 	private Pair<String, Double> scaledLevensteinPair9 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.9);
-	private Pair<String, Double> scaledLevensteinPair8 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.8);
 	private Pair<String, Double> softTfidfPair1 = new ImmutablePair<String, Double>(this.softTfidfS, 1.0);
+	private Pair<String, Double> softTfidfPair95 = new ImmutablePair<String, Double>(this.softTfidfS, 0.95);
 	private Pair<String, Double> softTfidfPair9 = new ImmutablePair<String, Double>(this.softTfidfS, 0.9);
-	private Pair<String, Double> softTfidfPair8 = new ImmutablePair<String, Double>(this.softTfidfS, 0.8);
 	private Pair<String, Double> allPair = new ImmutablePair<String, Double>(this.allS, 1.0);
 	/**
 	   * StringMeasures constructor
@@ -85,7 +93,7 @@ public class StringMeasures {
 	   * @param internalSoftTfidfS internal sim measure for softTFIDF ("jaroWinkler", "jaccard", or "scaledLevenstein")
 	   * @param internalSoftTfidfT threshold value for internal sim measure of softTFIDF
 	   */
-	public StringMeasures(boolean exactMatch, boolean jaccard, double jaccardT, boolean jaro, double jaroT, boolean scaledLevenstein, double scaledLevensteinT, boolean tfidf, double tfidfT, boolean jaroWinkler, double jaroWinklerT, boolean softTfidf, double softTfidfT, boolean internalSoftTfidf, String internalSoftTfidfS, double internalSoftTfidfT, boolean all) {		
+	public StringMeasures(boolean exactMatch, boolean jaccard, double jaccardT, boolean jaro, double jaroT, boolean scaledLevenstein, double scaledLevensteinT, boolean mongeElkan, double mongeElkanT, boolean tfidf, double tfidfT, boolean jaroWinkler, double jaroWinklerT, boolean softTfidf, double softTfidfT, boolean internalSoftTfidf, String internalSoftTfidfS, double internalSoftTfidfT, boolean all) {		
 		String config = "";
 		this.exactMatch = exactMatch;
 		if (exactMatch)
@@ -93,6 +101,7 @@ public class StringMeasures {
 		this.jaccard = jaccard;
 		this.jaro = jaro;
 		this.scaledLevenstein = scaledLevenstein;
+		this.mongeElkan = mongeElkan;
 		this.tfidf = tfidf;
 		this.jaroWinkler = jaroWinkler;
 		this.softTfidf = softTfidf;
@@ -109,9 +118,15 @@ public class StringMeasures {
 			config = config + "jaro ("+ jaroT+"), ";
 		}
 		if (scaledLevenstein) {
-		 this.scaledLevensteinC = new ScaledLevenstein();
-		 this.scaledLevensteinT = scaledLevensteinT;
-		 config = config + "scaledLevenstein ("+ scaledLevensteinT+"), ";
+			this.scaledLevensteinC = new ScaledLevenstein();
+			this.scaledLevensteinT = scaledLevensteinT;
+			config = config + "scaledLevenstein ("+ scaledLevensteinT+"), ";
+		}
+		if (mongeElkan) {
+			this.mongeElkanC = new MongeElkan();
+			this.mongeElkanC.setScaling(true);
+			this.mongeElkanT = mongeElkanT;
+			config = config + "mongeElkan (" + mongeElkanT +"), "; 
 		}
 		if (tfidf) {
 			this.tfidfC = new TFIDF();
@@ -167,33 +182,104 @@ public class StringMeasures {
 		this.jaro = true;
 		this.scaledLevenstein = true;
 		this.jaroWinkler = true;
-		this.softTfidf = true;
-		this.all = false;
+		this.mongeElkan = true;
 		
+		this.softTfidf = false;
+		this.all = false;
+		this.tfidf = false;
+		this.internalSoftTfidf = false;
+	
 		this.jaccardC = new Jaccard();
 		this.jaroC = new Jaro();
 		this.scaledLevensteinC = new ScaledLevenstein();
 		this.jaroWinklerC = new JaroWinkler();
 		this.softTfidfC = new SoftTFIDF();
+		this.mongeElkanC = new MongeElkan();
+		mongeElkanC.setScaling(true);
 	}
-
+	
 	public double getJaccardScore(String s1, String s2) {
-		return jaccardC.score(jaccardC.prepare(s1), jaccardC.prepare(s2));
+		double score = 0.0;
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {	
+			try {
+				Jaccard j = new Jaccard();
+				score = j.score(j.prepare(s1), j.prepare(s2));
+				j = null;
+				return score;
+			} catch (NullPointerException e) {
+				return score;		
+			}
+		}
 	}
 	public double getJaroScore(String s1, String s2) {
-		return jaroC.score(jaroC.prepare(s1), jaroC.prepare(s2));
+		double score = 0.0;
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {
+			Jaro j = new Jaro();
+			score = j.score(j.prepare(s1), j.prepare(s2));
+			j = null;
+			return score;
+		}
 	}
 	public double getScaledLevenstein(String s1, String s2) {
-		return scaledLevensteinC.score(scaledLevensteinC.prepare(s1), scaledLevensteinC.prepare(s2));
-	}
-	public double getTfidfScore(String s1, String s2) {
-		return tfidfC.score(tfidfC.prepare(s1), tfidfC.prepare(s2));
+		double score = 0.0; 
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {
+			ScaledLevenstein sl = new ScaledLevenstein();
+			score = sl.score(sl.prepare(s1), sl.prepare(s2));
+			sl = null;
+			return score;
+		}
 	}
 	public double getJaroWinklerScore(String s1, String s2) {
-		return jaroWinklerC.score(jaroWinklerC.prepare(s1), jaroWinklerC.prepare(s2));
+		double score = 0.0;
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {
+			JaroWinkler jw = new JaroWinkler();
+			score = jw.score(jw.prepare(s1), jw.prepare(s2));
+			jw = null;
+			return score;
+		}
+	}
+	public double getMongeElkanScore(String s1, String s2) {
+		double score = 0.0;
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {
+			MongeElkan me = new MongeElkan();
+			me.setScaling(true);
+			score = me.score(me.prepare(s1), me.prepare(s2));
+			me = null;
+			return score;
+		}
+	}
+	public double getTfidfScore(String s1, String s2) {
+		double score = 0.0;
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {
+			TFIDF t = new TFIDF();
+			score = t.score(t.prepare(s1), t.prepare(s2));
+			t = null;
+			return score;
+		}
 	}
 	public double getSoftTfidfScore(String s1, String s2) {
-		return softTfidfC.score(softTfidfC.prepare(s1), softTfidfC.prepare(s2));
+		double score = 0.0;
+		if (s1 == null || s2 == null) {
+			return score;
+		} else {
+			SoftTFIDF st = new SoftTFIDF();
+			score = st.score(st.prepare(s1), st.prepare(s2));
+			st = null;
+			return score;
+			
+		}
 	}
 	
 	/**
@@ -203,6 +289,7 @@ public class StringMeasures {
 	   * @return double (1.0 if strings are equal; 0.0 otherwise)
 	   */
 	public double getExactMatchScore(String s1, String s2) {
+		if (s1 == null || s2 == null) {return 0.0;}
 		double score = 0.0;
 		if (s1.equals(s2)) {
 			score = 1.0;
@@ -240,7 +327,11 @@ public class StringMeasures {
 			resultScores.put(this.exactMatchS, getExactMatchScore(s1, s2));
 		}
 		if (this.jaccard) {
-			resultScores.put(this.jaccardS, getJaccardScore(s1, s2));
+			double score = 0.0;
+			if (s1 != null && s2 != null) {
+				score = getJaccardScore(s1, s2);
+			}
+			resultScores.put(this.jaccardS, score);
 		}
 		if (this.jaro) {
 			resultScores.put(this.jaroS, getJaroScore(s1, s2));
@@ -248,18 +339,21 @@ public class StringMeasures {
 		if (this.scaledLevenstein) {
 			resultScores.put(this.scaledLevensteinS, getScaledLevenstein(s1, s2));
 		}
-		if (this.tfidf) {
-			resultScores.put(this.tfidfS, getTfidfScore(s1, s2));
-		}
 		if (this.jaroWinkler) {
 			resultScores.put(this.jaroWinklerS, getJaroWinklerScore(s1, s2));
+		}
+		if (this.mongeElkan) {
+			resultScores.put(this.mongeElkanS, getMongeElkanScore(s1, s2));
+		}
+		/*if (this.tfidf) {
+			resultScores.put(this.tfidfS, getTfidfScore(s1, s2));
 		}	
 		if (this.softTfidf) {
 			resultScores.put(this.softTfidfS, getSoftTfidfScore(s1, s2));
 		}
 		if (this.all) {
 			resultScores.put(this.allS, getAllScore(s1,s2));
-		}
+		}*/
 		return resultScores;
 	}
 	/**
@@ -274,9 +368,9 @@ public class StringMeasures {
 		if (this.exactMatch) {	
 			results.put(getKeyPair(this.exactMatchS, 1.0), getExactMatch(s1, s2));
 		}
-		if (this.all) {
-			results.put(getKeyPair(this.allS, 1.0), getAllMatch(s1, s2));
-		}
+		//if (this.all) {
+		//	results.put(getKeyPair(this.allS, 1.0), getAllMatch(s1, s2));
+		//}
 		//check scores against thresholds
 		HashMap<String, Double> resultScores = getSimilarityScores(s1, s2);
 		//get all scores
@@ -302,10 +396,12 @@ public class StringMeasures {
 						System.out.println(s1 + " matched with " + s2);*/
 				} else if (entry.getKey().equals(this.jaroWinklerS)) {
 					results.put(getKeyPair(this.jaroWinklerS, t), checkThreshold(entry.getValue().doubleValue(), t));
+				} else if (entry.getKey().equals(this.mongeElkanS)) {
+					results.put(getKeyPair(this.mongeElkanS, t), checkThreshold(entry.getValue().doubleValue(), t));
 					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT))
 						System.out.println(s1 + " matched with " + s2);*/
-				} else if (entry.getKey().equals(this.softTfidfS)) {
-					results.put(getKeyPair(this.softTfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));
+				//} else if (entry.getKey().equals(this.softTfidfS)) {
+				//	results.put(getKeyPair(this.softTfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));
 					/*if (checkThreshold(entry.getValue().doubleValue(), this.softTfidfT))
 						System.out.println(s1 + " matched with " + s2);*/
 				}
@@ -322,43 +418,51 @@ public class StringMeasures {
 		case "jaccard":
 			if (t == 1.0)
 				return getJaccardPair1();
+			else if (t == 0.95)
+				return getJaccardPair95();
 			else if (t == 0.9)
 				return getJaccardPair9();
-			else if (t == 0.8)
-				return getJaccardPair8();
 			break;
 		case "jaro":
 			if (t == 1.0)
 				return getJaroPair1();
+			else if (t == 0.95)
+				return getJaroPair95();
 			else if (t == 0.9)
 				return getJaroPair9();
-			else if (t == 0.8)
-				return getJaroPair8();
 			break;
 		case "scaledLevenstein":
 			if (t == 1.0)
 				return getScaledLevensteinPair1();
+			else if (t == 0.95)
+				return getScaledLevensteinPair95();
 			else if (t == 0.9)
 				return getScaledLevensteinPair9();
-			else if (t == 0.8)
-				return getScaledLevensteinPair8();
 			break;
 		case "jaroWinkler":
 			if (t == 1.0)
 				return getJaroWinklerPair1();
+			else if (t == 0.95)
+				return getJaroWinklerPair95();
 			else if (t == 0.9)
 				return getJaroWinklerPair9();
-			else if (t == 0.8)
-				return getJaroWinklerPair8();
 			break;
-		case "softTfidf":
+		case "mongeElkan":
+			if (t == 1.0)
+				return getMongeElkanPair1();
+			else if (t == 0.95)
+				return getMongeElkanPair95();
+			else if (t == 0.9)
+				return getMongeElkanPair9();
+			break;
+		/*case "softTfidf":
 			if (t == 1.0)
 				return getSoftTfidfPair1();
+			else if (t == 0.95)
+				return getSoftTfidfPair95();
 			else if (t == 0.9)
 				return getSoftTfidfPair9();
-			else if (t == 0.8)
-				return getSoftTfidfPair8();
-			break;
+			break;*/
 		}
 		return null;
 	}
@@ -395,21 +499,24 @@ public class StringMeasures {
 			if (this.scaledLevenstein) {
 				instanceResults.put(getKeyPair(this.scaledLevensteinS, t), false);
 			}
-			if (this.tfidf) {
-				instanceResults.put(getKeyPair(this.tfidfS, t), false);
-			}
 			if (this.jaroWinkler) {
 				instanceResults.put(getKeyPair(this.jaroWinklerS, t), false);
 			}
+			if (this.mongeElkan) {
+				instanceResults.put(getKeyPair(this.mongeElkanS, t), false);
+			}
+			/*if (this.tfidf) {
+				instanceResults.put(getKeyPair(this.tfidfS, t), false);
+			}
 			if (this.softTfidf) {
 				instanceResults.put(getKeyPair(this.softTfidfS, t), false);
-			}
+			}*/
 		}
 		return instanceResults;
 	}
 	/**
 	   * Check if TFIDF or SoftTFIDF is used 
-	 * @param kKgClassInstanceLabels 
+	   * @param kKgClassInstanceLabels 
 	   * @return boolean
 	   */
 	public boolean checkTFIDF() {
@@ -422,9 +529,7 @@ public class StringMeasures {
 			//Collection<HashSet<String>> labels,
 			//HashMap<String, HashMap<String, HashSet<String>>> toKgClasses
 			) {
-		//System.out.println("TRAIN TFIDF");
-		//reset
-		
+		System.out.println("Training TFIDF");
 		if (this.internalSoftTfidf) {
 			if (this.internalSoftTfidfS.endsWith(this.jaccardS)) {
 				this.softTfidfJaccardC = new Jaccard();
@@ -443,10 +548,11 @@ public class StringMeasures {
 		this.tfidfC = new TFIDF();
 		
 		//train on labels
-		Set<StringWrapper> labelsW = new HashSet<StringWrapper>();
-		
+		Set<String> labels = getAllLabels(kKgClassInstanceLabels);
+		System.out.println(labels.size() + " labels received in total.");
+		Set<StringWrapper> labelsW = new HashSet<StringWrapper>(labels.size() + 10, 1f);
 		//for each KG
-		for (String fk : kKgClassInstanceLabels.keySet()) {
+		/*for (String fk : kKgClassInstanceLabels.keySet()) {
 			//for each kg class
 			for (String kgClass : kKgClassInstanceLabels.get(fk).keySet()) {
 				for (String instance : kKgClassInstanceLabels.get(fk).get(kgClass).keySet()) {
@@ -454,80 +560,101 @@ public class StringMeasures {
 						labelsW.add(this.tfidfC.prepare(label));
 					}
 				}
+				System.out.println("Training for " + fk + ": " + kgClass + " done.");
 			}
-		}
+		}*/
+		labelsW = labels.stream()
+					.parallel()
+					.map(label -> this.tfidfC.prepare(label))
+					.collect(Collectors.toSet());
+		System.out.println(labelsW.size() + " labels as StringWrapper added. Start training TFIDF");
 		if (this.softTfidf)
 			this.softTfidfC.train(new BasicStringWrapperIterator(labelsW.iterator()));
 		if (this.tfidf)
 			this.tfidfC.train(new BasicStringWrapperIterator(labelsW.iterator()));
 		
-		//System.out.println("TFIDF is trained on labels with collection size of " + this.softTfidfC.getCollectionSize());
+		System.out.println("TFIDF is trained on labels with collection size of " + this.softTfidfC.getCollectionSize());
 		
+	}
+	private Set<String> getAllLabels(
+			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> kKgClassInstanceLabels) {
+		//get number of labels
+		int labelCounter = 0;
+		for (String fk : kKgClassInstanceLabels.keySet()) {
+			for (String kgClass : kKgClassInstanceLabels.get(fk).keySet()) {
+				for (String instance : kKgClassInstanceLabels.get(fk).get(kgClass).keySet()) {
+					labelCounter += kKgClassInstanceLabels.get(fk).get(kgClass).get(instance).size();
+				}
+			}
+		}
+		//init set and add all labels to the set
+		HashSet<String> allLabels = new HashSet<String>(labelCounter + 10, 1f);
+		for (String fk : kKgClassInstanceLabels.keySet()) {
+			for (String kgClass : kKgClassInstanceLabels.get(fk).keySet()) {
+				for (String instance : kKgClassInstanceLabels.get(fk).get(kgClass).keySet()) {
+					for (String label : kKgClassInstanceLabels.get(fk).get(kgClass).get(instance)) {
+						allLabels.add(label);
+					}
+				}
+			}
+		}
+		
+		return allLabels;
 	}
 	public double getJaccardT() {
 		return jaccardT;
 	}
-
 	public double getJaroT() {
 		return jaroT;
 	}
-
 	public double getScaledLevensteinT() {
 		return scaledLevensteinT;
 	}
-
+	public double getMongeElkanT() {
+		return mongeElkanT;
+	}
 	public double getTfidfT() {
 		return tfidfT;
 	}
-
 	public double getJaroWinklerT() {
 		return jaroWinklerT;
 	}
-
 	public double getSoftTfidfT() {
 		return softTfidfT;
 	}
-
 	public double getInternalSoftTfidfT() {
 		return internalSoftTfidfT;
 	}
-	
 	public void setJaccardT(double jaccardT) {
 		this.jaccardT = jaccardT;
 	}
-
 	public void setJaroT(double jaroT) {
 		this.jaroT = jaroT;
 	}
-
+	public void setMongeElkanT(double mongeElkanT) {
+		this.mongeElkanT = mongeElkanT;
+	}
 	public void setScaledLevensteinT(double scaledLevensteinT) {
 		this.scaledLevensteinT = scaledLevensteinT;
 	}
-
 	public void setTfidfT(double tfidfT) {
 		this.tfidfT = tfidfT;
 	}
-
 	public void setJaroWinklerT(double jaroWinklerT) {
 		this.jaroWinklerT = jaroWinklerT;
 	}
-
 	public void setSoftTfidfT(double softTfidfT) {
 		this.softTfidfT = softTfidfT;
 	}
-
 	public void setInternalSoftTfidfT(double internalSoftTfidfT) {
 		this.internalSoftTfidfT = internalSoftTfidfT;
 	}
-	
 	public void setExactMatch(boolean exactMatch) {
 		this.exactMatch = exactMatch;
 	}
-	
 	public void setAllMatch(boolean all) {
 		this.all = all;
 	}
-
 	public List<String> getUsedMeasures() {
 		List<String> usedMeasures = new ArrayList<String>();
 		if (this.exactMatch)
@@ -542,6 +669,8 @@ public class StringMeasures {
 			usedMeasures.add(this.jaroWinklerS);
 		if (this.scaledLevenstein)
 			usedMeasures.add(this.scaledLevensteinS);
+		if (this.mongeElkan)
+			usedMeasures.add(this.mongeElkanS);
 		if (this.softTfidf)
 			usedMeasures.add(this.softTfidfS);
 		if (this.tfidf)
@@ -561,8 +690,8 @@ public class StringMeasures {
 	public Pair<String, Double> getJaccardPair9() {
 		return jaccardPair9;
 	}
-	public Pair<String, Double> getJaccardPair8() {
-		return jaccardPair8;
+	public Pair<String, Double> getJaccardPair95() {
+		return jaccardPair95;
 	}
 	public Pair<String, Double> getJaroPair1() {
 		return jaroPair1;
@@ -570,8 +699,8 @@ public class StringMeasures {
 	public Pair<String, Double> getJaroPair9() {
 		return jaroPair9;
 	}
-	public Pair<String, Double> getJaroPair8() {
-		return jaroPair8;
+	public Pair<String, Double> getJaroPair95() {
+		return jaroPair95;
 	}
 	public Pair<String, Double> getJaroWinklerPair1() {
 		return jaroWinklerPair1;
@@ -579,8 +708,8 @@ public class StringMeasures {
 	public Pair<String, Double> getJaroWinklerPair9() {
 		return jaroWinklerPair9;
 	}
-	public Pair<String, Double> getJaroWinklerPair8() {
-		return jaroWinklerPair8;
+	public Pair<String, Double> getJaroWinklerPair95() {
+		return jaroWinklerPair95;
 	}
 	public Pair<String, Double> getScaledLevensteinPair1() {
 		return scaledLevensteinPair1;
@@ -588,8 +717,17 @@ public class StringMeasures {
 	public Pair<String, Double> getScaledLevensteinPair9() {
 		return scaledLevensteinPair9;
 	}
-	public Pair<String, Double> getScaledLevensteinPair8() {
-		return scaledLevensteinPair8;
+	public Pair<String, Double> getScaledLevensteinPair95() {
+		return scaledLevensteinPair95;
+	}
+	public Pair<String, Double> getMongeElkanPair1() {
+		return mongeElkanPair1;
+	}
+	public Pair<String, Double> getMongeElkanPair9() {
+		return mongeElkanPair95;
+	}
+	public Pair<String, Double> getMongeElkanPair95() {
+		return mongeElkanPair9;
 	}
 	public Pair<String, Double> getSoftTfidfPair1() {
 		return softTfidfPair1;
@@ -597,8 +735,8 @@ public class StringMeasures {
 	public Pair<String, Double> getSoftTfidfPair9() {
 		return softTfidfPair9;
 	}
-	public Pair<String, Double> getSoftTfidfPair8() {
-		return softTfidfPair8;
+	public Pair<String, Double> getSoftTfidfPair95() {
+		return softTfidfPair95;
 	}
 
 
