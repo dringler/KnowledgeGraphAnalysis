@@ -41,7 +41,9 @@ public class StringMeasures {
 	private double jaroWinklerT;
 	private double softTfidfT;
 	private double internalSoftTfidfT;
-	private List<Double> thresholds;
+	private List<Double> thresholdsH;
+	private List<Double> thresholdsL;
+	private List<Double> thresholdsJaccard;
 	//strings
 	private String jaccardS = "jaccard";
 	private String jaroS = "jaro";
@@ -56,23 +58,24 @@ public class StringMeasures {
 	//keys
 	private Pair<String, Double> exactMatchPair = new ImmutablePair<String, Double>(this.exactMatchS, 1.0);
 	private Pair<String, Double> jaccardPair1 = new ImmutablePair<String, Double>(this.jaccardS, 1.0);
-	private Pair<String, Double> jaccardPair95 = new ImmutablePair<String, Double>(this.jaccardS, 0.95);
-	private Pair<String, Double> jaccardPair9 = new ImmutablePair<String, Double>(this.jaccardS, 0.9);
+	private Pair<String, Double> jaccardPair8 = new ImmutablePair<String, Double>(this.jaccardS, 0.8);
+	private Pair<String, Double> jaccardPair6 = new ImmutablePair<String, Double>(this.jaccardS, 0.6);
+	private Pair<String, Double> scaledLevensteinPair1 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 1.0);
+	private Pair<String, Double> scaledLevensteinPair9 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.9);
+	private Pair<String, Double> scaledLevensteinPair8 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.8);
+	private Pair<String, Double> mongeElkanPair1 = new ImmutablePair<String, Double>(this.mongeElkanS, 1.0);
+	private Pair<String, Double> mongeElkanPair95 = new ImmutablePair<String, Double>(this.mongeElkanS, 0.95);
+	private Pair<String, Double> mongeElkanPair9 = new ImmutablePair<String, Double>(this.mongeElkanS, 0.9);
+	private Pair<String, Double> softTfidfPair1 = new ImmutablePair<String, Double>(this.softTfidfS, 1.0);
+	private Pair<String, Double> softTfidfPair95 = new ImmutablePair<String, Double>(this.softTfidfS, 0.95);
+	private Pair<String, Double> softTfidfPair9 = new ImmutablePair<String, Double>(this.softTfidfS, 0.9);
 	private Pair<String, Double> jaroPair1 = new ImmutablePair<String, Double>(this.jaroS, 1.0);
 	private Pair<String, Double> jaroPair95 = new ImmutablePair<String, Double>(this.jaroS, 0.95);
 	private Pair<String, Double> jaroPair9 = new ImmutablePair<String, Double>(this.jaroS, 0.9);
 	private Pair<String, Double> jaroWinklerPair1 = new ImmutablePair<String, Double>(this.jaroWinklerS, 1.0);
 	private Pair<String, Double> jaroWinklerPair95 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.95);
 	private Pair<String, Double> jaroWinklerPair9 = new ImmutablePair<String, Double>(this.jaroWinklerS, 0.9);
-	private Pair<String, Double> mongeElkanPair1 = new ImmutablePair<String, Double>(this.mongeElkanS, 1.0);
-	private Pair<String, Double> mongeElkanPair95 = new ImmutablePair<String, Double>(this.mongeElkanS, 0.95);
-	private Pair<String, Double> mongeElkanPair9 = new ImmutablePair<String, Double>(this.mongeElkanS, 0.9);
-	private Pair<String, Double> scaledLevensteinPair1 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 1.0);
-	private Pair<String, Double> scaledLevensteinPair95 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.95);
-	private Pair<String, Double> scaledLevensteinPair9 = new ImmutablePair<String, Double>(this.scaledLevensteinS, 0.9);
-	private Pair<String, Double> softTfidfPair1 = new ImmutablePair<String, Double>(this.softTfidfS, 1.0);
-	private Pair<String, Double> softTfidfPair95 = new ImmutablePair<String, Double>(this.softTfidfS, 0.95);
-	private Pair<String, Double> softTfidfPair9 = new ImmutablePair<String, Double>(this.softTfidfS, 0.9);
+	
 	private Pair<String, Double> allPair = new ImmutablePair<String, Double>(this.allS, 1.0);
 	/**
 	   * StringMeasures constructor
@@ -174,8 +177,10 @@ public class StringMeasures {
 	   * exactMatch, jaccard, jaro, scaledLevenstein, jaroWinkler, softTfidf
 	   * 
 	   */
-	public StringMeasures(ArrayList<Double> thresholds) {
-		this.thresholds = thresholds;
+	public StringMeasures(ArrayList<Double> thresholdsH, ArrayList<Double> thresholdsL, ArrayList<Double> thresholdsJaccard) {
+		this.thresholdsH = thresholdsH;
+		this.thresholdsL = thresholdsL;
+		this.thresholdsJaccard = thresholdsJaccard;
 		
 		this.exactMatch = true;
 		this.jaccard = true;
@@ -277,8 +282,7 @@ public class StringMeasures {
 			SoftTFIDF st = new SoftTFIDF();
 			score = st.score(st.prepare(s1), st.prepare(s2));
 			st = null;
-			return score;
-			
+			return score;			
 		}
 	}
 	
@@ -360,10 +364,12 @@ public class StringMeasures {
 	   * Get similarity results for two strings s1 and s2
 	   * @param s1
 	   * @param s2
-	 * @param thresholds 
+	 * @param thresholds H
+	 * @param thresholdsL 
 	   * @return HashMap<String, Boolean> with similarity measure name and result
 	   */
-	public HashMap<Pair<String, Double>, Boolean> getSimilarityResult(String s1, String s2, ArrayList<Double> thresholds) {
+	public HashMap<Pair<String, Double>, Boolean> getSimilarityResult(String s1, String s2, 
+			ArrayList<Double> thresholdsH, ArrayList<Double> thresholdsLL) {
 		HashMap<Pair<String, Double>, Boolean> results = new HashMap<Pair<String, Double>, Boolean>();
 		if (this.exactMatch) {	
 			results.put(getKeyPair(this.exactMatchS, 1.0), getExactMatch(s1, s2));
@@ -375,35 +381,29 @@ public class StringMeasures {
 		HashMap<String, Double> resultScores = getSimilarityScores(s1, s2);
 		//get all scores
 		for (Entry<String, Double> entry : resultScores.entrySet()) {
-			//for each threshold
-			for (Double t : thresholds) {
-				//check sim measure & check threshold
+			//for each threshold: check sim measure & check threshold
+			for (Double t : thresholdsJaccard) {
 				if (entry.getKey().equals(this.jaccardS)) {
 					results.put(getKeyPair(this.jaccardS, t), checkThreshold(entry.getValue().doubleValue(), t));
-					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaccardT))
-						System.out.println(s1 + " matched with " + s2);*/
-				} else if (entry.getKey().equals(this.jaroS)) {
-					results.put(getKeyPair(this.jaroS, t), checkThreshold(entry.getValue().doubleValue(), t));
-					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroT))
-						System.out.println(s1 + " matched with " + s2);*/
-				} else if (entry.getKey().equals(this.scaledLevensteinS)) {
+				}
+			}
+			for (Double t : thresholdsL) {
+				if (entry.getKey().equals(this.scaledLevensteinS)) {
 					results.put(getKeyPair(this.scaledLevensteinS, t), checkThreshold(entry.getValue().doubleValue(), t));
-					/*if (checkThreshold(entry.getValue().doubleValue(), this.scaledLevensteinT))
-						System.out.println(s1 + " matched with " + s2);*/
-				/*} else if (entry.getKey().equals(this.tfidfS)) {
-					results.put(getKeyPair(this.tfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));	
-					/*if (checkThreshold(entry.getValue().doubleValue(), this.tfidfT))
-						System.out.println(s1 + " matched with " + s2);*/
-				} else if (entry.getKey().equals(this.jaroWinklerS)) {
-					results.put(getKeyPair(this.jaroWinklerS, t), checkThreshold(entry.getValue().doubleValue(), t));
-				} else if (entry.getKey().equals(this.mongeElkanS)) {
+				}
+			}
+			for (Double t : thresholdsH) {
+				if (entry.getKey().equals(this.mongeElkanS)) {
 					results.put(getKeyPair(this.mongeElkanS, t), checkThreshold(entry.getValue().doubleValue(), t));
-					/*if (checkThreshold(entry.getValue().doubleValue(), this.jaroWinklerT))
-						System.out.println(s1 + " matched with " + s2);*/
-				//} else if (entry.getKey().equals(this.softTfidfS)) {
-				//	results.put(getKeyPair(this.softTfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));
-					/*if (checkThreshold(entry.getValue().doubleValue(), this.softTfidfT))
-						System.out.println(s1 + " matched with " + s2);*/
+				} else if (entry.getKey().equals(this.jaroS)) {
+					results.put(getKeyPair(this.jaroS, t), checkThreshold(entry.getValue().doubleValue(), t));				
+				} else if (entry.getKey().equals(this.jaroWinklerS)) {
+					results.put(getKeyPair(this.jaroWinklerS, t), checkThreshold(entry.getValue().doubleValue(), t));				
+				/*} else if (entry.getKey().equals(this.softTfidfS)) {
+					results.put(getKeyPair(this.softTfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));
+				} else if (entry.getKey().equals(this.tfidfS)) {
+					results.put(getKeyPair(this.tfidfS, t), checkThreshold(entry.getValue().doubleValue(), t));	
+					*/
 				}
 			}
 		}
@@ -418,34 +418,18 @@ public class StringMeasures {
 		case "jaccard":
 			if (t == 1.0)
 				return getJaccardPair1();
-			else if (t == 0.95)
-				return getJaccardPair95();
-			else if (t == 0.9)
-				return getJaccardPair9();
-			break;
-		case "jaro":
-			if (t == 1.0)
-				return getJaroPair1();
-			else if (t == 0.95)
-				return getJaroPair95();
-			else if (t == 0.9)
-				return getJaroPair9();
+			else if (t == 0.8)
+				return getJaccardPair8();
+			else if (t == 0.6)
+				return getJaccardPair6();
 			break;
 		case "scaledLevenstein":
 			if (t == 1.0)
 				return getScaledLevensteinPair1();
-			else if (t == 0.95)
-				return getScaledLevensteinPair95();
 			else if (t == 0.9)
 				return getScaledLevensteinPair9();
-			break;
-		case "jaroWinkler":
-			if (t == 1.0)
-				return getJaroWinklerPair1();
-			else if (t == 0.95)
-				return getJaroWinklerPair95();
-			else if (t == 0.9)
-				return getJaroWinklerPair9();
+			else if (t == 0.8)
+				return getScaledLevensteinPair8();
 			break;
 		case "mongeElkan":
 			if (t == 1.0)
@@ -455,6 +439,22 @@ public class StringMeasures {
 			else if (t == 0.9)
 				return getMongeElkanPair9();
 			break;
+		case "jaro":
+			if (t == 1.0)
+				return getJaroPair1();
+			else if (t == 0.95)
+				return getJaroPair95();
+			else if (t == 0.9)
+				return getJaroPair9();
+			break;	
+		case "jaroWinkler":
+			if (t == 1.0)
+				return getJaroWinklerPair1();
+			else if (t == 0.95)
+				return getJaroWinklerPair95();
+			else if (t == 0.9)
+				return getJaroWinklerPair9();
+			break;	
 		/*case "softTfidf":
 			if (t == 1.0)
 				return getSoftTfidfPair1();
@@ -478,10 +478,13 @@ public class StringMeasures {
 	}
 	/**
 	   * Get blank HashMap with all similarity measures 
-	 * @param thresholds2 
+	 * @param thresholdsH
+	 * @param thresholdsL 
 	   * @return HashMap
 	   */
-	public HashMap<Pair<String,Double>, Boolean> getBlankInstanceResultsContainer(ArrayList<Double> thresholds2) {
+	public HashMap<Pair<String,Double>, Boolean> getBlankInstanceResultsContainer(ArrayList<Double> thresholdsH, 
+			ArrayList<Double> thresholdsL,
+			ArrayList<Double> thresholdsJaccard) {
 		HashMap<Pair<String,Double>, Boolean> instanceResults = new HashMap<Pair<String, Double>, Boolean>();
 		if (this.exactMatch) {
 			instanceResults.put(getKeyPair(this.exactMatchS, 1.0), false);
@@ -489,22 +492,27 @@ public class StringMeasures {
 		if (this.all) {
 			instanceResults.put(getKeyPair(this.allS, 1.0), false);
 		}
-		for (Double t : thresholds) {			
+		for (Double t : thresholdsJaccard) {
 			if (this.jaccard) {
 				instanceResults.put(getKeyPair(this.jaccardS, t), false);
 			}
-			if (this.jaro) {
-				instanceResults.put(getKeyPair(this.jaroS, t), false);
-			}
+		}
+		for (Double t : thresholdsL) {			
 			if (this.scaledLevenstein) {
 				instanceResults.put(getKeyPair(this.scaledLevensteinS, t), false);
-			}
+			}		
+		}
+		for (Double t : thresholdsH) {
+			if (this.jaro) {
+				instanceResults.put(getKeyPair(this.jaroS, t), false);
+			}		
 			if (this.jaroWinkler) {
 				instanceResults.put(getKeyPair(this.jaroWinklerS, t), false);
 			}
 			if (this.mongeElkan) {
 				instanceResults.put(getKeyPair(this.mongeElkanS, t), false);
 			}
+			
 			/*if (this.tfidf) {
 				instanceResults.put(getKeyPair(this.tfidfS, t), false);
 			}
@@ -684,15 +692,35 @@ public class StringMeasures {
 	public Pair<String, Double> getAllMatchPair() {
 		return allPair;
 	}
+	//Low thresholds
 	public Pair<String, Double> getJaccardPair1() {
 		return jaccardPair1;
 	}
-	public Pair<String, Double> getJaccardPair9() {
-		return jaccardPair9;
+	public Pair<String, Double> getJaccardPair8() {
+		return jaccardPair8;
 	}
-	public Pair<String, Double> getJaccardPair95() {
-		return jaccardPair95;
+	public Pair<String, Double> getJaccardPair6() {
+		return jaccardPair6;
 	}
+	public Pair<String, Double> getScaledLevensteinPair1() {
+		return scaledLevensteinPair1;
+	}
+	public Pair<String, Double> getScaledLevensteinPair9() {
+		return scaledLevensteinPair9;
+	}
+	public Pair<String, Double> getScaledLevensteinPair8() {
+		return scaledLevensteinPair8;
+	}
+	//high thresholds
+	public Pair<String, Double> getMongeElkanPair1() {
+		return mongeElkanPair1;
+	}
+	public Pair<String, Double> getMongeElkanPair9() {
+		return mongeElkanPair95;
+	}
+	public Pair<String, Double> getMongeElkanPair95() {
+		return mongeElkanPair9;
+	}	
 	public Pair<String, Double> getJaroPair1() {
 		return jaroPair1;
 	}
@@ -710,24 +738,6 @@ public class StringMeasures {
 	}
 	public Pair<String, Double> getJaroWinklerPair95() {
 		return jaroWinklerPair95;
-	}
-	public Pair<String, Double> getScaledLevensteinPair1() {
-		return scaledLevensteinPair1;
-	}
-	public Pair<String, Double> getScaledLevensteinPair9() {
-		return scaledLevensteinPair9;
-	}
-	public Pair<String, Double> getScaledLevensteinPair95() {
-		return scaledLevensteinPair95;
-	}
-	public Pair<String, Double> getMongeElkanPair1() {
-		return mongeElkanPair1;
-	}
-	public Pair<String, Double> getMongeElkanPair9() {
-		return mongeElkanPair95;
-	}
-	public Pair<String, Double> getMongeElkanPair95() {
-		return mongeElkanPair9;
 	}
 	public Pair<String, Double> getSoftTfidfPair1() {
 		return softTfidfPair1;

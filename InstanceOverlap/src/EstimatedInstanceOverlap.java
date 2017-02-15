@@ -28,21 +28,26 @@ public class EstimatedInstanceOverlap {
 	 * @param className
 	 * @param cM
 	 * @param stringM
-	 * @param thresholds
+	 * @param thresholdsH
+	 * @param thresholdsL
 	 * @param kKgInstanceCount
 	 * @throws IOException
 	 */
 	public void run(String className, 
 			ClassMapping cM, 
 			ArrayList<String> stringM, 
-			ArrayList<Double> thresholds, 
+			ArrayList<Double> thresholdsH,
+			ArrayList<Double> thresholdsL,
+			ArrayList<Double> thresholdsJaccard,
+			HashSet<String> simMeasuresThresholdH,
 			HashMap<String, HashMap<String, Integer>> kKgInstanceCount) throws IOException {
 		System.out.println("Start calculating estimated instance overlap for " + className);
 		DateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 		Date date = new Date();
 		
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("./estimatedOverlap/estimatedInstanceOverlap_"+className+"_wBlocking_tokenBk4_"+df.format(date)+".csv"));
+			String fileName = "estimatedInstanceOverlap_"+className+"_wBlocking_tokenBk4_"+df.format(date)+".csv";
+			BufferedWriter writer = new BufferedWriter(new FileWriter("./estimatedOverlap/"+ fileName));
 			
 			String header = "x2y, fromKgClass, fromInstanceCount, toKgClass, toInstanceCount, simMeasure, threshold, precision, recall, fMeasure, estimatedOverlap, owlSameAs links, matching alignment, partial matching alignment, tp";			
 			writer.write(header + "\n");
@@ -60,6 +65,7 @@ public class EstimatedInstanceOverlap {
 			x2yA.add("w2n");
 			x2yA.add("o2n");
 			
+			ArrayList<Double> thresholds;
 			
 			for (String x2y : x2yA) {
 			//x2yA.parallelStream().forEach((x2y) -> {
@@ -79,7 +85,12 @@ public class EstimatedInstanceOverlap {
 								System.out.println("Gold standard for received with size: " + r_p.size());
 								//for each simMeasure
 								for (String simMeasure : stringM) {
-					
+									thresholds = thresholdsL;
+									if (simMeasuresThresholdH.contains(simMeasure)) {
+										thresholds = thresholdsH;
+									} else if (simMeasure.equals("jaccard")) {
+										thresholds = thresholdsJaccard;
+									}
 									//for each threshold
 									for (Double threshold : thresholds) {
 										if (! ((simMeasure.equals("exactMatch") || simMeasure.equals("all")) && threshold != 1.0)) {
@@ -127,6 +138,7 @@ public class EstimatedInstanceOverlap {
 			//});		
 			}
 			writer.close();
+			System.out.println("results written to " + fileName);
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}	

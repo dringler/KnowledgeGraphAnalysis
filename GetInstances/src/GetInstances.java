@@ -23,9 +23,9 @@ public class GetInstances {
 		boolean useSamples = false;
 		
 		boolean dbpedia = false; //0
-		boolean yago = false; //1
+		boolean yago = true; //1
 		boolean opencyc = false; //2
-		boolean nell = true; //3
+		boolean nell = false; //3
 		boolean wikidata = false; //4
 		
 		String fType1  = "";
@@ -224,7 +224,7 @@ public class GetInstances {
 				//for (Entry<String, Set<String>> entry : classInstances.entrySet()) {
 				for (Entry<String, Set<String>> entry : classInstancesWithLabel.entrySet()) {
 					//write instances to disk
-					Path fileName = Paths.get(resultFolder + getClassNameOfURI(kg, entry.getKey()) + "InstancesWithLabels.txt");		
+					Path fileName = Paths.get(resultFolder + getClassNameOfURIWithLetter(kg, entry.getKey()) + "InstancesWithLabels.txt");		
 					Files.write(fileName, entry.getValue(), Charset.forName("UTF-8"));
 					
 				}
@@ -260,8 +260,7 @@ public class GetInstances {
 				Stream<String> it = Files.lines(Paths.get(fType1));
 				// read files
 				classInstances =	
-						it
-							.skip(skipRows) //skip rows 
+						it.skip(skipRows) //skip rows 
 							.filter(line -> containsClassName(kg, line, classes, allInstancesSet)) //check if line contains a className
 							//collect: group by className (third argument), set of all instance names (first argument): instance a className
 							.collect(Collectors.groupingBy(line -> getO(kg, line), Collectors.mapping(line -> getS(kg, line), Collectors.toSet())));
@@ -433,31 +432,56 @@ public class GetInstances {
 		}
 		return containsClass;
 	}
-
+	
 	/**
-	  * Get class name of URI with the letter of the kg in front
-	  * @param uriString
+	  * Get class name of URI
+	  * @param kg
+	  * @param string
 	  * @returns substring
 	 */
 	private static String getClassNameOfURI(int kg, String o) {
 		String returnString = "";
 		if (kg ==0) {
 			//"<http://dbpedia.org/ontology/CLASSNAME_TO_KEEP>"
-			returnString = "d_" + o.substring(29, o.length()-1);
+			returnString = o.substring(29, o.length()-1);
 		} else if (kg == 1) { //YAGO
 			//"<CLASSNAME_TO_KEEP> ."
-			returnString = "y_" + o.substring(1, o.length()-3);
+			returnString = o.substring(1, o.length()-3);
 		} else if (kg == 2) {
 			//<http://sw.opencyc.org/concept/CLASSNAME_TO_KEEP>
-			returnString = "o_" + o.substring(31, o.length()-1);
+			returnString = o.substring(31, o.length()-1);
 		} else if (kg == 3) { //NELL
 			//"concept:CLASSNAME_TO_KEEP"
-			returnString = "n_" + o.substring(8, o.length());
+			returnString = o.substring(8, o.length());
 		} else if (kg == 4) {
 			//<http://www.wikidata.org/entity/CLASSNAME_TO_KEEP>
-			returnString = "w_" + o.substring(32, o.length()-1);
+			returnString = o.substring(32, o.length()-1);
 		}
-		//System.out.println("getClassNameOfURI: " + returnString);
+		return returnString;
+	}
+
+
+
+	/**
+	  * Get class name of URI with the letter of the kg in front
+	  * @param uriString
+	  * @returns substring
+	 */
+	private static String getClassNameOfURIWithLetter(int kg, String o) {
+		String className = getClassNameOfURI(kg, o);
+		String returnString = "";
+		if (kg ==0) { //DBpedia
+			returnString = "d_" + className;
+		} else if (kg == 1) { //YAGO
+			returnString = "y_" + className;
+		} else if (kg == 2) { //OpenCyc
+			//<http://sw.opencyc.org/concept/CLASSNAME_TO_KEEP>
+			returnString = "o_" + className;
+		} else if (kg == 3) { //NELL
+			returnString = "n_" + className;
+		} else if (kg == 4) { // Wikidata
+			returnString = "w_" + className;
+		}
 		return returnString;
 	}
 
@@ -564,13 +588,14 @@ public class GetInstances {
 		HashSet<String> classNameArray = new HashSet<String>();
 		classNameArray.addAll(Arrays.asList(
 								//PERSON
-									"yagoLegalActor",
+					/*				"yagoLegalActor",
 									"wordnet_causal_agent_100007347",
 									"wordnet_person_100007846",
 									"wordnet_politician_110450303",
 									"wordnet_politician_110451263",
 									"wordnet_athlete_109820263",	
-									"wordnet_actor_109767197",	
+									"wordnet_actor_109767197",*/
+									"wordnet_actor_109765278"/*,
 								//ORGANIZATION
 									"wordnet_government_108050678",
 									"wordnet_stock_company_108383310",
@@ -584,7 +609,7 @@ public class GetInstances {
 									"wordnet_country_108544813",
 								//ART
 									"wordnet_work_104599396",								
-									"wordnet_musical_composition_107037465",	
+									"wordnet_musical_composition_107037465",
 									"wordnet_album_106591815",
 									"wordnet_song_107048000",
 									"wordnet_movie_106613686",	
@@ -604,7 +629,7 @@ public class GetInstances {
 									"wordnet_chemical_element_114622893",	
 									"wordnet_substance_100019613",
 									"wordnet_celestial_body_109239740",
-									"wordnet_planet_109394007"
+									"wordnet_planet_109394007"*/
 									));
 		return classNameArray;
 	}

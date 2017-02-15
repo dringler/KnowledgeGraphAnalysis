@@ -63,7 +63,7 @@ public class ClassMapping {
 			fullClassMap.put("Actor",
 					new HashMap<String, ArrayList<String>>() {{
 						put("d", new ArrayList<String>(Arrays.asList("Actor")));
-						put("y", new ArrayList<String>(Arrays.asList("wordnet_actor_109767197")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_actor_109767197", "wordnet_actor_109765278")));
 						put("w", new ArrayList<String>(Arrays.asList("Q33999")));//actor
 						put("o", new ArrayList<String>(Arrays.asList("Mx4rvVjaHZwpEbGdrcN5Y29ycA"))); //actor
 						put("n", new ArrayList<String>(Arrays.asList("actor")));

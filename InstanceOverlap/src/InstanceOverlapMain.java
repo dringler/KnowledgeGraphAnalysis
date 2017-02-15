@@ -1,9 +1,8 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class InstanceOverlapMain {
 
@@ -11,21 +10,36 @@ public class InstanceOverlapMain {
 		
 		boolean useSamples = false;
 		
-		ArrayList<Double> thresholds = new ArrayList<Double>();
-		thresholds.add(1.0);
-		thresholds.add(0.95);
-		thresholds.add(0.9);
+		ArrayList<Double> thresholdsH = new ArrayList<Double>();
+		thresholdsH.add(1.0);
+		thresholdsH.add(0.95);
+		thresholdsH.add(0.9);
 		
-		StringMeasures stringMeasures = new StringMeasures(thresholds);
+		ArrayList<Double> thresholdsL = new ArrayList<Double>();
+		thresholdsL.add(1.0);
+		thresholdsL.add(0.9);
+		thresholdsL.add(0.8);
+		
+		ArrayList<Double> thresholdsJaccard = new ArrayList<Double>();
+		thresholdsJaccard.add(1.0);
+		thresholdsJaccard.add(0.8);
+		thresholdsJaccard.add(0.6);
+		
+		HashSet<String> simMeasuresThresholdH = new HashSet<>();
+		simMeasuresThresholdH.add("jaro");
+		simMeasuresThresholdH.add("jaroWinkler");
+		simMeasuresThresholdH.add("mongeElkan");
+		
+		StringMeasures stringMeasures = new StringMeasures(thresholdsH, thresholdsL, thresholdsJaccard);
 		//StringMeasures stringMeasures = new StringMeasures(exactMatch, jaccard, jaccardT, jaro, jaroT, scaledLevenstein, scaledLevensteinT, mongeElkan, mongeElkanT, tfidf, tfidfT, jaroWinkler, jaroWinklerT,softTfidf, softTfidfT, internalSoftTfidf, internalSoftTfidfS, internalSoftTfidfT);
 		
 		ArrayList<String> stringM = new ArrayList<String>();
 		//stringM.add("all");
 		stringM.add("exactMatch");
 		stringM.add("jaccard");
+		stringM.add("scaledLevenstein");
 		stringM.add("jaro");
 		stringM.add("jaroWinkler");
-		stringM.add("scaledLevenstein");
 		stringM.add("mongeElkan");
 		
 		//stringM.add("softTfidf");
@@ -55,32 +69,10 @@ public class InstanceOverlapMain {
 		
 		ClassMapping cM = new ClassMapping();
 		ArrayList<String> classNames = getClassNames();
-		ArrayList<String> classNamesUserInput = new ArrayList<>();
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        boolean newInput = true;
-		while (newInput) {
-		System.out.print("Enter class name, 'all', or 'start': ");
-        String userInput = br.readLine();
-        	if (userInput.equals("start")) {
-        		if (classNamesUserInput.size()>0) {
-        			newInput = false;
-        		} else {
-        			System.out.println("please enter at least one valid class first.");
-        			System.out.println(classNames.toString());
-        		}
-        	} else if (userInput.equals("all")) {
-        		classNamesUserInput = classNames;
-        	} else {
-        		if (classNames.contains(userInput)) {
-        			classNamesUserInput.add(userInput);
-        		} else {
-        			System.out.println("Class not found. Please enter one of the following classes");
-        			System.out.println(classNames.toString());
-        		}	
-        	}
-		}
-        
+		UserInput ui = new UserInput();
+		ArrayList<String> classNamesUserInput = ui.getClassNames(classNames);
+		//int maxBlockSize = ui.getMaxBlockSize();
 		
 		//for (String className : classNames) {
 		for (String className : classNamesUserInput) {
@@ -88,7 +80,7 @@ public class InstanceOverlapMain {
 		
 		// SAME AS LINKS
 			// PARAMETERS		
-			/*boolean d2y = true;
+			boolean d2y = true;
 			boolean d2w = true;
 			boolean d2o = true;
 			boolean d2n = true;
@@ -100,15 +92,16 @@ public class InstanceOverlapMain {
 			boolean o2n = true;
 			CountSameAs same = new CountSameAs();
 			same.run(className, cM, d2y, d2w, d2o, d2n, y2w, y2o, y2n, w2o, w2n, o2n);
-			*/
+			
 			
 		// INSTANCE MATCHES USING STRING SIMILARITY MEASURES	
 			CountStringSimilarity stringSim = new CountStringSimilarity();
-			HashMap<String, HashMap<String, Integer>> kKgInstanceCount = stringSim.run(className, cM, stringMeasures, useSamples, thresholds);
+			HashMap<String, HashMap<String, Integer>> kKgInstanceCount = stringSim.run(className, cM, stringMeasures, useSamples, thresholdsH, thresholdsL, thresholdsJaccard, simMeasuresThresholdH);
 		//CALCULATE ESTIMATED INSTANCE OVERLAP
 			EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
-			overlap.run(className, cM, stringM, thresholds, kKgInstanceCount);
+			overlap.run(className, cM, stringM, thresholdsH, thresholdsL, thresholdsJaccard, simMeasuresThresholdH, kKgInstanceCount);
 			System.out.println("DONE");
+			
 		}
 	}
 	
