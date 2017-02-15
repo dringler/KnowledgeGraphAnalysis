@@ -676,14 +676,14 @@ public class QueryObject {
 									//"wordnet_species_108110373",
 									//"wordnet_individual_110203839",
 								//PERSON
-									"yagoLegalActor",
+							/*		"yagoLegalActor",
 									"wordnet_causal_agent_100007347",
 									"wordnet_person_100007846",
 									"wordnet_politician_110450303",
 									"wordnet_politician_110451263",
 									"wordnet_athlete_109820263",	
-									"wordnet_actor_109767197", 
-									"wordnet_actor_109765278",
+									"wordnet_actor_109767197", */
+									"wordnet_actor_109765278"/*,
 									//"wordnet_director_110015215",	
 									//"wordnet_celebrity_109903153",	
 									//"wordnet_male_109624168",
@@ -737,7 +737,7 @@ public class QueryObject {
 									"wordnet_planet_109394007"
 									//"wordnet_time_interval_115269513",
 									//"wordnet_noun_106319293",
-									//"wordnet_sport_100523513",
+									//"wordnet_sport_100523513",*/
 									};
 		return classNameArray;
 	}

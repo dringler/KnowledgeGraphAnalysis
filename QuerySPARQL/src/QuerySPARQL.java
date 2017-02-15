@@ -27,10 +27,10 @@ public class QuerySPARQL {
 		// query YAGO
 		endpoint = 1;
 		QueryObject yago = new QueryObject();
-		resultsInstance = yago.queryEndpoint(endpoint);
-		//printCountHeader();
-		//printResults(resultsInstance);
-		writeResultsToFile(resultsInstance);
+		results = yago.queryEndpoint(endpoint);
+		printCountHeader();
+		printResults(results);
+		//writeResultsToFile(resultsInstance);
 		
 		
 		// query Wikidata
@@ -61,13 +61,7 @@ public class QuerySPARQL {
 			}
 			
 			classInstancesWithLabel.put(entry.getKey(), instanceWithLabel);
-		}
-		
-		
-		
-		
-		
-		
+		}	
 		
 		//write to file
 		//http://stackoverflow.com/questions/2885173/how-to-create-a-file-and-write-to-a-file-in-java
@@ -83,9 +77,6 @@ public class QuerySPARQL {
 			}
 			
 		}
-		
-	
-
 	}
 	private static void printResults(Map<String, CountObject> results) {
 		for (Map.Entry<String, CountObject> entry : results.entrySet()) {
