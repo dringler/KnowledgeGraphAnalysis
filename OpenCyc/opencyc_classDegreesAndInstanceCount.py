@@ -6,11 +6,8 @@ import operator
 
 #readFile = 'opencyc-latest_sample.nt'
 readFile = '../../../SeminarPaper_KG_Files/opencyc-latest.nt'
-
-
 rdfType = '<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>'
 owlClass = '<http://www.w3.org/2002/07/owl#Class>'
-
 lineProgress = 1000000
 
 
