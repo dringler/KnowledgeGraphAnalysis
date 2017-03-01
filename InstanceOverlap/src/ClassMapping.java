@@ -84,7 +84,7 @@ public class ClassMapping {
 			fullClassMap.put("Company", 
 					new HashMap<String, ArrayList<String>>() {{
 						put("d",  new ArrayList<String>(Arrays.asList("Company")));
-						//put("y", new ArrayList<String>(Arrays.asList("wordnet_stock_company_108383310"))); //no instances
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_company_108058098", "wordnet_business_108061042", "wordnet_enterprise_108056231"))); //no instances: "wordnet_stock_company_108383310"
 						put("w", new ArrayList<String>(Arrays.asList("Q891723")));//public company
 						put("o", new ArrayList<String>(Arrays.asList("Mx4rvVjZ_ZwpEbGdrcN5Y29ycA")));//publicly held corporation
 						put("n", new ArrayList<String>(Arrays.asList("company")));
@@ -227,7 +227,7 @@ public class ClassMapping {
 			fullClassMap.put("MilitaryConflict", 
 					new HashMap<String, ArrayList<String>>() {{
 						put("d",  new ArrayList<String>(Arrays.asList("MilitaryConflict")));
-						//put("y", new ArrayList<String>(Arrays.asList("wordnet_war_101236296")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_conflict_100958896"))); //no instances: wordnet_war_101236296
 						put("w", new ArrayList<String>(Arrays.asList("Q350604", "Q198")));//armed conflict, war
 						put("o", new ArrayList<String>(Arrays.asList("Mx4rvnSeAJwpEbGdrcN5Y29ycA")));//military conflict
 						put("n", new ArrayList<String>(Arrays.asList("militaryeventtype", "militaryconflict")));
@@ -247,7 +247,7 @@ public class ClassMapping {
 			fullClassMap.put("SportsEvent", 
 					new HashMap<String, ArrayList<String>>() {{
 						put("d",  new ArrayList<String>(Arrays.asList("SportsEvent")));
-						//put("y", new ArrayList<String>(Arrays.asList("")));
+						put("y", new ArrayList<String>(Arrays.asList("wordnet_tournament_107464725")));
 						put("w", new ArrayList<String>(Arrays.asList("Q16510064")));//sporting event
 						put("o", new ArrayList<String>(Arrays.asList("Mx4rvVjzBJwpEbGdrcN5Y29ycA")));//sports event
 						put("n", new ArrayList<String>(Arrays.asList("sportsevent")));

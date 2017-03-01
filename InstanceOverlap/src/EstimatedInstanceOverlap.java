@@ -40,13 +40,14 @@ public class EstimatedInstanceOverlap {
 			ArrayList<Double> thresholdsL,
 			ArrayList<Double> thresholdsJaccard,
 			HashSet<String> simMeasuresThresholdH,
-			HashMap<String, HashMap<String, Integer>> kKgInstanceCount) throws IOException {
+			HashMap<String, HashMap<String, Integer>> kKgInstanceCount,
+			int maxBlockSize) throws IOException {
 		System.out.println("Start calculating estimated instance overlap for " + className);
 		DateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 		Date date = new Date();
 		
 		try {
-			String fileName = "estimatedInstanceOverlap_"+className+"_wBlocking_tokenBk4_"+df.format(date)+".csv";
+			String fileName = "estimatedInstanceOverlap_"+className+"_wBlockingMax"+ maxBlockSize +"_tokenBk4_"+df.format(date)+".csv";
 			BufferedWriter writer = new BufferedWriter(new FileWriter("./estimatedOverlap/"+ fileName));
 			
 			String header = "x2y, fromKgClass, fromInstanceCount, toKgClass, toInstanceCount, simMeasure, threshold, precision, recall, fMeasure, estimatedOverlap, owlSameAs links, matching alignment, partial matching alignment, tp";			
@@ -95,8 +96,7 @@ public class EstimatedInstanceOverlap {
 									for (Double threshold : thresholds) {
 										if (! ((simMeasure.equals("exactMatch") || simMeasure.equals("all")) && threshold != 1.0)) {
 											// read matching alignment
-											System.out.println("Calculate estimated overlap for " + simMeasure + " with threshold: " + threshold);
-											System.out.println("Loading string matching alignment...");
+											System.out.println("Calculate estimated overlap for " + simMeasure + " with threshold: " + threshold + " - Loading string matching alignment...");
 											HashSet<Pair<String, String>> a = readStringMatchingAlignment(x, x2y, kgClass, toKgClass, simMeasure, threshold);
 											//System.out.println("a.size(): " + a.size());
 											//get partial matching alignment: parallelized withinin method

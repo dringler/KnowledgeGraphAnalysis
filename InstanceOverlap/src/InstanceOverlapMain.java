@@ -72,7 +72,7 @@ public class InstanceOverlapMain {
 		
 		UserInput ui = new UserInput();
 		ArrayList<String> classNamesUserInput = ui.getClassNames(classNames);
-		//int maxBlockSize = ui.getMaxBlockSize();
+		int maxBlockSize = ui.getMaxBlockSize();
 		
 		//for (String className : classNames) {
 		for (String className : classNamesUserInput) {
@@ -91,15 +91,15 @@ public class InstanceOverlapMain {
 			boolean w2n = true;
 			boolean o2n = true;
 			CountSameAs same = new CountSameAs();
-			same.run(className, cM, d2y, d2w, d2o, d2n, y2w, y2o, y2n, w2o, w2n, o2n);
-			
+			same.run(className, cM, d2y, d2w, d2o, d2n, y2w, y2o, y2n, w2o, w2n, o2n);	
 			
 		// INSTANCE MATCHES USING STRING SIMILARITY MEASURES	
 			CountStringSimilarity stringSim = new CountStringSimilarity();
-			HashMap<String, HashMap<String, Integer>> kKgInstanceCount = stringSim.run(className, cM, stringMeasures, useSamples, thresholdsH, thresholdsL, thresholdsJaccard, simMeasuresThresholdH);
+			HashMap<String, HashMap<String, Integer>> kKgInstanceCount = stringSim.run(className, cM, stringMeasures, useSamples, thresholdsH, thresholdsL, thresholdsJaccard, simMeasuresThresholdH, maxBlockSize);
 		//CALCULATE ESTIMATED INSTANCE OVERLAP
 			EstimatedInstanceOverlap overlap = new EstimatedInstanceOverlap();
-			overlap.run(className, cM, stringM, thresholdsH, thresholdsL, thresholdsJaccard, simMeasuresThresholdH, kKgInstanceCount);
+			overlap.run(className, cM, stringM, thresholdsH, thresholdsL, thresholdsJaccard, simMeasuresThresholdH, kKgInstanceCount, maxBlockSize);
+			
 			System.out.println("DONE");
 			
 		}

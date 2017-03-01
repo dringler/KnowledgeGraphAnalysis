@@ -45,7 +45,8 @@ public class CountStringSimilarity {
 			ArrayList<Double> thresholdsH, 
 			ArrayList<Double> thresholdsL, 
 			ArrayList<Double> thresholdsJaccard,
-			HashSet<String> simMeasuresThresholdH) {
+			HashSet<String> simMeasuresThresholdH,
+			int maxBlockSize) {
 		System.out.println("Start CountStringSimilarity.run()");
 		this.useSamples = useSamples;
 		//long startTime = System.nanoTime();
@@ -92,11 +93,10 @@ public class CountStringSimilarity {
 		 *HashMap<token, <HashMap<k, HashMap<kgClass, <HashSet<URIs>>>>>> 
 		 */
 		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks = createBlocks(kKgClassInstanceLabels);
-		HashMap<String, Integer> sortedBlocks = blockCleaning(blocks, 2);
+		HashMap<String, Integer> sortedBlocks = blockCleaning(blocks, 2, maxBlockSize);
 		getBlockDistribution(className, blocks);
 		getMatchedStringPairs(results, kKgClassInstanceLabels, stringMeasures, thresholdsH, thresholdsL, thresholdsJaccard, blocks, sortedBlocks);
-			
-			
+				
 		return kKgClassInstanceCounts;
 		
 		//long startTime = System.nanoTime();
@@ -111,10 +111,10 @@ public class CountStringSimilarity {
 	 */
 	private HashMap<String, Integer> blockCleaning(
 			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks,
-			int minBlockSize) {
-		System.out.println("Removing blocks with a size smaller than " + minBlockSize);
-		
-		HashMap<String, Integer> blockSizes = removeBlocks(blocks, minBlockSize);
+			int minBlockSize,
+			int maxBlockSize) {
+		System.out.println("Removing blocks...");
+		HashMap<String, Integer> blockSizes = removeBlocks(blocks, minBlockSize, maxBlockSize);
 		
 		System.out.println("Clean blocks...");
 		HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> removeFromBlock = new HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>>();
@@ -167,8 +167,8 @@ public class CountStringSimilarity {
 			}
 		}
 		System.out.println(removeCounter + " instances removed from unspecific blocks");
-	
-		blockSizes = removeBlocks(blocks, minBlockSize);
+		System.out.println("Removing blocks...");
+		blockSizes = removeBlocks(blocks, minBlockSize, maxBlockSize);
 		
 		HashMap<String, Integer> sortedBlockDist = sortByValue(blockSizes);
 		return sortedBlockDist;
@@ -176,7 +176,8 @@ public class CountStringSimilarity {
 	}
 	private HashMap<String, Integer> removeBlocks(
 			HashMap<String, HashMap<String, HashMap<String, HashSet<String>>>> blocks,
-			int minBlockSize) {
+			int minBlockSize,
+			int maxBlockSize) {
 		HashSet<String> blocksToDelete = new HashSet<String>();
 		HashMap<String, Integer> blockSizes = new HashMap<String, Integer>();
 		for (String blockingKey : blocks.keySet()) {
@@ -186,7 +187,7 @@ public class CountStringSimilarity {
 					c += blocks.get(blockingKey).get(k).get(kgClass).size();
 				}
 			}
-			if (c < minBlockSize) {// || (c > maxBlockSize && maxBlockSize!=0) ) {
+			if (c < minBlockSize || (c > maxBlockSize && maxBlockSize!=0) ) {
 				blocksToDelete.add(blockingKey);
 			} else {
 				blockSizes.put(blockingKey, c);
@@ -195,7 +196,7 @@ public class CountStringSimilarity {
 		for (String blockingKey : blocksToDelete) {
 			blocks.remove(blockingKey);
 		}
-		System.out.println(blocksToDelete.size() + " blocks removed.");
+		System.out.println(blocksToDelete.size() + " blocks removed  " + minBlockSize+ " <= blocks.size() >= " + maxBlockSize);
 
 		return blockSizes;
 	}
@@ -527,26 +528,25 @@ public class CountStringSimilarity {
 		//long startTime = System.nanoTime();
 		for (String kgClass :kKgClassInstanceLabels.get(fk).keySet()) {
 			
-			//init 
-			for (String simMeasure : stringMeasures.getUsedMeasures()) {
-				ArrayList<Double> thresholds = thresholdsL;
-				if (this.simMeasuresThresholdH.contains(simMeasure)) {
-					thresholds = thresholdsH;
-				} else if (simMeasure.equals("jaccard")) {
-					thresholds = thresholdsJaccard;
-				}
-				for (Double t : thresholds) {
-					HashSet<Pair<String, String>> emptySet = new HashSet<Pair<String,String>>();
-					Pair<String, Double> k = new ImmutablePair<String, Double>(simMeasure, t);
-					kgClassInstancePairResults.put(k, emptySet);
-				}
-			}
-			
 			if (kKgClassInstanceLabels.get(tk) != null) {				
 				//for each kg class in other kg
-				
-				for (String toKgClass : kKgClassInstanceLabels.get(tk).keySet()) {
+				for (String toKgClass : kKgClassInstanceLabels.get(tk).keySet()) {	
 					System.out.println("Comparing " + fk +": " + kgClass + " with " + tk + ": " + toKgClass);
+					//init 
+					for (String simMeasure : stringMeasures.getUsedMeasures()) {
+						ArrayList<Double> thresholds = thresholdsL;
+						if (this.simMeasuresThresholdH.contains(simMeasure)) {
+							thresholds = thresholdsH;
+						} else if (simMeasure.equals("jaccard")) {
+							thresholds = thresholdsJaccard;
+						}
+						for (Double t : thresholds) {
+							HashSet<Pair<String, String>> emptySet = new HashSet<Pair<String,String>>();
+							Pair<String, Double> k = new ImmutablePair<String, Double>(simMeasure, t);
+							kgClassInstancePairResults.put(k, emptySet);
+						}
+					}
+					
 					//compare instanceLabels
 					
 					//BLOCKING
