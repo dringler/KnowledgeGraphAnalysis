@@ -692,6 +692,9 @@ public class QueryObject {
 									"wordnet_government_108050678",
 									"wordnet_stock_company_108383310",
 									"wordnet_party_108256968",
+									"wordnet_company_108058098",
+									"wordnet_business_108061042",
+									"wordnet_enterprise_108056231",
 								//PLACE
 									"wordnet_location_100027167",
 									//"wordnet_region_108630985",
@@ -724,6 +727,8 @@ public class QueryObject {
 									"wordnet_event_100029378",
 									"wordnet_war_101236296",
 									"wordnet_social_event_107288639",
+									"wordnet_conflict_100958896",
+									"wordnet_tournament_107464725",
 								//TRANSPORT	
 									"wordnet_vehicle_104524313",
 									"wordnet_conveyance_103100490",

@@ -588,17 +588,20 @@ public class GetInstances {
 		HashSet<String> classNameArray = new HashSet<String>();
 		classNameArray.addAll(Arrays.asList(
 								//PERSON
-					/*				"yagoLegalActor",
+									"yagoLegalActor",
 									"wordnet_causal_agent_100007347",
 									"wordnet_person_100007846",
 									"wordnet_politician_110450303",
 									"wordnet_politician_110451263",
 									"wordnet_athlete_109820263",	
-									"wordnet_actor_109767197",*/
-									"wordnet_actor_109765278"/*,
+									"wordnet_actor_109767197",
+									"wordnet_actor_109765278",
 								//ORGANIZATION
 									"wordnet_government_108050678",
 									"wordnet_stock_company_108383310",
+									"wordnet_company_108058098",
+									"wordnet_business_108061042",
+									"wordnet_enterprise_108056231",
 									"wordnet_party_108256968",
 								//PLACE
 									"wordnet_location_100027167",
@@ -619,6 +622,8 @@ public class GetInstances {
 									"wordnet_event_100029378",
 									"wordnet_war_101236296",
 									"wordnet_social_event_107288639",
+									"wordnet_conflict_100958896",
+									"wordnet_tournament_107464725",
 								//TRANSPORT	
 									"wordnet_vehicle_104524313",
 									"wordnet_conveyance_103100490",
@@ -629,7 +634,7 @@ public class GetInstances {
 									"wordnet_chemical_element_114622893",	
 									"wordnet_substance_100019613",
 									"wordnet_celestial_body_109239740",
-									"wordnet_planet_109394007"*/
+									"wordnet_planet_109394007"
 									));
 		return classNameArray;
 	}
