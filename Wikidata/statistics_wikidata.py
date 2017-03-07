@@ -2,8 +2,9 @@
 import numpy
 import operator
 
-#readFile = '/Volumes/Samsung/wikidata.nt'
-readFile = '../../../SeminarPaper_KG_Files/Wikidata/wikidata_s_1m.nt'
+#readFile = '/Volumes/Samsung/Wikidata/wikidata_s.nt'
+readFile = 'wikidata.nt'
+#readFile = '../../../SeminarPaper_KG_Files/Wikidata/wikidata_s_1m.nt'
 
 isA = '<http://www.wikidata.org/prop/direct/P31>'
 
@@ -119,6 +120,10 @@ try:
 	#print sNodes
 	#print sProperties
 	#print sClasses
+	fw = open('wikidata_statistics.csv', 'w')
+	fw.write('#triples, #nodes, #properties, #classes, avgIndegree, medianIndegree, avgOutdegree, medianOutdegree\n')
+	fw.write('{}, {}, {}, {}, {}, {}, {}, {}'.format(sTriples, len(sNodes), len(sProperties), len(sClasses), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict)))
+	fw.close()
 except:
 	print('ERROR')
 
