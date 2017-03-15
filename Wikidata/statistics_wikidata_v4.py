@@ -151,7 +151,7 @@ try:
 	#print sNodes
 	#print sProperties
 	#print sClasses
-	fw = open('wikidata_statistics_v3.csv', 'w')
+	fw = open('wikidata_statistics_v4.csv', 'w')
 	fw.write('#triples, #nodes, #namespaceNodes, #properties, #classes, #instances, avgIndegree, medianIndegree, avgOutdegree, medianOutdegree\n')
 	fw.write('{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstancesRdfType), len(sInstancesP31), len(sInstancesP31entity), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict)))
 	fw.close()

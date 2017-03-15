@@ -2,19 +2,24 @@
 import numpy
 import operator
 
-#readFile = '../../../SeminarPaper_KG_Files/OpenCyc/opencyc-latest_s.nt'
-readFile = '../../../SeminarPaper_KG_Files/OpenCyc/opencyc-latest.nt'
+#readFile = '/Volumes/Samsung/Wikidata/wikidata_s.nt'
+readFile = 'wikidata.nt'
+#readFile = '../../../SeminarPaper_KG_Files/Wikidata/wikidata_s_1m.nt'
+
+isA = '<http://www.wikidata.org/prop/direct/P31>'
 rdfType = '<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>'
-owlClass = '<http://www.w3.org/2002/07/owl#Class>'
-owlThing = '<http://www.w3.org/2002/07/owl#Thing>'
-lineProgress = 1000000
+entity = '<http://www.wikidata.org/entity/Q35120>'
+
+lineProgress = 30000000
 
 sTriples = 0
 sNodes = set()
 sNodesNamespace = set()
 sProperties = set()
 sClasses = set()
+#sInstancesRdfType = set()
 sInstances = set()
+#sInstancesP31entity = set()
 indegreeDict = dict()
 outdegreeDict = dict()
 instanceIndegreeDict = dict()
@@ -36,7 +41,7 @@ def isBlankNode(w):
 	return False
 
 def isNamespaceURI(w):
-	if (w.startswith('<http://sw.opencyc.org/concept/')):
+	if(w.startswith('<http://www.wikidata.org/entity/')):
 		return True
 	return False
 
@@ -67,7 +72,7 @@ def checkAndAddNode(n):
 	if(isURI(n) or isBlankNode(n)):
 		if (not n in sNodes):
 			sNodes.add(n)
-	if (isNamespaceURI(n)):
+	if(isNamespaceURI(n)):
 		if (not n in sNodesNamespace):
 			sNodesNamespace.add(n)
 
@@ -81,15 +86,12 @@ def countProperties(p):
 		if (not p in sProperties):
 			sProperties.add(p)
 
-def countClasses(s,p,o):
+def countInstancesAndClasses(s,p,o):
 	global sClasses
-	if (p == rdfType and o==owlClass):
-		if (not s in sClasses):
-			sClasses.add(s)
-
-def countInstances(s,p,o):
 	global sInstances
-	if(p==rdfType and o in sClasses):
+	if (p == isA):
+		if (not o in sClasses):
+			sClasses.add(o)
 		if (not s in sInstances):
 			sInstances.add(s)
 
@@ -134,37 +136,25 @@ def getMedian(d):
 	return numpy.median(numpy.array(d.values()))
 
 try:
-	print('GET STATISTICS FOR OPENCYC')
+	print('GET STATISTICS FOR WIKIDATA')
 	f = open(readFile, 'r')
 	lineCounter = 0
 	for line in f:
-		#print line
 		splittedLine = line.rstrip('\n').split()
 		s, p, o = getSPO(splittedLine)
 		countTriple(s,p,o)
 		countNodes(s,o)
 		countProperties(p)
-		countClasses(s,p,o)		
+		countInstancesAndClasses(s,p,o)
 		addIndegree(o)
 		addOutdegree(s)
 		lineCounter += 1
 		if (lineCounter % lineProgress == 0):
 			print ('{} million lines read'.format(lineCounter / 1000000))
 	f.close()
-	print('First run complete.')
-	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}, avgInstanceIndegree: {}, medianInstanceIndegree: {}, avgInstanceOutdegree: {}, medianInstanceOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict), getAvg(instanceIndegreeDict), getMedian(instanceIndegreeDict), getAvg(instanceOutdegreeDict), getMedian(instanceOutdegreeDict)))
-	f = open(readFile, 'r')
-	lineCounter = 0
-	for line in f:
-		splittedLine = line.rstrip('\n').split()
-		s, p, o = getSPO(splittedLine)
-		countInstances(s,p,o)
-		lineCounter += 1
-		if (lineCounter % lineProgress == 0):
-			print ('{} million lines read'.format(lineCounter / 1000000))
-	f.close()
-	print('Second run complete.')
-	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}, avgInstanceIndegree: {}, medianInstanceIndegree: {}, avgInstanceOutdegree: {}, medianInstanceOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict), getAvg(instanceIndegreeDict), getMedian(instanceIndegreeDict), getAvg(instanceOutdegreeDict), getMedian(instanceOutdegreeDict)))
+	print('DONE with first run')
+	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict)))
+	
 	f = open(readFile, 'r')
 	lineCounter = 0
 	for line in f:
@@ -176,14 +166,14 @@ try:
 		if (lineCounter % lineProgress == 0):
 			print ('{} million lines read'.format(lineCounter / 1000000))
 	f.close()
-	print('DONE')
+	print('DONE with second run')
 	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}, avgInstanceIndegree: {}, medianInstanceIndegree: {}, avgInstanceOutdegree: {}, medianInstanceOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict), getAvg(instanceIndegreeDict), getMedian(instanceIndegreeDict), getAvg(instanceOutdegreeDict), getMedian(instanceOutdegreeDict)))
-	#print sNodes
-	print sProperties
-	print ('###############')
-	print ('#####')
-	print ('###############')
-	print sClasses
+	
+	fw = open('wikidata_statistics_v5.csv', 'w')
+	fw.write('#triples, #nodes, #namespaceNodes, #properties, #classes, #instances, avgIndegree, medianIndegree, avgOutdegree, medianOutdegree, avgInstanceIndegree, medianInstanceIndegree, avgInstanceOutdegree, medianInstanceOutdegree\n')
+	fw.write('{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict), getAvg(instanceIndegreeDict), getMedian(instanceIndegreeDict), getAvg(instanceOutdegreeDict), getMedian(instanceOutdegreeDict)))
+	fw.close()
+	print('saved to disk')
 except:
 	print('ERROR')
 
