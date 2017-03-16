@@ -8,10 +8,11 @@ nell = '../../../SeminarPaper_KG_Files/NELL/NELL.08m.995.esv.csv'
 ontology = '../../../SeminarPaper_KG_Files/NELL/NELL.08m.995.ontology.csv'
 
 #rdfType = '<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>'
-pClass = 'memberofsets'
-pInstance = 'generalizations'
+pMemberOfSets = 'memberofsets'
+pGeneralizations = 'generalizations'
 #owlClass = '<http://www.w3.org/2002/07/owl#Class>'
 oClass = 'concept:rtwcategory'
+pClass = 'rtwrelation'
 lineProgress = 1000000
 
 sTriples = 0
@@ -84,23 +85,41 @@ def countNodes(s,o):
 	checkAndAddNode(s)
 	checkAndAddNode(o)
 
-def countProperties(p):
+def countExplicitProperties(s,p,o):
 	global sProperties
-	#if (isURI(p)):
+	#all p
 	if (not p in sProperties):
 		sProperties.add(p)
+	#explicit defined properties
+	if (p==pMemberOfSets and o == pClass):
+		if (not s in sProperties):
+			sProperties.add(s)
 
-def countClasses(s,p,o):
+def countSubProperties(s,p,o):
+	global sProperties
+	if (p==pGeneralizations and o in sProperties):
+		if (not s in sProperties):
+			sProperties.add(s)
+
+def countExplicitClasses(s,p,o):
 	global sClasses
-	if (p == pClass and o==oClass):
+	if (p == pMemberOfSets and o==oClass):
 		if (not s in sClasses):
 			sClasses.add(s)
 
-def countInstances(s,p):
+def countSubClasses(s,p,o):
+	if (p==pGeneralizations and o in sClasses):
+		if (not s in sClasses):
+			sClasses.add(s)
+
+def countInstances(s,p,o):
 	global sInstances
-	if (p==pInstance):
-		if (not s in sInstances):
-			sInstances.add(s)
+	global sClasses
+	if (p==pGeneralizations and o in sClasses):
+		if (not s in sClasses):
+			if (not s in sProperties):
+				if (not s in sInstances):
+					sInstances.add(s)
 
 def addIndegree(o):
 	global indegreeDict
@@ -142,27 +161,66 @@ def getAvg(d):
 def getMedian(d):
 	return numpy.median(numpy.array(d.values()))
 
-
-def readAndCount(file):
+def readAndCountBasic(file):
+	print('count triples, nodes node in-&outdegrees for {}'.format(file))
 	f = open(file, 'r')
 	lineCounter = 0
 	for line in f:
 		#print line
 		splittedLine = line.rstrip('\n').split()
 		s, p, o = getSPO(splittedLine)
-		#print o
 		countTriple(s,p,o)
 		countNodes(s,o)
-		countProperties(p)
-		countClasses(s,p,o)
-		countInstances(s,p)
 		addIndegree(o)
 		addOutdegree(s)
+		countExplicitProperties(s,p,o)
 		lineCounter += 1
 		if (lineCounter % lineProgress == 0):
 			print ('{} million lines read'.format(lineCounter / 1000000))
 	f.close()
-	print('first run complete')
+	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict)))
+	#print(sClasses)
+
+def readAndCountExplicit(file):
+	print('count explicit properties and classes')
+	f = open(file, 'r')
+	lineCounter = 0
+	for line in f:
+		splittedLine = line.rstrip('\n').split()
+		s, p, o = getSPO(splittedLine)
+		countExplicitProperties(s,p,o)
+		countExplicitClasses(s,p,o)
+	f.close()
+	print('#classes: {}, properties: {}'.format(len(sClasses), len(sProperties)))
+
+def readAndCountSub(file):
+	print('count explicit properties and classes')
+	f = open(file, 'r')
+	lineCounter = 0
+	for line in f:
+		splittedLine = line.rstrip('\n').split()
+		s, p, o = getSPO(splittedLine)
+		countSubProperties(s,p,o)
+		countSubClasses(s,p,o)
+	f.close()
+	print('#classes: {}, properties: {}'.format(len(sClasses), len(sProperties)))
+
+def readAndCountInstances(file):
+	print('count instances for {}'.format(file))
+	f = open(file, 'r')
+	lineCounter = 0
+	for line in f:	
+		splittedLine = line.rstrip('\n').split()
+		s, p, o = getSPO(splittedLine)
+		countInstances(s,p,o)
+		lineCounter += 1
+		if (lineCounter % lineProgress == 0):
+			print ('{} million lines read'.format(lineCounter / 1000000))
+	f.close()
+	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict)))
+
+def readAndCountInstanceDegrees(file):
+	print('instance in-&outdegree for {}'.format(file))
 	f = open(file, 'r')
 	lineCounter = 0
 	for line in f:
@@ -175,15 +233,30 @@ def readAndCount(file):
 		if (lineCounter % lineProgress == 0):
 			print ('{} million lines read'.format(lineCounter / 1000000))
 	f.close()
+	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}, avgInstanceIndegree: {}, medianInstanceIndegree: {}, avgInstanceOutdegree: {}, medianInstanceOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict), getAvg(instanceIndegreeDict), getMedian(instanceIndegreeDict), getAvg(instanceOutdegreeDict), getMedian(instanceOutdegreeDict)))
 try:
 	print('GET STATISTICS FOR NELL')
-	readAndCount(nell)
-	readAndCount(ontology)
+
+	# get classes and properties from ontology
+	readAndCountExplicit(ontology)
+	readAndCountSub(ontology)
+	
+	#get basic KG measures
+	readAndCountBasic(ontology)
+	readAndCountBasic(nell)
+
+	# get instances
+	readAndCountInstances(ontology)
+	readAndCountInstances(nell)
+	# calculcate instance degrees
+	readAndCountInstanceDegrees(ontology)
+	readAndCountInstanceDegrees(nell)
 	print('DONE')
 	print('#triples: {}, #nodes: {}, #namespaceNodes: {}, #properties: {}, #classes: {}, #instances: {}, avgIndegree: {}, medianIndegree: {}, avgOutdegree: {}, medianOutdegree: {}, avgInstanceIndegree: {}, medianInstanceIndegree: {}, avgInstanceOutdegree: {}, medianInstanceOutdegree: {}'.format(sTriples, len(sNodes), len(sNodesNamespace), len(sProperties), len(sClasses), len(sInstances), getAvg(indegreeDict), getMedian(indegreeDict), getAvg(outdegreeDict), getMedian(outdegreeDict), getAvg(instanceIndegreeDict), getMedian(instanceIndegreeDict), getAvg(instanceOutdegreeDict), getMedian(instanceOutdegreeDict)))
 	#print sNodes
 	#print sProperties
 	#print sClasses
+	#print (sorted(instanceIndegreeDict.items(), key=operator.itemgetter(1)))
 except:
 	print('ERROR')
 
