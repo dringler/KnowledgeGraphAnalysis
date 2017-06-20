@@ -1,5 +1,5 @@
-# SeminarPaper
-Seminar paper and research assistant work
+# Knowledge Graph Analysis
+Code accompanying our paper "One Knowledge Graph to Rule them All? Analyzing the Differences between DBpedia, YAGO, Wikidata & co."
 
 Quantitative analysis of the following Knowledge Graphs (KG):
 * DBpedia
